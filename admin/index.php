@@ -18,6 +18,7 @@ match ($act) {
 
     // CRUD Category
     'category-list' => categoryList(),
+    'add-category'  => addCategory(),
 
 };
 

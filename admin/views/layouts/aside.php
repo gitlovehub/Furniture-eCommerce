@@ -33,7 +33,7 @@
             </a>
             <ul class="menu-sub">
                 <li class="menu-item">
-                    <a href="" class="menu-link">
+                    <a href="?act=add-category" class="menu-link">
                         <span>Add Category</span>
                     </a>
                 </li>
@@ -74,12 +74,12 @@
             <ul class="menu-sub">
                 <li class="menu-item">
                     <a href="" class="menu-link">
-                        <span>Accounts</span>
+                        <span>Account</span>
                     </a>
                 </li>
                 <li class="menu-item">
                     <a href="" class="menu-link">
-                        <span>Comments</span>
+                        <span>Comment</span>
                     </a>
                 </li>
             </ul>

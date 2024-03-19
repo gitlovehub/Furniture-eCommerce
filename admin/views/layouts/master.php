@@ -26,6 +26,8 @@
     <!-- Vendors CSS -->
     <link rel="stylesheet" href="assets/vendor/libs/perfect-scrollbar/perfect-scrollbar.css" />
     <link rel="stylesheet" href="assets/vendor/libs/apex-charts/apex-charts.css" />
+    <link rel="stylesheet" href="assets/vendor/libs/toastr/toastr.css">
+    <link rel="stylesheet" href="assets/vendor/libs/animate-css/animate.css">
 
     <!-- Page CSS -->
 
@@ -41,6 +43,10 @@
 </head>
 
 <body>
+    <!-- Toast -->
+    <?php require_once 'toast.php'; ?>
+    <!-- / Toast -->
+
     <!-- Layout wrapper -->
     <div class="layout-wrapper layout-content-navbar">
 
@@ -95,6 +101,7 @@
 
     <!-- Page JS -->
     <script src="assets/js/dashboards-analytics.js"></script>
+    <script src="assets/js/ui-toasts.js"></script>
 
     <!-- Place this tag in your head or just before your close body tag. -->
     <script async defer src="https://buttons.github.io/buttons.js"></script>

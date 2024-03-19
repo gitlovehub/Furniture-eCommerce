@@ -13,7 +13,7 @@
                     <input type="search" class="form-control" placeholder="Search Category">
                 </label>
                 <div class="col">
-                    <a href="add-category.html" class="btn btn-secondary add-new btn-primary float-end" type="button">
+                    <a href="?act=add-category" class="btn btn-secondary add-new btn-primary float-end" type="button">
                         <i class="bx bx-plus me-0 me-sm-1"></i>
                         Add Category
                     </a>
@@ -33,9 +33,15 @@
                         </tr>
                     </thead>
                     <tbody class="table-border-bottom-0">
+
+                        <?php foreach($list as $item) : ?>
                         <tr>
-                            <td>1</td>
-                            <td>Tên danh mục</td>
+                            <td>
+                                <?= $item['id_category'] ?>
+                            </td>
+                            <td>
+                                <?= $item['name_category'] ?>
+                            </td>
                             <td>
                                 <div class="float-end">
                                     <a href="" class="badge bg-label-success">
@@ -47,20 +53,8 @@
                                 </div>
                             </td>
                         </tr>
-                        <tr>
-                            <td>2</td>
-                            <td>Tên danh mục</td>
-                            <td>
-                                <div class="float-end">
-                                    <a href="" class="badge bg-label-success">
-                                        <i class="bx bx-edit-alt me-1"></i>
-                                    </a>
-                                    <a href="" class="badge bg-label-danger">
-                                        <i class="bx bx-trash me-1"></i>
-                                    </a>
-                                </div>
-                            </td>
-                        </tr>
+                        <?php endforeach; ?>
+
                     </tbody>
                 </table>
             </div>
