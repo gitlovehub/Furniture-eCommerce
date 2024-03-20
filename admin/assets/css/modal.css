@@ -1,0 +1,65 @@
+@keyframes zoomIn {
+  from {
+    transform: scale(0.5);
+  }
+  to {
+    transform: scale(1);
+  }
+}
+.ios-modal-overlay {
+  position: fixed;
+  z-index: 7979;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: none;
+}
+.ios-modal-wrapper {
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.ios-modal-container {
+  overflow: hidden;
+  width: 270px;
+  margin: 0px auto;
+  background-color: white;
+  border-radius: 14px;
+  animation: zoomIn linear 0.3s;
+  text-align: center;
+}
+.ios-modal-question {
+  margin: 20px 0 10px 0;
+}
+.ios-modal-controls {
+  border-top: 0.5px solid #ccc;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.ios-modal-control-btn {
+  width: 100%;
+  font-weight: 500;
+  background-color: transparent;
+  border: 0;
+  box-shadow: none;
+  cursor: pointer;
+  font-size: 16px;
+  color: #007aff;
+  padding: 10px 0;
+  outline: none;
+  text-decoration: none;
+  transition: all ease 0.3s;
+}
+
+.ios-modal-controls a {
+  color: #ff2d55 !important;
+  border-right: 0.5px solid #ccc;
+}
+
+.ios-modal-control-btn:hover {
+  background-color: #ddd;
+}

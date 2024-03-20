@@ -17,9 +17,13 @@ match ($act) {
     'dashboard' => dashboard(),
 
     // CRUD Category
-    'category-list' => categoryList(),
-    'add-category'  => addCategory(),
+    'category-list'   => categoryList(),
+    'add-category'    => addCategory(),
+    'update-category' => updateCategory($_GET["id"]),
+    'delete-category' => deleteCategory($_GET["id"]),
 
+    // CRUD Product
+    // ...
 };
 
 require_once '../commons/disconnect-db.php';

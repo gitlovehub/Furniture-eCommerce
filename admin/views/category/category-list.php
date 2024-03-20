@@ -37,19 +37,19 @@
                         <?php foreach($list as $item) : ?>
                         <tr>
                             <td>
-                                <?= $item['id_category'] ?>
+                                <?= $item['id'] ?>
                             </td>
                             <td>
                                 <?= $item['name_category'] ?>
                             </td>
                             <td>
                                 <div class="float-end">
-                                    <a href="" class="badge bg-label-success">
+                                    <a href="?act=update-category&id=<?= $item['id'] ?>" class="btn badge bg-label-success">
                                         <i class="bx bx-edit-alt me-1"></i>
                                     </a>
-                                    <a href="" class="badge bg-label-danger">
+                                    <button onclick="openModal(<?= $item['id'] ?>)" class="btn badge bg-label-danger">
                                         <i class="bx bx-trash me-1"></i>
-                                    </a>
+                                    </button>
                                 </div>
                             </td>
                         </tr>
