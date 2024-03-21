@@ -17,7 +17,7 @@ function addCategory() {
         ];
 
         // Validate
-        $errors = validate($data);
+        $errors = validateCreate($data);
         if (!empty($errors)) {
             $_SESSION["errors"] = $errors;
             $_SESSION["data"]   = $data ;
@@ -48,18 +48,18 @@ function updateCategory($id) {
         ];
 
         // Validate
-        $errors = validate($data);
+        $errors = validateUpdate($id, $data);
         if (!empty($errors)) {
             $_SESSION["errors"] = $errors;
-            $_SESSION["data"]   = $data ;
             header('Location: ?act=update-category&id=' . $id);
             exit();
+        } else {
+            update('tbl_categories', $id, $data);
+            $_SESSION["success"]='';
         }
 
-        update('tbl_categories', $id, $data);
-        // Lỗi không nhận được thông báo
-        $_SESSION["success"]='';
         header('Location: ?act=update-category&id=' . $id);
+        exit();
     }
     require_once PATH_VIEW_ADMIN . 'layouts/master.php';
 }
@@ -71,12 +71,26 @@ function deleteCategory($id) {
     exit();
 }
 
-function validate($data) {
+function validateCreate($data) {
     $errors = [];
     if (empty($data['name_category'])) {
         $errors[] = 'This field is required.';
     } elseif (strlen($data['name_category']) > 50) {
         $errors[] = 'Please enter between 1 and 50 characters.';
+    } elseif (!checkUniqueForCreate($data['name_category'])) {
+        $errors[] = 'The entered data is a duplicate.';
+    }
+    return $errors;
+}
+
+function validateUpdate($id, $data) {
+    $errors = [];
+    if (empty($data['name_category'])) {
+        $errors[] = 'This field is required.';
+    } elseif (strlen($data['name_category']) > 50) {
+        $errors[] = 'Please enter between 1 and 50 characters.';
+    } elseif (!checkUniqueForUpdate($id, $data['name_category'])) {
+        $errors[] = 'The entered data is a duplicate.';
     }
     return $errors;
 }
