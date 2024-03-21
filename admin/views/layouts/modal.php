@@ -18,6 +18,7 @@
     function openModal(id) {
         // Open the modal
         document.getElementById('iosModal').style.display = 'block';
+        document.body.style.overflow = 'hidden';
 
         // Set the href attribute dynamically for the "OK" button
         document.getElementById('ok-btn').href = '?act=delete-category&id=' + id;
@@ -31,5 +32,6 @@
     function closeModal() {
         // Close the modal
         document.getElementById('iosModal').style.display = 'none';
+        document.body.style.overflow = '';
     }
 </script>

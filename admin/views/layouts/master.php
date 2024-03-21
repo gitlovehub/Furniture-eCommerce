@@ -8,7 +8,7 @@
     <meta name="description" content="" />
 
     <!-- Favicon -->
-    <link rel="icon" type="image/x-icon" href="assets/img/favicon/dashboard-apps.ico" />
+    <link rel="icon" type="image/x-icon" href="assets/img/favicon/tesla_logo.png" />
 
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
