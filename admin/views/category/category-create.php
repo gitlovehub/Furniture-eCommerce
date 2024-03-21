@@ -1,6 +1,6 @@
 <?php
 // Kiểm tra xem có thông báo thành công từ session không?
-if (isset($_SESSION['success'])) {
+if (isset($_SESSION["success"])) {
     // Hiển thị toast
     echo '<script>
             document.addEventListener("DOMContentLoaded", function() {
@@ -12,7 +12,7 @@ if (isset($_SESSION['success'])) {
         </script>';
 
     // Xóa thông báo thành công từ session
-    unset($_SESSION['success']);
+    unset($_SESSION["success"]);
 }
 ?>
 <div class="content-wrapper">
@@ -51,7 +51,11 @@ if (isset($_SESSION['success'])) {
                             </div>
                             <div class="col-sm-12 col-md-6">
                                 <label class="form-label" for="categoryName">Name</label>
-                                <input type="text" name="categoryName" class="form-control" id="categoryName" placeholder="Category title">
+                                <input type="text" name="categoryName" class="form-control" id="categoryName" placeholder="Category title"
+                                value="<?= isset($_SESSION["data"]) ? $_SESSION["data"]["name_category"] : null ?>"
+                                >
+                                <!-- Show errors -->
+                                <?php require_once 'show-errors.php'; ?>
                             </div>
                         </div>
                     </div>

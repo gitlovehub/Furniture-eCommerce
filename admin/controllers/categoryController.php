@@ -13,11 +13,20 @@ function addCategory() {
     
     if (!empty($_POST)) {
         $data = [
-            "name_category" => $_POST["categoryName"],
+            "name_category" => $_POST["categoryName"] ?? null,
         ];
+
+        // Validate
+        $errors = validate($data);
+        if (!empty($errors)) {
+            $_SESSION["errors"] = $errors;
+            $_SESSION["data"]   = $data ;
+            header('Location: ?act=add-category');
+            exit();
+        }
+
         insert('tbl_categories', $data);
-        session_start();
-        $_SESSION['success']='';
+        $_SESSION["success"]='';
     }
     require_once PATH_VIEW_ADMIN . 'layouts/master.php';
 }
@@ -35,19 +44,39 @@ function updateCategory($id) {
     
     if (!empty($_POST)) {
         $data = [
-            "name_category" => $_POST["categoryName"],
+            "name_category" => $_POST["categoryName"] ?? null,
         ];
+
+        // Validate
+        $errors = validate($data);
+        if (!empty($errors)) {
+            $_SESSION["errors"] = $errors;
+            $_SESSION["data"]   = $data ;
+            header('Location: ?act=update-category&id=' . $id);
+            exit();
+        }
+
         update('tbl_categories', $id, $data);
-        header('Location: ?act=update-category&id=' . $id);
         // Lỗi không nhận được thông báo
-        session_start();
-        $_SESSION['success']='';
+        $_SESSION["success"]='';
+        header('Location: ?act=update-category&id=' . $id);
     }
     require_once PATH_VIEW_ADMIN . 'layouts/master.php';
 }
 
 function deleteCategory($id) {
     delete('tbl_categories', $id);
+    $_SESSION["success"]='';
     header('Location: ?act=category-list');
     exit();
+}
+
+function validate($data) {
+    $errors = [];
+    if (empty($data['name_category'])) {
+        $errors[] = 'This field is required.';
+    } elseif (strlen($data['name_category']) > 50) {
+        $errors[] = 'Please enter between 1 and 50 characters.';
+    }
+    return $errors;
 }

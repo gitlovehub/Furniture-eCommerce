@@ -1,3 +1,20 @@
+<?php
+// Kiểm tra xem có thông báo thành công từ session không?
+if (isset($_SESSION["success"])) {
+    // Hiển thị toast
+    echo '<script>
+            document.addEventListener("DOMContentLoaded", function() {
+                document.querySelector(".bs-toast").classList.add("show");
+                setTimeout(function() {
+                    document.querySelector(".bs-toast").classList.remove("show");
+                }, 3000);
+            });
+        </script>';
+
+    // Xóa thông báo thành công từ session
+    unset($_SESSION["success"]);
+}
+?>
 <div class="content-wrapper">
 
     <!-- Content -->
@@ -44,11 +61,11 @@
                             </td>
                             <td>
                                 <div class="float-end">
-                                    <a href="?act=update-category&id=<?= $item['id'] ?>" class="btn badge bg-label-success">
-                                        <i class="bx bx-edit-alt me-1"></i>
+                                    <a href="?act=update-category&id=<?= $item['id'] ?>" class="btn btn-success p-2">
+                                        <i class="bx bx-edit-alt"></i>
                                     </a>
-                                    <button onclick="openModal(<?= $item['id'] ?>)" class="btn badge bg-label-danger">
-                                        <i class="bx bx-trash me-1"></i>
+                                    <button onclick="openModal(<?= $item['id'] ?>)" class="btn btn-danger p-2">
+                                        <i class="bx bx-trash"></i>
                                     </button>
                                 </div>
                             </td>
