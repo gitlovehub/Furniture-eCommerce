@@ -2,10 +2,8 @@
 <div class="ios-modal-overlay" id="iosModal">
     <div class="ios-modal-wrapper">
         <div class="ios-modal-container">
-            <h4 class="ios-modal-question">
-                Delete item?
-            </h4>
-            <p class="ios-modal-text">You cannot undo this action</p>
+            <h4 id="question" class="ios-modal-question"></h4>
+            <p id="message" class="ios-modal-text"></p>
             <div class="ios-modal-controls">
                 <a id="ok-btn" class="ios-modal-control-btn">OK</a>
                 <button class="ios-modal-control-btn cancel-btn" onclick="closeModal()">Cancel</button>
@@ -15,13 +13,26 @@
 </div>
 
 <script>
-    function openModal(id) {
+    function openModalDelete(id) {
+        document.body.style.overflow = 'hidden';
+        document.getElementById('question').innerHTML = 'Delete item?';
+        document.getElementById('message').innerHTML  = 'You cannot undo this action.';
         // Open the modal
         document.getElementById('iosModal').style.display = 'block';
-        document.body.style.overflow = 'hidden';
 
         // Set the href attribute dynamically for the "OK" button
         document.getElementById('ok-btn').href = '?act=delete-category&id=' + id;
+    }
+
+    function openModalStatus(id, value, table, question, message) {
+        document.body.style.overflow = 'hidden';
+        document.getElementById('question').innerHTML = question;
+        document.getElementById('message').innerHTML  = message;
+        // Open the modal
+        document.getElementById('iosModal').style.display = 'block';
+
+        // Set the href attribute dynamically for the "OK" button
+        document.getElementById('ok-btn').href = '?act=update-status-' + table + '&id=' + id + '&value=' + value;
     }
 
     function confirmDelete() {

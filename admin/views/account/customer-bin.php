@@ -4,24 +4,20 @@
     <!-- Content -->
     <div class="container-xxl flex-grow-1 container-p-y">
         <h4 class="py-3 mb-4">
-            List of Categories
+            Show Deactivated Accounts
         </h4>
 
         <!-- Basic Bootstrap Table -->
         <div class="card">
             <div class="card-header row gy-3">
                 <div class="col-12 col-sm-3">
-                    <input type="search" class="form-control" name="search" placeholder="Search Category">
+                    <input type="search" class="form-control" name="search" placeholder="Search Customer">
                 </div>
                 <div class="col">
                     <div class="d-flex justify-content-end gap-2">
-                        <a href="?act=category-bin" class="btn btn-outline-dark" type="button">
-                            <i class="bx bx-trash me-1"></i>
-                            Recycle Bin
-                        </a>
-                        <a href="?act=create-category" class="btn btn-info" type="button">
-                            <i class="bx bx-plus me-1"></i>
-                            Create Category
+                        <a href="?act=customer-list" class="btn btn-secondary" type="button">
+                            <i class="bx bx-arrow-back me-0 me-sm-1"></i>
+                            Back
                         </a>
                     </div>
                 </div>
@@ -30,9 +26,12 @@
                 <table class="table table-hover">
                     <thead>
                         <tr>
-                            <th class="col-8">Name</th>
-                            <th class="col-2">Status</th>
-                            <th class="col-2">
+                            <th class="col-2">Name</th>
+                            <th class="col-3">Email</th>
+                            <th class="col-3">Address</th>
+                            <th class="col-2">Phone</th>
+                            <th class="col-1">Status</th>
+                            <th class="col-1">
                                 <span class="float-end">
                                     Actions
                                 </span>
@@ -44,22 +43,22 @@
                         <?php foreach ($list as $item) : ?>
                             <tr>
                                 <td><?= $item['name'] ?></td>
+                                <td><?= $item['email'] ?></td>
+                                <td><?= $item['address'] ?></td>
+                                <td><?= $item['phone'] ?></td>
                                 <td>
-                                    <span class="badge bg-label-success">
+                                    <span class="badge bg-label-secondary">
                                         <?php
-                                        if ($item['status'] == 1) {
-                                            echo 'Active';
+                                        if ($item['status'] == 0) {
+                                            echo 'Deactivated';
                                         }
                                         ?>
                                     </span>
                                 </td>
                                 <td>
                                     <div class="float-end">
-                                        <a href="?act=update-category&id=<?= $item['id'] ?>" class="btn btn-primary p-2">
-                                            <i class="bx bx-edit-alt"></i>
-                                        </a>
-                                        <button onclick="openModalStatus(<?= $item['id'] ?>, 0, 'category', 'Move to Bin?', 'You can find it in the recycle bin.')" class="btn btn-danger p-2">
-                                            <i class="bx bx-trash"></i>
+                                        <button onclick="openModalStatus(<?= $item['id'] ?>, 1, 'customer', 'Active account?', '')" class="btn btn-success p-2">
+                                            Active
                                         </button>
                                     </div>
                                 </td>

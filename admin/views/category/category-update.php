@@ -1,20 +1,4 @@
-<?php
-// Kiểm tra xem có thông báo thành công từ session không?
-if (isset($_SESSION["success"])) {
-    // Hiển thị toast
-    echo '<script>
-            document.addEventListener("DOMContentLoaded", function() {
-                document.querySelector(".bs-toast").classList.add("show");
-                setTimeout(function() {
-                    document.querySelector(".bs-toast").classList.remove("show");
-                }, 3000);
-            });
-        </script>';
-
-    // Xóa thông báo thành công từ session
-    unset($_SESSION["success"]);
-}
-?>
+<?php require_once 'show-toast.php'; ?>
 <div class="content-wrapper">
 
     <!-- Content -->
@@ -32,11 +16,11 @@ if (isset($_SESSION["success"])) {
                         </div>
                         <div class="col">
                             <div class="d-flex justify-content-end gap-2">
-                                <a href="?act=category-list" class="btn btn-secondary add-new btn-secondary" type="button">
+                                <a href="?act=category-list" class="btn btn-secondary" type="button">
                                     <i class="bx bx-arrow-back me-0 me-sm-1"></i>
                                     Back to list
                                 </a>
-                                <button type="submit" class="btn btn-secondary add-new btn-primary">
+                                <button type="submit" class="btn btn-primary">
                                     <i class="bx bx-save me-0 me-sm-1"></i>
                                     Save
                                 </button>
@@ -51,7 +35,7 @@ if (isset($_SESSION["success"])) {
                             </div>
                             <div class="col-sm-12 col-md-6">
                                 <label class="form-label" for="categoryName">Name</label>
-                                <input type="text" name="categoryName" class="form-control" id="categoryName" value="<?= $show['name_category'] ?>">
+                                <input type="text" name="categoryName" class="form-control" id="categoryName" value="<?= $show['name'] ?>" placeholder="Category title">
                                 <!-- Show errors -->
                                 <?php require_once 'show-errors.php'; ?>
                             </div>

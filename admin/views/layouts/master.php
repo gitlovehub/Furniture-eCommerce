@@ -41,6 +41,20 @@
         <?= $titleBar ?? 'Dashboards' ?>
         – Admin
     </title>
+    <style>
+        .ovl {
+            display: none;
+            width: 100%;
+            height: 100%;
+            z-index: 1;
+        }
+        
+        .img-link:hover .ovl {
+            display: block;
+            background-color: #00000030;
+            color: white;
+        }
+    </style>
 </head>
 
 <body>
@@ -49,7 +63,7 @@
     <!-- / Toast -->
 
     <!-- Modal -->
-        <?php require_once 'modal.php'; ?>
+    <?php require_once 'modal.php'; ?>
     <!-- / Modal -->
 
     <!-- Layout wrapper -->

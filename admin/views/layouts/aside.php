@@ -18,22 +18,22 @@
 
     <ul class="menu-inner py-1">
         <!-- Dashboards -->
-        <li class="menu-item">
+        <li class="menu-item py-1">
             <a href="?act=dashboard" class="menu-link">
-                <i class="menu-icon tf-icons bx bx-home-circle"></i>
+                <i class="menu-icon tf-icons bx bx-home"></i>
                 <span>Dashboards</span>
             </a>
         </li>
 
         <!-- Categories -->
-        <li class="menu-item">
+        <li class="menu-item py-1">
             <a href="javascript:void(0);" class="menu-link menu-toggle">
-                <i class="menu-icon tf-icons bx bx-category"></i>
+                <i class="menu-icon tf-icons bx bx-list-ul"></i>
                 <span>Categories</span>
             </a>
             <ul class="menu-sub">
                 <li class="menu-item">
-                    <a href="?act=add-category" class="menu-link">
+                    <a href="?act=create-category" class="menu-link">
                         <span>Add Category</span>
                     </a>
                 </li>
@@ -46,44 +46,60 @@
         </li>
 
         <!-- Products -->
-        <li class="menu-item">
+        <li class="menu-item py-1">
             <a href="javascript:void(0);" class="menu-link menu-toggle">
                 <i class="menu-icon tf-icons bx bx-package"></i>
                 <span>Products</span>
             </a>
             <ul class="menu-sub">
                 <li class="menu-item">
-                    <a href="" class="menu-link">
+                    <a href="?act=create-product" class="menu-link">
                         <span>Add Product</span>
                     </a>
                 </li>
                 <li class="menu-item">
-                    <a href="" class="menu-link">
+                    <a href="?act=product-list" class="menu-link">
                         <span>Product List</span>
                     </a>
                 </li>
             </ul>
         </li>
 
-        <!-- Customers -->
-        <li class="menu-item">
+        <!-- Accounts -->
+        <li class="menu-item py-1">
             <a href="javascript:void(0);" class="menu-link menu-toggle">
                 <i class="menu-icon tf-icons bx bx-user"></i>
-                <span>Customers</span>
+                <span>Accounts</span>
             </a>
             <ul class="menu-sub">
                 <li class="menu-item">
-                    <a href="" class="menu-link">
-                        <span>Account</span>
+                    <a href="?act=admin-list" class="menu-link">
+                        <span>Admin</span>
                     </a>
                 </li>
                 <li class="menu-item">
-                    <a href="" class="menu-link">
-                        <span>Comment</span>
+                    <a href="?act=customer-list" class="menu-link">
+                        <span>Customers</span>
                     </a>
                 </li>
             </ul>
         </li>
+
+        <!-- Reviews -->
+        <li class="menu-item py-1">
+            <a href="?act=manage-reviews" class="menu-link">
+                <i class="menu-icon tf-icons bx bx-message-dots"></i>
+                <span>Reviews</span>
+            </a>
+        </li>
+
+        <!-- Order -->
+        <li class="menu-item py-1">
+            <a href="?act=order-list" class="menu-link">
+                <i class="menu-icon tf-icons bx bx-receipt"></i>
+                <span>Order</span>
+            </a>
+        </li>        
 
     </ul>
 </aside>

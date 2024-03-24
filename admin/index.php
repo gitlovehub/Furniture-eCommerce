@@ -18,13 +18,38 @@ match ($act) {
     'dashboard' => dashboard(),
 
     // CRUD Category
-    'category-list'   => categoryList(),
-    'add-category'    => addCategory(),
-    'update-category' => updateCategory($_GET["id"]),
-    'delete-category' => deleteCategory($_GET["id"]),
+    'create-category'        => createCategory(),
+    'category-list'          => CategoryList(),
+    'update-category'        => updateCategory($_GET["id"]),
+    'delete-category'        => deleteCategory($_GET["id"]),
+    'category-bin'           => categoryBin(),
+    'update-status-category' => updateCategoryStatus($_GET["id"], $_GET["value"]),
 
-    // CRUD Product
-    // ...
+    // CRU Product
+    'create-product'        => createProduct(),
+    'product-list'          => productList(),
+    'update-product'        => updateProduct($_GET["id"]),
+    'product-bin'           => productBin(),
+    'update-status-product' => updateProductStatus($_GET["id"], $_GET["value"]),
+    'add-gallery'           => addGallery($_GET["id"]),
+    'delete-image'          => deleteImage($_GET["id"], $_GET["back"]),
+    
+
+    // Review
+    'manage-reviews' => manageReviews(),
+
+    // Account
+    'admin-list'             => adminList(),
+    'customer-list'          => customerList(),
+    'customer-bin'           => customerBin(),
+    'update-status-customer' => updateCustomerStatus($_GET["id"], $_GET["value"]),
+
+    // Order
+    'order-list'    => orderList(),
+    'order-details' => orderDetails($_GET["id"]),
+
+
 };
 
 require_once '../commons/disconnect-db.php';
+?>

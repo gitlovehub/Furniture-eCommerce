@@ -4,7 +4,7 @@
     <!-- Content -->
     <div class="container-xxl flex-grow-1 container-p-y">
         <h4 class="py-3 mb-4">
-            List of Categories
+        Show Deactivated Categories
         </h4>
 
         <!-- Basic Bootstrap Table -->
@@ -15,19 +15,15 @@
                 </div>
                 <div class="col">
                     <div class="d-flex justify-content-end gap-2">
-                        <a href="?act=category-bin" class="btn btn-outline-dark" type="button">
-                            <i class="bx bx-trash me-1"></i>
-                            Recycle Bin
-                        </a>
-                        <a href="?act=create-category" class="btn btn-info" type="button">
-                            <i class="bx bx-plus me-1"></i>
-                            Create Category
+                        <a href="?act=category-list" class="btn btn-secondary" type="button">
+                            <i class="bx bx-arrow-back me-0 me-sm-1"></i>
+                            Back
                         </a>
                     </div>
                 </div>
             </div>
             <div class="table-responsive text-nowrap">
-                <table class="table table-hover">
+                <table class="table">
                     <thead>
                         <tr>
                             <th class="col-8">Name</th>
@@ -45,20 +41,20 @@
                             <tr>
                                 <td><?= $item['name'] ?></td>
                                 <td>
-                                    <span class="badge bg-label-success">
+                                    <span class="badge bg-label-secondary">
                                         <?php
-                                        if ($item['status'] == 1) {
-                                            echo 'Active';
+                                        if ($item['status'] == 0) {
+                                            echo 'Deactivated';
                                         }
                                         ?>
                                     </span>
                                 </td>
                                 <td>
                                     <div class="float-end">
-                                        <a href="?act=update-category&id=<?= $item['id'] ?>" class="btn btn-primary p-2">
-                                            <i class="bx bx-edit-alt"></i>
-                                        </a>
-                                        <button onclick="openModalStatus(<?= $item['id'] ?>, 0, 'category', 'Move to Bin?', 'You can find it in the recycle bin.')" class="btn btn-danger p-2">
+                                        <button onclick="openModalStatus(<?= $item['id'] ?>, 1, 'category', 'Active now?', '')" class="btn btn-success p-2">
+                                            Active
+                                        </button>
+                                        <button onclick="openModalDelete(<?= $item['id'] ?>)" class="btn btn-danger p-2">
                                             <i class="bx bx-trash"></i>
                                         </button>
                                     </div>

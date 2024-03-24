@@ -3,17 +3,24 @@
 function categoryList() {
     $titleBar = 'Categories';
     $view     = 'category/category-list';
-    $list     = selectAll('tbl_categories');
+    $list     = selectStatusActive('tbl_categories');
     require_once PATH_VIEW_ADMIN . 'layouts/master.php';
 }
 
-function addCategory() {
+function categoryBin() {
+    $titleBar = 'Categories';
+    $view     = 'category/category-bin';
+    $list     = selectStatusDeactivated('tbl_categories');
+    require_once PATH_VIEW_ADMIN . 'layouts/master.php';
+}
+
+function createCategory() {
     $titleBar = 'Categories';
     $view     = 'category/category-create';
     
     if (!empty($_POST)) {
         $data = [
-            "name_category" => $_POST["categoryName"] ?? null,
+            "name" => $_POST["categoryName"] ?? null,
         ];
 
         // Validate
@@ -21,7 +28,7 @@ function addCategory() {
         if (!empty($errors)) {
             $_SESSION["errors"] = $errors;
             $_SESSION["data"]   = $data ;
-            header('Location: ?act=add-category');
+            header('Location: ?act=create-category');
             exit();
         }
 
@@ -32,7 +39,6 @@ function addCategory() {
 }
 
 function updateCategory($id) {
-
     $show = selectOne('tbl_categories', $id);
 
     if (empty($show)) {
@@ -44,7 +50,7 @@ function updateCategory($id) {
     
     if (!empty($_POST)) {
         $data = [
-            "name_category" => $_POST["categoryName"] ?? null,
+            "name" => $_POST["categoryName"] ?? null,
         ];
 
         // Validate
@@ -58,26 +64,37 @@ function updateCategory($id) {
             $_SESSION["success"]='';
         }
 
-        header('Location: ?act=update-category&id=' . $id);
+        header('Location: ?act=category-list');
         exit();
     }
     require_once PATH_VIEW_ADMIN . 'layouts/master.php';
 }
 
+function updateCategoryStatus($id, $value) {
+    updateStatus('tbl_categories', $id, $value);
+    if ($value == 1) {
+        header('Location: ?act=category-bin');
+    } else {
+        header('Location: ?act=category-list');
+    }
+    $_SESSION["success"]='';
+    exit();
+}
+
 function deleteCategory($id) {
     delete('tbl_categories', $id);
     $_SESSION["success"]='';
-    header('Location: ?act=category-list');
+    header('Location: ?act=category-bin');
     exit();
 }
 
 function validateCreate($data) {
     $errors = [];
-    if (empty($data['name_category'])) {
+    if (empty($data['name'])) {
         $errors[] = 'This field is required.';
-    } elseif (strlen($data['name_category']) > 50) {
+    } elseif (strlen($data['name']) > 50) {
         $errors[] = 'Please enter between 1 and 50 characters.';
-    } elseif (!checkUniqueForCreate($data['name_category'])) {
+    } elseif (!checkUniqueForCreate($data['name'])) {
         $errors[] = 'The entered data is a duplicate.';
     }
     return $errors;
@@ -85,11 +102,11 @@ function validateCreate($data) {
 
 function validateUpdate($id, $data) {
     $errors = [];
-    if (empty($data['name_category'])) {
+    if (empty($data['name'])) {
         $errors[] = 'This field is required.';
-    } elseif (strlen($data['name_category']) > 50) {
+    } elseif (strlen($data['name']) > 50) {
         $errors[] = 'Please enter between 1 and 50 characters.';
-    } elseif (!checkUniqueForUpdate($id, $data['name_category'])) {
+    } elseif (!checkUniqueForUpdate($id, $data['name'])) {
         $errors[] = 'The entered data is a duplicate.';
     }
     return $errors;
