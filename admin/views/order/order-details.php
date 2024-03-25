@@ -111,7 +111,7 @@
                     </div>
                     <div class="card-body">
                         <p>
-                            <i class="bx bx-mail-send fs-3 me-0 me-sm-1"></i>
+                            <i class="bx bx-envelope fs-3 me-0 me-sm-1"></i>
                             <?= $item['customer_email'] ?>
                         </p>
                         <p class="mb-0">

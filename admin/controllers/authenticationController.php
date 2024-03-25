@@ -21,7 +21,7 @@ function checkAdmin() {
     $admin    = getAdmin($email, $password);
 
     if (empty($admin)) {
-        $_SESSION["errors"] = ['Sorry, Sign-in failed.'];
+        $_SESSION["errors"] = 'Sorry, Sign-in failed.';
         header('Location: ' . BASE_URL_ADMIN . '?act=login');
         exit();
     } else {
@@ -29,5 +29,4 @@ function checkAdmin() {
         header('Location: ' . BASE_URL_ADMIN);
         exit();
     }
-
 }

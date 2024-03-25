@@ -55,13 +55,18 @@
                             </a>
                         </div>
                         <!-- /Logo -->
-                        
+
                         <h4 class="mb-2">Welcome sir! 👋</h4>
                         <p class="mb-4">Please sign-in to your account and start the adventure.</p>
 
                         <div class="text-center">
                             <!-- Show errors -->
-                            <?php require_once 'show-errors.php'; ?>
+                            <?php if (isset($_SESSION["errors"])) : ?>
+                                <span class="badge bg-label-danger">
+                                    <?= $_SESSION["errors"] ?>
+                                </span>
+                            <?php endif; ?>
+                            <?php unset($_SESSION["errors"]); ?>
                         </div>
 
                         <form class="mb-3" action="" method="post">
