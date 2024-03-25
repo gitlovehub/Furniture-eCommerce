@@ -18,13 +18,13 @@ function createCategory() {
     $titleBar = 'Categories';
     $view     = 'category/category-create';
     
-    if (!empty($_POST)) {
+    if (isset($_POST['btnPublish'])) {
         $data = [
             "name" => $_POST["categoryName"] ?? null,
         ];
 
         // Validate
-        $errors = validateCreate($data);
+        $errors = validateCreateCategory($data);
         if (!empty($errors)) {
             $_SESSION["errors"] = $errors;
             $_SESSION["data"]   = $data ;
@@ -48,13 +48,13 @@ function updateCategory($id) {
     $titleBar = 'Categories';
     $view     = 'category/category-update';
     
-    if (!empty($_POST)) {
+    if (isset($_POST['btnSave'])) {
         $data = [
             "name" => $_POST["categoryName"] ?? null,
         ];
 
         // Validate
-        $errors = validateUpdate($id, $data);
+        $errors = validateUpdateCategory($id, $data);
         if (!empty($errors)) {
             $_SESSION["errors"] = $errors;
             header('Location: ?act=update-category&id=' . $id);
@@ -88,25 +88,25 @@ function deleteCategory($id) {
     exit();
 }
 
-function validateCreate($data) {
+function validateCreateCategory($data) {
     $errors = [];
     if (empty($data['name'])) {
-        $errors[] = 'This field is required.';
+        $errors['categoryName'] = 'This field is required.';
     } elseif (strlen($data['name']) > 50) {
-        $errors[] = 'Please enter between 1 and 50 characters.';
+        $errors['categoryName'] = 'Please enter between 1 and 50 characters.';
     } elseif (!checkUniqueForCreate($data['name'])) {
         $errors[] = 'The entered data is a duplicate.';
     }
     return $errors;
 }
 
-function validateUpdate($id, $data) {
+function validateUpdateCategory($id, $data) {
     $errors = [];
     if (empty($data['name'])) {
-        $errors[] = 'This field is required.';
+        $errors['categoryName'] = 'This field is required.';
     } elseif (strlen($data['name']) > 50) {
-        $errors[] = 'Please enter between 1 and 50 characters.';
-    } elseif (!checkUniqueForUpdate($id, $data['name'])) {
+        $errors['categoryName'] = 'Please enter between 1 and 50 characters.';
+    } elseif (!checkUniqueForCreate($id, $data['name'])) {
         $errors[] = 'The entered data is a duplicate.';
     }
     return $errors;

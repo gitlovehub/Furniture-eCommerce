@@ -31,6 +31,7 @@
     <link rel="stylesheet" href="assets/vendor/libs/animate-css/animate.css">
 
     <!-- Page CSS -->
+    <link rel="stylesheet" href="assets/vendor/css/pages/page-auth.css" />
 
     <!-- Helpers -->
     <script src="assets/vendor/js/helpers.js"></script>

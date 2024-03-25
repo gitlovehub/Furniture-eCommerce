@@ -49,7 +49,7 @@
                                     <tr>
                                         <td>
                                             <div class="d-flex align-items-center gap-2">
-                                                <img src="<?= '../' . $item['product_thumbnail'] ?>" width="80px">
+                                                <img src="<?= PATH_UPLOAD . $item['product_thumbnail'] ?>" width="80px">
                                                 <?= $item['product_name'] ?>
                                             </div>
                                         </td>
@@ -92,7 +92,7 @@
                     </div>
                     <div class="card-body">
                         <div class="d-flex justify-content-start align-items-center mb-4">
-                            <img src="<?= '../' . $item['customer_avatar'] ?>" class="rounded-circle me-2" width="50px">
+                            <img src="<?= PATH_UPLOAD . $item['customer_avatar'] ?>" class="rounded-circle me-2" width="50px">
                             <div class="d-flex flex-column">
                                 <h5 class="mb-0">
                                     <?= $item['customer_name'] ?>

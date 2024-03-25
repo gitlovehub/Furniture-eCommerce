@@ -1,6 +1,21 @@
 <?php 
 
-if (!function_exists('checkUniqueCreate')) {
+if (!function_exists('getAdmin')) {
+    function getAdmin($e, $pw) {
+        try {
+            $sql = "SELECT * FROM tbl_accounts WHERE email = :email AND password = :password AND role = 1 LIMIT 1";
+            $stmt = $GLOBALS['conn']->prepare($sql);
+            $stmt->bindParam(":email", $e);
+            $stmt->bindParam(":password", $pw);
+            $stmt->execute();
+            return $stmt->fetch();
+        } catch (\Exception $e) {
+            debug($e);
+        }
+    }
+}
+
+if (!function_exists('checkUniqueForCreate')) {
     function checkUniqueForCreate($name) {
         try {
             $sql = "SELECT * FROM tbl_categories WHERE name = :name LIMIT 1";
@@ -15,7 +30,7 @@ if (!function_exists('checkUniqueCreate')) {
     }
 }
 
-if (!function_exists('checkUniqueUpdate')) {
+if (!function_exists('checkUniqueForUpdate')) {
     function checkUniqueForUpdate($id, $name) {
         try {
             $sql = "SELECT * FROM tbl_categories WHERE name = :name AND id <> :id LIMIT 1";

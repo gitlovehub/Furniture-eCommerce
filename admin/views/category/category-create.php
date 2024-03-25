@@ -20,7 +20,7 @@
                                     <i class="bx bx-arrow-back me-0 me-sm-1"></i>
                                     Back to list
                                 </a>
-                                <button type="submit" class="btn btn-primary">
+                                <button type="submit" class="btn btn-primary" name="btnPublish">
                                     <i class="bx bx-upload me-0 me-sm-1"></i>
                                     Publish category
                                 </button>
@@ -39,7 +39,13 @@
                                 value="<?= isset($_SESSION["data"]) ? $_SESSION["data"]["name"] : null ?>"
                                 >
                                 <!-- Show errors -->
-                                <?php require_once 'show-errors.php'; ?>
+                                <?php if (isset($_SESSION["errors"]["categoryName"])) : ?>
+                                    <span class="bg-label-danger">
+                                        <?= $_SESSION["errors"]["categoryName"] ?>
+                                    </span>
+                                <?php endif; ?>
+                                <?php unset($_SESSION["errors"]); ?>
+                                <?php unset($_SESSION["data"]); ?>
                             </div>
                         </div>
                     </div>

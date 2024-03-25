@@ -59,7 +59,7 @@
                                             <div class="ovl position-absolute top-50 start-50 translate-middle">
                                                 <i class="bx bx-plus-circle position-absolute top-50 start-50 translate-middle fs-3"></i>
                                             </div>
-                                            <img src="<?= '../' . $item['thumbnail'] ?>" width="100px" alt="">
+                                            <img src="<?= PATH_UPLOAD . $item['thumbnail'] ?>" width="100px" alt="">
                                         </a>
                                     </td>
                                     <td>

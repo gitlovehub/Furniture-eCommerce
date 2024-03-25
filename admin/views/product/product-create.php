@@ -21,14 +21,27 @@
                     <div class="card-body">
                         <div class="mb-3">
                             <label class="form-label" for="product-name">Name</label>
-                            <input type="text" name="productName" class="form-control" id="product-name" placeholder="Product title">
+                            <input type="text" name="productName" class="form-control" id="product-name" placeholder="Product title"
+                            value="<?= isset($_SESSION["data"]) ? $_SESSION["data"]["name"] : null ?>">
+                            <!-- Show errors -->
+                            <?php if (isset($_SESSION["errors"]["productName"])) : ?>
+                                <span class="bg-label-danger">
+                                    <?= $_SESSION["errors"]["productName"] ?>
+                                </span>
+                            <?php endif; ?>
                         </div>
                         <div class="mb-3">
                             <label class="form-label" for="product-description">
                                 Description
                                 <span class="text-muted">(Optional)</span>
                             </label>
-                            <textarea rows="6" cols="50" name="productDescription" class="form-control" id="product-description" placeholder="Enter description here"></textarea>
+                            <textarea rows="6" cols="50" name="productDescription" class="form-control" id="product-description" placeholder="Product description"><?= isset($_SESSION["data"]) ? $_SESSION["data"]["description"] : null ?></textarea>
+                            <!-- Show errors -->
+                            <?php if (isset($_SESSION["errors"]["productDescription"])) : ?>
+                                <span class="bg-label-danger">
+                                    <?= $_SESSION["errors"]["productDescription"] ?>
+                                </span>
+                            <?php endif; ?>
                         </div>
                     </div>
                 </div>
@@ -42,6 +55,12 @@
                         <div class="mb-3">
                             <label class="form-label" for="product-thumbnail">Thumbnail</label>
                             <input type="file" name="productThumbnail" class="form-control" id="product-thumbnail">
+                            <!-- Show errors -->
+                            <?php if (isset($_SESSION["errors"]["productThumbnail"])) : ?>
+                                <span class="bg-label-danger">
+                                    <?= $_SESSION["errors"]["productThumbnail"] ?>
+                                </span>
+                            <?php endif; ?>
                         </div>
                     </div>
                 </div>
@@ -63,6 +82,12 @@
                                     </option>
                                 <?php endforeach; ?>
                             </select>
+                            <!-- Show errors -->
+                            <?php if (isset($_SESSION["errors"]["productCategory"])) : ?>
+                                <span class="bg-label-danger">
+                                    <?= $_SESSION["errors"]["productCategory"] ?>
+                                </span>
+                            <?php endif; ?>
                         </div>
                     </div>
                 </div>
@@ -75,7 +100,14 @@
                     <div class="card-body">
                         <div class="mb-3">
                             <label class="form-label" for="product-instock">Add to stock</label>
-                            <input type="number" min="0" name="productInstock" class="form-control" id="product-instock" placeholder="Quantity">        
+                            <input type="number" min="0" name="productInstock" class="form-control" id="product-instock" placeholder="Quantity"
+                            value="<?= isset($_SESSION["data"]) ? $_SESSION["data"]["instock"] : null ?>">
+                            <!-- Show errors -->
+                            <?php if (isset($_SESSION["errors"]["productInstock"])) : ?>
+                                <span class="bg-label-danger">
+                                    <?= $_SESSION["errors"]["productInstock"] ?>
+                                </span>
+                            <?php endif; ?>
                         </div>
                     </div>
                 </div>
@@ -89,23 +121,39 @@
                         <div class="mb-3">
                             <label class="form-label" for="product-price">Base price</label>
                             <div class="input-group">
-                                <span class="input-group-text">$</span>
-                                <input type="number" min="0" name="productPrice" class="form-control" id="product-price" placeholder="1000">
+                                <span class="input-group-text">£</span>
+                                <input type="number" min="0" name="productPrice" class="form-control" id="product-price" placeholder="Product price"
+                                value="<?= isset($_SESSION["data"]) ? $_SESSION["data"]["price"] : null ?>">
                             </div>
+                            <!-- Show errors -->
+                            <?php if (isset($_SESSION["errors"]["productPrice"])) : ?>
+                                <span class="bg-label-danger">
+                                    <?= $_SESSION["errors"]["productPrice"] ?>
+                                </span>
+                            <?php endif; ?>
                         </div>
                         <div class="mb-3">
                             <label class="form-label" for="product-discount">Discount percent</label>
                             <div class="input-group">
-                                <input type="number" min="0" max="100" name="productDiscount" class="form-control" id="product-discount" placeholder="10">
+                                <input type="number" min="0" max="100" name="productDiscount" class="form-control" id="product-discount" placeholder="0 to 100"
+                                value="<?= isset($_SESSION["data"]) ? $_SESSION["data"]["discount"] : null ?>">
                                 <span class="input-group-text">%</span>
                             </div>
+                            <!-- Show errors -->
+                            <?php if (isset($_SESSION["errors"]["productDiscount"])) : ?>
+                                <span class="bg-label-danger">
+                                    <?= $_SESSION["errors"]["productDiscount"] ?>
+                                </span>
+                            <?php endif; ?>
+                            <?php unset($_SESSION["errors"]); ?>
+                            <?php unset($_SESSION["data"]); ?>
                         </div>
                     </div>
                 </div>
 
                 <div class="d-flex justify-content-end gap-2">
                     <button type="reset" class="btn btn-outline-secondary">Reset</button>
-                    <button class="btn btn-primary" type="submit">
+                    <button class="btn btn-primary" type="submit" name="btnPublish">
                         <i class="bx bx-upload me-0 me-sm-1"></i>
                         Publish product
                     </button>

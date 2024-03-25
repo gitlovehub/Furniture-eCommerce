@@ -19,7 +19,7 @@ function createProduct() {
     $view     = 'product/product-create';
     $listCategory = selectStatusActive('tbl_categories');
     
-    if (!empty($_POST)) {
+    if (isset($_POST['btnPublish'])) {
         $data = [
             "id_category" => $_POST["productCategory"] ?? null,
             "name"        => $_POST["productName"] ?? null,
@@ -32,6 +32,15 @@ function createProduct() {
         // Xử lý file
         if ($_FILES['productThumbnail']['error'] === UPLOAD_ERR_OK) {
             $data['thumbnail'] = upload_file($_FILES['productThumbnail'], 'uploads/product/');
+        }
+
+        // Validate
+        $errors = validateCreateProduct($data);
+        if (!empty($errors)) {
+            $_SESSION["errors"] = $errors;
+            $_SESSION["data"]   = $data ;
+            header('Location: ?act=create-product');
+            exit();
         }
 
         insert('tbl_products', $data);
@@ -51,7 +60,7 @@ function updateProduct($id) {
     $view     = 'product/product-update';
     $listCategory = selectStatusActive('tbl_categories');
     
-    if (!empty($_POST)) {
+    if (isset($_POST['btnSave'])) {
         $data = [
             "id_category" => $_POST["productCategory"] ?? null,
             "name"        => $_POST["productName"] ?? null,
@@ -74,9 +83,17 @@ function updateProduct($id) {
             $data['thumbnail'] = $_POST['img-current'] ?? null;
         }
 
-        update('tbl_products', $id, $data);
-        $_SESSION["success"]='';
-
+        // Validate
+        $errors = validateUpdateProduct($data);
+        if (!empty($errors)) {
+            $_SESSION["errors"] = $errors;
+            header('Location: ?act=update-product&id=' . $id);
+            exit();
+        } else {
+            update('tbl_products', $id, $data);
+            $_SESSION["success"]='';
+        }
+        
         header('Location: ?act=product-list');
         exit();
     }
@@ -100,7 +117,7 @@ function addGallery($id) {
     $list        = getGallery('tbl_gallery', $id);
     $show        = selectOne('tbl_products', $id);
 
-    if (isset($_POST['add'])) {
+    if (isset($_POST['btnAddGallery'])) {
 
         $data = [
             "id_product" => $id ?? null,
@@ -111,6 +128,14 @@ function addGallery($id) {
             $data['url'] = upload_file($_FILES['productGallery'], 'uploads/product/');
         }
 
+        // Validate
+        $errors = validateGallery($data);
+        if (!empty($errors)) {
+            $_SESSION["errors"] = $errors;
+            header('Location: ?act=add-gallery&id=' . $id);
+            exit();
+        }
+
         insert('tbl_gallery', $data);
         $_SESSION["success"]='';
         header('Location: ?act=add-gallery&id=' . $id);
@@ -119,8 +144,121 @@ function addGallery($id) {
     require_once PATH_VIEW_ADMIN . 'layouts/master.php';
 }
 
+function validateGallery($data) {
+    // Check if product gallery is not uploaded
+    if ($_FILES['productGallery']['size'] == 0) {
+        $errors['productGallery'] = 'Please upload an image.';
+    }
+    return $errors;
+}
+
 function deleteImage($id, $back) {
     delete('tbl_gallery', $id);
     header('Location: ?act=add-gallery&id=' . $back);
     exit();
+}
+
+function validateCreateProduct($data) {
+    $errors = [];
+
+    // Validate name
+    if (empty($data['name'])) {
+        $errors['productName'] = 'This field is required.';
+    } elseif (strlen($data['name']) > 50) {
+        $errors['productName'] = 'Please enter between 1 and 50 characters.';
+    }
+
+    // Validate description
+    if (empty($data['name'])) {
+        $errors['productDescription'] = 'This field is required.';
+    } elseif (strlen($data['name']) > 255) {
+        $errors['productDescription'] = 'Please enter between 1 and 255 characters.';
+    }
+
+    // Check if product thumbnail is not uploaded
+    if ($_FILES['productThumbnail']['size'] == 0) {
+        $errors['productThumbnail'] = 'Please upload an image.';
+    }
+
+    // Validate category ID
+    if (empty($data['id_category'])) {
+        $errors['productCategory'] = 'Please select a category.';
+    } elseif (!is_numeric($data['id_category']) || $data['id_category'] <= 0) {
+        $errors['productCategory'] = 'Invalid category ID.';
+    }
+
+    // Validate instock quantity
+    if (empty($data['instock'])) {
+        $errors['productInstock'] = 'This field is required.';
+    } elseif (!is_numeric($data['instock']) || $data['instock'] < 0) {
+        $errors['productInstock'] = 'Quantity must be a positive numeric value.';
+    }
+
+    // Validate price
+    if (empty($data['price'])) {
+        $errors['productPrice'] = 'This field is required.';
+    } elseif (!is_numeric($data['price']) || $data['price'] <= 0) {
+        $errors['productPrice'] = 'Price must be a positive numeric value.';
+    } elseif ($data['price'] > 999999999) {
+        $errors['productPrice'] = 'Price must be less than or equal to 999999999.';
+    }
+
+    // Validate discount percent
+    if (empty($data['discount'])) {
+        $errors['productDiscount'] = 'This field is required.';
+    } elseif (!is_numeric($data['discount']) || $data['discount'] < 0 || $data['discount'] > 100) {
+        $errors['productDiscount'] = 'Discount percent must be a numeric value between 0 and 100.';
+    }
+
+    return $errors;
+}
+
+function validateUpdateProduct($data) {
+    $errors = [];
+
+    // Validate name
+    if (empty($data['name'])) {
+        $errors['productName'] = 'This field is required.';
+    } elseif (strlen($data['name']) > 50) {
+        $errors['productName'] = 'Please enter between 1 and 50 characters.';
+    }
+
+    // Validate description
+    if (empty($data['description'])) {
+        $errors['productDescription'] = 'This field is required.';
+    } elseif (strlen($data['description']) > 255) {
+        $errors['productDescription'] = 'Please enter between 1 and 255 characters.';
+    }
+
+    // Validate category ID
+    if (empty($data['id_category'])) {
+        $errors['productCategory'] = 'Please select a category.';
+    } elseif (!is_numeric($data['id_category']) || $data['id_category'] <= 0) {
+        $errors['productCategory'] = 'Invalid category ID.';
+    }
+
+    // Validate instock quantity
+    if (empty($data['instock'])) {
+        $errors['productInstock'] = 'This field is required.';
+    } elseif (!is_numeric($data['instock']) || $data['instock'] < 0) {
+        $errors['productInstock'] = 'Quantity must be a positive numeric value.';
+    }
+
+    // Validate price
+    if (empty($data['price'])) {
+        $errors['productPrice'] = 'This field is required.';
+    } elseif (!is_numeric($data['price']) || $data['price'] <= 0) {
+        $errors['productPrice'] = 'Price must be a positive numeric value.';
+    } elseif ($data['price'] > 999999999) {
+        $errors['productPrice'] = 'Price must be less than or equal to 999999999.';
+    }
+
+    // Validate discount percent
+    if (empty($data['discount'])) {
+        $errors['productDiscount'] = 'This field is required.';
+    } elseif (!is_numeric($data['discount']) || $data['discount'] < 0 || $data['discount'] > 100) {
+        $errors['productDiscount'] = 'Discount percent must be a numeric value between 0 and 100.';
+    }
+
+    return $errors;
 }

@@ -20,7 +20,7 @@
                                     <i class="bx bx-arrow-back me-0 me-sm-1"></i>
                                     Back to list
                                 </a>
-                                <button type="submit" class="btn btn-primary">
+                                <button type="submit" class="btn btn-primary" name="btnSave">
                                     <i class="bx bx-save me-0 me-sm-1"></i>
                                     Save
                                 </button>
@@ -37,7 +37,12 @@
                                 <label class="form-label" for="categoryName">Name</label>
                                 <input type="text" name="categoryName" class="form-control" id="categoryName" value="<?= $show['name'] ?>" placeholder="Category title">
                                 <!-- Show errors -->
-                                <?php require_once 'show-errors.php'; ?>
+                                <?php if (isset($_SESSION["errors"]["categoryName"])) : ?>
+                                    <span class="bg-label-danger">
+                                        <?= $_SESSION["errors"]["categoryName"] ?>
+                                    </span>
+                                <?php endif; ?>
+                                <?php unset($_SESSION["errors"]); ?>
                             </div>
                         </div>
                     </div>

@@ -2,6 +2,6 @@
 
 function manageReviews() {
     $titleBar = 'Reviews';
-    $view     = 'review';
+    $view     = 'review/review';
     require_once PATH_VIEW_ADMIN . 'layouts/master.php';
 }
