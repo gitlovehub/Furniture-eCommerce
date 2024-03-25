@@ -16,11 +16,11 @@
                 <div class="card mb-4">
                     <div class="card-header">
                         <span class="badge bg-label-primary">
-                            ID:
+                            Order:
                             <?php foreach ($list as $item) {
                                 extract($item);
                             } ?>
-                            <?= $item['order_id'] ?>
+                            #<?= $item['order_id'] ?>
                         </span>
                     </div>
                     <div class="table-responsive text-nowrap">
