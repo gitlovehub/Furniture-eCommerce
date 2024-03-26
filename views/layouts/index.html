@@ -1,0 +1,815 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- Reset css link here -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css">
+
+    <!-- Google fonts link here -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@300;400;500;600;700;800&display=swap"
+        rel="stylesheet">
+
+    <!-- Latest compiled and minified CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Latest compiled JavaScript -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+
+    <!-- CSS link here-->
+    <link rel="stylesheet" href="http://localhost/gitlovehub/du-an-1/assets/css/base.css">
+    <link rel="stylesheet" href="http://localhost/gitlovehub/du-an-1/assets/css/grid.css">
+    <link rel="stylesheet" href="http://localhost/gitlovehub/du-an-1/assets/css/style.css">
+    <link rel="stylesheet" href="http://localhost/gitlovehub/du-an-1/assets/css/responsive.css">
+    <title>Furniture Store</title>
+</head>
+
+<body>
+
+    <div class="cart-overlay">
+        <div class="cart-container">
+            <div class="cart-header">
+                <div class="cart-title">
+                    <h3>
+                        Your Shopping Cart
+                        <span>1 item</span>
+                    </h3>
+                </div>
+                <div class="cart-close">✖</div>
+            </div>
+
+            <!-- If empty cart will add class name "empty-cart" -->
+            <div class="cart-body">
+                <img src="http://localhost/gitlovehub/du-an-1/assets/images/empty-cart.png" alt="" class="empty-cart-img">
+                <h2 class="empty-cart-msg">Your cart is empty</h2>
+
+                <!-- When has items -->
+                <!-- Add HTML string here -->
+                <div class="cart-item">
+                    <div class="cart-item-start">
+                        <img src="https://cdn.sanity.io/images/0309uc88/production/1e36b7f952c25567b95c013f2d8200cb3eab3ce3-1280x1280.webp"
+                            alt="product img" class="cart-item-img" layout="fill">
+                    </div>
+                    <div class="cart-item-mid">
+                        <h4 class="cart-item-title">Little Petra VB1 Armchair Sheepskin</h4>
+                        <span class="cart-item-code"></span>
+                        <div class="qty-changer-container">
+                            <div class="cart-qty-btn qty-minus"><span>−</span></div>
+                            <div class="cart-qty-number">1</div>
+                            <div class="cart-qty-btn qty-plus"><span>+</span></div>
+                        </div>
+                    </div>
+                    <div class="cart-item-end">
+                        <div class="cart-item-price">900$</div>
+                        <div class="cart-item-remove">
+                            <svg width="20" height="20" viewBox="0 0 12 12" fill="none"
+                                xmlns="http://www.w3.org/2000/svg">
+                                <path d="M5.25 5.25H3.75V9.75H5.25V5.25Z" fill="#524646"></path>
+                                <path d="M8.25 5.25H6.75V9.75H8.25V5.25Z" fill="#524646"></path>
+                                <path
+                                    d="M9 0.75C9 0.3 8.7 0 8.25 0H3.75C3.3 0 3 0.3 3 0.75V2.25H0V3.75H0.75V11.25C0.75 11.7 1.05 12 1.5 12H10.5C10.95 12 11.25 11.7 11.25 11.25V3.75H12V2.25H9V0.75ZM4.5 1.5H7.5V2.25H4.5V1.5ZM9.75 3.75V10.5H2.25V3.75H9.75Z"
+                                    fill="#524646"></path>
+                            </svg>
+                        </div>
+                    </div>
+                </div>
+                <div class="cart-item">
+                    <div class="cart-item-start">
+                        <img src="https://cdn.sanity.io/images/0309uc88/production/1e36b7f952c25567b95c013f2d8200cb3eab3ce3-1280x1280.webp"
+                            alt="product img" class="cart-item-img" layout="fill">
+                    </div>
+                    <div class="cart-item-mid">
+                        <h4 class="cart-item-title">Little Petra VB1 Armchair Sheepskin</h4>
+                        <span class="cart-item-code"></span>
+                        <div class="qty-changer-container">
+                            <div class="cart-qty-btn qty-minus"><span>−</span></div>
+                            <div class="cart-qty-number">1</div>
+                            <div class="cart-qty-btn qty-plus"><span>+</span></div>
+                        </div>
+                    </div>
+                    <div class="cart-item-end">
+                        <div class="cart-item-price">900$</div>
+                        <div class="cart-item-remove">
+                            <svg width="20" height="20" viewBox="0 0 12 12" fill="none"
+                                xmlns="http://www.w3.org/2000/svg">
+                                <path d="M5.25 5.25H3.75V9.75H5.25V5.25Z" fill="#524646"></path>
+                                <path d="M8.25 5.25H6.75V9.75H8.25V5.25Z" fill="#524646"></path>
+                                <path
+                                    d="M9 0.75C9 0.3 8.7 0 8.25 0H3.75C3.3 0 3 0.3 3 0.75V2.25H0V3.75H0.75V11.25C0.75 11.7 1.05 12 1.5 12H10.5C10.95 12 11.25 11.7 11.25 11.25V3.75H12V2.25H9V0.75ZM4.5 1.5H7.5V2.25H4.5V1.5ZM9.75 3.75V10.5H2.25V3.75H9.75Z"
+                                    fill="#524646"></path>
+                            </svg>
+                        </div>
+                    </div>
+                </div>
+                <div class="cart-item">
+                    <div class="cart-item-start">
+                        <img src="https://cdn.sanity.io/images/0309uc88/production/1e36b7f952c25567b95c013f2d8200cb3eab3ce3-1280x1280.webp"
+                            alt="product img" class="cart-item-img" layout="fill">
+                    </div>
+                    <div class="cart-item-mid">
+                        <h4 class="cart-item-title">Little Petra VB1 Armchair Sheepskin</h4>
+                        <span class="cart-item-code"></span>
+                        <div class="qty-changer-container">
+                            <div class="cart-qty-btn qty-minus"><span>−</span></div>
+                            <div class="cart-qty-number">1</div>
+                            <div class="cart-qty-btn qty-plus"><span>+</span></div>
+                        </div>
+                    </div>
+                    <div class="cart-item-end">
+                        <div class="cart-item-price">900$</div>
+                        <div class="cart-item-remove">
+                            <svg width="20" height="20" viewBox="0 0 12 12" fill="none"
+                                xmlns="http://www.w3.org/2000/svg">
+                                <path d="M5.25 5.25H3.75V9.75H5.25V5.25Z" fill="#524646"></path>
+                                <path d="M8.25 5.25H6.75V9.75H8.25V5.25Z" fill="#524646"></path>
+                                <path
+                                    d="M9 0.75C9 0.3 8.7 0 8.25 0H3.75C3.3 0 3 0.3 3 0.75V2.25H0V3.75H0.75V11.25C0.75 11.7 1.05 12 1.5 12H10.5C10.95 12 11.25 11.7 11.25 11.25V3.75H12V2.25H9V0.75ZM4.5 1.5H7.5V2.25H4.5V1.5ZM9.75 3.75V10.5H2.25V3.75H9.75Z"
+                                    fill="#524646"></path>
+                            </svg>
+                        </div>
+                    </div>
+                </div>
+                <div class="cart-item">
+                    <div class="cart-item-start">
+                        <img src="https://cdn.sanity.io/images/0309uc88/production/1e36b7f952c25567b95c013f2d8200cb3eab3ce3-1280x1280.webp"
+                            alt="product img" class="cart-item-img" layout="fill">
+                    </div>
+                    <div class="cart-item-mid">
+                        <h4 class="cart-item-title">Little Petra VB1 Armchair Sheepskin</h4>
+                        <span class="cart-item-code"></span>
+                        <div class="qty-changer-container">
+                            <div class="cart-qty-btn qty-minus"><span>−</span></div>
+                            <div class="cart-qty-number">1</div>
+                            <div class="cart-qty-btn qty-plus"><span>+</span></div>
+                        </div>
+                    </div>
+                    <div class="cart-item-end">
+                        <div class="cart-item-price">900$</div>
+                        <div class="cart-item-remove">
+                            <svg width="20" height="20" viewBox="0 0 12 12" fill="none"
+                                xmlns="http://www.w3.org/2000/svg">
+                                <path d="M5.25 5.25H3.75V9.75H5.25V5.25Z" fill="#524646"></path>
+                                <path d="M8.25 5.25H6.75V9.75H8.25V5.25Z" fill="#524646"></path>
+                                <path
+                                    d="M9 0.75C9 0.3 8.7 0 8.25 0H3.75C3.3 0 3 0.3 3 0.75V2.25H0V3.75H0.75V11.25C0.75 11.7 1.05 12 1.5 12H10.5C10.95 12 11.25 11.7 11.25 11.25V3.75H12V2.25H9V0.75ZM4.5 1.5H7.5V2.25H4.5V1.5ZM9.75 3.75V10.5H2.25V3.75H9.75Z"
+                                    fill="#524646"></path>
+                            </svg>
+                        </div>
+                    </div>
+                </div>
+                <div class="cart-item">
+                    <div class="cart-item-start">
+                        <img src="https://cdn.sanity.io/images/0309uc88/production/1e36b7f952c25567b95c013f2d8200cb3eab3ce3-1280x1280.webp"
+                            alt="product img" class="cart-item-img" layout="fill">
+                    </div>
+                    <div class="cart-item-mid">
+                        <h4 class="cart-item-title">Little Petra VB1 Armchair Sheepskin</h4>
+                        <span class="cart-item-code"></span>
+                        <div class="qty-changer-container">
+                            <div class="cart-qty-btn qty-minus"><span>−</span></div>
+                            <div class="cart-qty-number">1</div>
+                            <div class="cart-qty-btn qty-plus"><span>+</span></div>
+                        </div>
+                    </div>
+                    <div class="cart-item-end">
+                        <div class="cart-item-price">900$</div>
+                        <div class="cart-item-remove">
+                            <svg width="20" height="20" viewBox="0 0 12 12" fill="none"
+                                xmlns="http://www.w3.org/2000/svg">
+                                <path d="M5.25 5.25H3.75V9.75H5.25V5.25Z" fill="#524646"></path>
+                                <path d="M8.25 5.25H6.75V9.75H8.25V5.25Z" fill="#524646"></path>
+                                <path
+                                    d="M9 0.75C9 0.3 8.7 0 8.25 0H3.75C3.3 0 3 0.3 3 0.75V2.25H0V3.75H0.75V11.25C0.75 11.7 1.05 12 1.5 12H10.5C10.95 12 11.25 11.7 11.25 11.25V3.75H12V2.25H9V0.75ZM4.5 1.5H7.5V2.25H4.5V1.5ZM9.75 3.75V10.5H2.25V3.75H9.75Z"
+                                    fill="#524646"></path>
+                            </svg>
+                        </div>
+                    </div>
+                </div>
+                <div class="cart-item">
+                    <div class="cart-item-start">
+                        <img src="https://cdn.sanity.io/images/0309uc88/production/1e36b7f952c25567b95c013f2d8200cb3eab3ce3-1280x1280.webp"
+                            alt="product img" class="cart-item-img" layout="fill">
+                    </div>
+                    <div class="cart-item-mid">
+                        <h4 class="cart-item-title">Little Petra VB1 Armchair Sheepskin</h4>
+                        <span class="cart-item-code"></span>
+                        <div class="qty-changer-container">
+                            <div class="cart-qty-btn qty-minus"><span>−</span></div>
+                            <div class="cart-qty-number">1</div>
+                            <div class="cart-qty-btn qty-plus"><span>+</span></div>
+                        </div>
+                    </div>
+                    <div class="cart-item-end">
+                        <div class="cart-item-price">900$</div>
+                        <div class="cart-item-remove">
+                            <svg width="20" height="20" viewBox="0 0 12 12" fill="none"
+                                xmlns="http://www.w3.org/2000/svg">
+                                <path d="M5.25 5.25H3.75V9.75H5.25V5.25Z" fill="#524646"></path>
+                                <path d="M8.25 5.25H6.75V9.75H8.25V5.25Z" fill="#524646"></path>
+                                <path
+                                    d="M9 0.75C9 0.3 8.7 0 8.25 0H3.75C3.3 0 3 0.3 3 0.75V2.25H0V3.75H0.75V11.25C0.75 11.7 1.05 12 1.5 12H10.5C10.95 12 11.25 11.7 11.25 11.25V3.75H12V2.25H9V0.75ZM4.5 1.5H7.5V2.25H4.5V1.5ZM9.75 3.75V10.5H2.25V3.75H9.75Z"
+                                    fill="#524646"></path>
+                            </svg>
+                        </div>
+                    </div>
+                </div>
+                <div class="cart-item">
+                    <div class="cart-item-start">
+                        <img src="https://cdn.sanity.io/images/0309uc88/production/1e36b7f952c25567b95c013f2d8200cb3eab3ce3-1280x1280.webp"
+                            alt="product img" class="cart-item-img" layout="fill">
+                    </div>
+                    <div class="cart-item-mid">
+                        <h4 class="cart-item-title">Little Petra VB1 Armchair Sheepskin</h4>
+                        <span class="cart-item-code"></span>
+                        <div class="qty-changer-container">
+                            <div class="cart-qty-btn qty-minus"><span>−</span></div>
+                            <div class="cart-qty-number">1</div>
+                            <div class="cart-qty-btn qty-plus"><span>+</span></div>
+                        </div>
+                    </div>
+                    <div class="cart-item-end">
+                        <div class="cart-item-price">900$</div>
+                        <div class="cart-item-remove">
+                            <svg width="20" height="20" viewBox="0 0 12 12" fill="#000"
+                                xmlns="http://www.w3.org/2000/svg">
+                                <path d="M5.25 5.25H3.75V9.75H5.25V5.25Z" fill="#000"></path>
+                                <path d="M8.25 5.25H6.75V9.75H8.25V5.25Z" fill="#000"></path>
+                                <path
+                                    d="M9 0.75C9 0.3 8.7 0 8.25 0H3.75C3.3 0 3 0.3 3 0.75V2.25H0V3.75H0.75V11.25C0.75 11.7 1.05 12 1.5 12H10.5C10.95 12 11.25 11.7 11.25 11.25V3.75H12V2.25H9V0.75ZM4.5 1.5H7.5V2.25H4.5V1.5ZM9.75 3.75V10.5H2.25V3.75H9.75Z"
+                                    fill="#524646"></path>
+                            </svg>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="cart-footer">
+                <h1>Total</h1>
+                <div class="total-container">
+                    <span class="total-price">900$</span>
+                    <button class="checkout-btn product-outline-btn">Go to Checkout</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <header class="header">
+        <div class="grid wide">
+            <div class="header__navbar header-sticky">
+                <a href="index.html" class="header__navbar-logo">
+                    <img src="http://localhost/gitlovehub/du-an-1/assets/images/logo.png" alt="" class="header__navbar-logo-img">
+                </a>
+
+                <div class="header__navbar-menu hide-on-mobile">
+                    <a href="categories.html" class="header__navbar-menu-link">
+                        CATEGORIES
+                    </a>
+                    <a href="register.html" class="header__navbar-menu-link">
+                        REGISTER
+                    </a>
+                    <a href="login.html" class="header__navbar-menu-link">
+                        LOGIN
+                    </a>
+                    <button class="header__navbar-menu-link cart-icon has-cart" data-item-count="7">
+                        <svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 24 24" height="1em"
+                            width="1em" xmlns="http://www.w3.org/2000/svg">
+                            <g>
+                                <path fill="none" d="M0 0h24v24H0z"></path>
+                                <path
+                                    d="M4 16V4H2V2h3a1 1 0 0 1 1 1v12h12.438l2-8H8V5h13.72a1 1 0 0 1 .97 1.243l-2.5 10a1 1 0 0 1-.97.757H5a1 1 0 0 1-1-1zm2 7a2 2 0 1 1 0-4 2 2 0 0 1 0 4zm12 0a2 2 0 1 1 0-4 2 2 0 0 1 0 4z">
+                                </path>
+                            </g>
+                        </svg>
+                    </button>
+                </div>
+
+                <div class="header__navbar-mobile hide-on-pc hide-on-tablet">
+                    <button class="header__navbar-menu-link cart-icon has-cart" data-item-count="7">
+                        <svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 24 24" height="1em"
+                            width="1em" xmlns="http://www.w3.org/2000/svg">
+                            <g>
+                                <path fill="none" d="M0 0h24v24H0z"></path>
+                                <path
+                                    d="M4 16V4H2V2h3a1 1 0 0 1 1 1v12h12.438l2-8H8V5h13.72a1 1 0 0 1 .97 1.243l-2.5 10a1 1 0 0 1-.97.757H5a1 1 0 0 1-1-1zm2 7a2 2 0 1 1 0-4 2 2 0 0 1 0 4zm12 0a2 2 0 1 1 0-4 2 2 0 0 1 0 4z">
+                                </path>
+                            </g>
+                        </svg>
+                    </button>
+                    <div class="hamburger">
+                        <svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 24 24" height="1em"
+                            width="1em" xmlns="http://www.w3.org/2000/svg">
+                            <g>
+                                <path fill="none" d="M0 0h24v24H0z"></path>
+                                <path d="M3 4h18v2H3V4zm6 7h12v2H9v-2zm-6 7h18v2H3v-2z"></path>
+                            </g>
+                        </svg>
+                    </div>
+                    <nav class="navbar__mobile">
+                        <div class="navbar__mobile-close-btn">
+                            <svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 1024 1024"
+                                height="1.1em" width="1.1em" xmlns="http://www.w3.org/2000/svg">
+                                <path
+                                    d="M563.8 512l262.5-312.9c4.4-5.2.7-13.1-6.1-13.1h-79.8c-4.7 0-9.2 2.1-12.3 5.7L511.6 449.8 295.1 191.7c-3-3.6-7.5-5.7-12.3-5.7H203c-6.8 0-10.5 7.9-6.1 13.1L459.4 512 196.9 824.9A7.95 7.95 0 0 0 203 838h79.8c4.7 0 9.2-2.1 12.3-5.7l216.5-258.1 216.5 258.1c3 3.6 7.5 5.7 12.3 5.7h79.8c6.8 0 10.5-7.9 6.1-13.1L563.8 512z">
+                                </path>
+                            </svg>
+                        </div>
+                        <ul class="navbar__mobile-list">
+                            <li class="navbar__mobile-item">
+                                <a href="" class="navbar__mobile-item-link">
+                                    <span>[</span>
+                                    <span>FURNITURE</span>
+                                    <span>]</span>
+                                </a>
+                            </li>
+                            <li class="navbar__mobile-item">
+                                <a href="" class="navbar__mobile-item-link">
+                                    <span>[</span>
+                                    <span>ELECTRONIC</span>
+                                    <span>]</span>
+                                </a>
+                            </li>
+                            <li class="navbar__mobile-item">
+                                <a href="" class="navbar__mobile-item-link">
+                                    <span>[</span>
+                                    <span>LAMP</span>
+                                    <span>]</span>
+                                </a>
+                            </li>
+                            <li class="navbar__mobile-item">
+                                <a href="" class="navbar__mobile-item-link">
+                                    <span>[</span>
+                                    <span>KITCHEN</span>
+                                    <span>]</span>
+                                </a>
+                            </li>
+                            <li class="navbar__mobile-item">
+                                <a href="" class="navbar__mobile-item-link">
+                                    <span>[</span>
+                                    <span>CHAIR</span>
+                                    <span>]</span>
+                                </a>
+                            </li>
+                            <li class="navbar__mobile-item">
+                                <a href="" class="navbar__mobile-item-link">
+                                    <span>[</span>
+                                    <span>SKINCARE</span>
+                                    <span>]</span>
+                                </a>
+                            </li>
+                            <li class="navbar__mobile-item">
+                                <a href="login.html" class="navbar__mobile-item-link">
+                                    <span>[</span>
+                                    <span>ACCOUNT</span>
+                                    <span>]</span>
+                                </a>
+                            </li>
+                        </ul>
+                    </nav>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <section id="home" class="home">
+        <div class="grid wide">
+            <div class="grid-home">
+                <div class="featured grid-1">
+                    <a href="" class="home__featured-link">
+                        <div class="overlay-img"></div>
+                        <img src="http://localhost/gitlovehub/du-an-1/assets/images/home-img-1.jpg" alt="" class="home__featured-img">
+                        <p class="home__featured-title">Live Comfortably</p>
+                    </a>
+                </div>
+                <div class="featured grid-2">
+                    <a href="" class="home__featured-link">
+                        <div class="overlay-img"></div>
+                        <img src="http://localhost/gitlovehub/du-an-1/assets/images/home-img-2.jpg" alt="" class="home__featured-img">
+                        <p class="home__featured-title">Skincare</p>
+                    </a>
+                </div>
+                <div class="featured grid-4">
+                    <a href="" class="home__featured-link">
+                        <div class="overlay-img"></div>
+                        <img src="http://localhost/gitlovehub/du-an-1/assets/images/home-img-3.jpg" alt="" class="home__featured-img">
+                        <p class="home__featured-title">Kitchen</p>
+                    </a>
+                </div>
+                <div class="featured grid-4-low">
+                    <a href="" class="home__featured-link">
+                        <div class="overlay-img"></div>
+                        <img src="http://localhost/gitlovehub/du-an-1/assets/images/home-img-4.jpg" alt="" class="home__featured-img">
+                        <p class="home__featured-title">Electronic</p>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="product">
+        <div class="grid wide">
+            <h2 class="page-title">Products we are proud of</h2>
+            <div class="grid-products">
+                <a href="productPage.html" class="product__item">
+                    <div class="product__item-wrapper-img">
+                        <img src="http://localhost/gitlovehub/du-an-1/assets/images/products/1.jpg" alt="" class="product__item-img">
+                    </div>
+                    <div class="product__item-btn-overlay">
+                        <button class="product__item-btn">ADD TO CART</button>
+                    </div>
+                    <div class="product__item-details">
+                        <h4 class="product__item-name">Little Armchair Sheepskin</h4>
+                        <p class="product__item-price">$900</p>
+                    </div>
+                </a>
+                <a href="" class="product__item">
+                    <div class="product__item-wrapper-img">
+                        <img src="http://localhost/gitlovehub/du-an-1/assets/images/products/2.jpg" alt="" class="product__item-img">
+                    </div>
+                    <div class="product__item-btn-overlay">
+                        <button class="product__item-btn">ADD TO CART</button>
+                    </div>
+                    <div class="product__item-details">
+                        <h4 class="product__item-name">Pop-Up Toaster</h4>
+                        <p class="product__item-price">$45</p>
+                    </div>
+                </a>
+                <a href="" class="product__item">
+                    <div class="product__item-wrapper-img">
+                        <img src="http://localhost/gitlovehub/du-an-1/assets/images/products/3.png" alt="" class="product__item-img">
+                    </div>
+                    <div class="product__item-btn-overlay">
+                        <button class="product__item-btn">ADD TO CART</button>
+                    </div>
+                    <div class="product__item-details">
+                        <h4 class="product__item-name">Lamp Light Blue</h4>
+                        <p class="product__item-price">$79</p>
+                    </div>
+                </a>
+                <a href="" class="product__item">
+                    <div class="product__item-wrapper-img">
+                        <img src="http://localhost/gitlovehub/du-an-1/assets/images/products/4.jpg" alt="" class="product__item-img">
+                    </div>
+                    <div class="product__item-btn-overlay">
+                        <button class="product__item-btn">ADD TO CART</button>
+                    </div>
+                    <div class="product__item-details">
+                        <h4 class="product__item-name">Pulp Unit - 5 Compartments</h4>
+                        <p class="product__item-price">$250</p>
+                    </div>
+                </a>
+                <a href="" class="product__item wide-item">
+                    <div class="product__item-wrapper-img wide-img">
+                        <img src="http://localhost/gitlovehub/du-an-1/assets/images/products/5.jpg" alt="" class="product__item-img">
+                    </div>
+                    <div class="wide__right-container">
+                        <h3 class="wide__right-title">Melt Pendant Gold</h3>
+                        <button class="wide__right-btn">View more</button>
+                    </div>
+                </a>
+                <a href="" class="product__item">
+                    <div class="product__item-wrapper-img">
+                        <img src="http://localhost/gitlovehub/du-an-1/assets/images/products/6.jpg" alt="" class="product__item-img">
+                    </div>
+                    <div class="product__item-btn-overlay">
+                        <button class="product__item-btn">ADD TO CART</button>
+                    </div>
+                    <div class="product__item-details">
+                        <h4 class="product__item-name">Oil Cleansing 200ml</h4>
+                        <p class="product__item-price">$65</p>
+                    </div>
+                </a>
+                <a href="" class="product__item">
+                    <div class="product__item-wrapper-img">
+                        <img src="http://localhost/gitlovehub/du-an-1/assets/images/products/7.jpg" alt="" class="product__item-img">
+                    </div>
+                    <div class="product__item-btn-overlay">
+                        <button class="product__item-btn">ADD TO CART</button>
+                    </div>
+                    <div class="product__item-details">
+                        <h4 class="product__item-name">Pendant light</h4>
+                        <p class="product__item-price">$120</p>
+                    </div>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <section class="banner">
+        <div class="grid wide">
+            <div class="banner-container">
+                <div class="banner__text-side">
+                    <h2 class="banner__text-title">
+                        Creative harmonious living
+                    </h2>
+                    <p class="banner__text-subtitle">
+                        Products are all made to standard sizes so that you can mix and match them freely.
+                    </p>
+                    <a href="" class="banner-btn">Shop now</a>
+                </div>
+                <div class="banner__img-side">
+                    <img src="http://localhost/gitlovehub/du-an-1/assets/images/banner.jpg" alt="" class="banner-img">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="trending">
+        <div class="grid wide">
+            <h2 class="page-title">Trending Now</h2>
+
+            <div class="trending-container">
+                <div class="trending-slider" id="slider">
+                    <a href="" class="product__item">
+                        <div class="product__item-wrapper-img">
+                            <img src="http://localhost/gitlovehub/du-an-1/assets/images/products/8.jpg" alt="" class="product__item-img">
+                        </div>
+                        <div class="product__item-btn-overlay">
+                            <button class="product__item-btn">ADD TO CART</button>
+                        </div>
+                        <div class="product__item-details">
+                            <h4 class="product__item-name">Gejst Shelf A Black</h4>
+                            <p class="product__item-price">$100</p>
+                        </div>
+                    </a>
+
+                    <a href="" class="product__item">
+                        <div class="product__item-wrapper-img">
+                            <img src="http://localhost/gitlovehub/du-an-1/assets/images/products/9.png" alt="" class="product__item-img">
+                        </div>
+                        <div class="product__item-btn-overlay">
+                            <button class="product__item-btn">ADD TO CART</button>
+                        </div>
+                        <div class="product__item-details">
+                            <h4 class="product__item-name">Cube Vase Black</h4>
+                            <p class="product__item-price">$150</p>
+                        </div>
+                    </a>
+
+                    <a href="" class="product__item">
+                        <div class="product__item-wrapper-img">
+                            <img src="http://localhost/gitlovehub/du-an-1/assets/images/products/10.jpg" alt="" class="product__item-img">
+                        </div>
+                        <div class="product__item-btn-overlay">
+                            <button class="product__item-btn">ADD TO CART</button>
+                        </div>
+                        <div class="product__item-details">
+                            <h4 class="product__item-name">Traditional Armchair</h4>
+                            <p class="product__item-price">$90</p>
+                        </div>
+                    </a>
+
+                    <a href="" class="product__item">
+                        <div class="product__item-wrapper-img">
+                            <img src="http://localhost/gitlovehub/du-an-1/assets/images/products/11.jpg" alt="" class="product__item-img">
+                        </div>
+                        <div class="product__item-btn-overlay">
+                            <button class="product__item-btn">ADD TO CART</button>
+                        </div>
+                        <div class="product__item-details">
+                            <h4 class="product__item-name">The Sun Pendant Black</h4>
+                            <p class="product__item-price">$160</p>
+                        </div>
+                    </a>
+
+                    <a href="" class="product__item">
+                        <div class="product__item-wrapper-img">
+                            <img src="http://localhost/gitlovehub/du-an-1/assets/images/products/12.png" alt="" class="product__item-img">
+                        </div>
+                        <div class="product__item-btn-overlay">
+                            <button class="product__item-btn">ADD TO CART</button>
+                        </div>
+                        <div class="product__item-details">
+                            <h4 class="product__item-name">Simple Golden Lamp</h4>
+                            <p class="product__item-price">$220</p>
+                        </div>
+                    </a>
+
+                    <a href="" class="product__item">
+                        <div class="product__item-wrapper-img">
+                            <img src="http://localhost/gitlovehub/du-an-1/assets/images/products/13.jpg" alt="" class="product__item-img">
+                        </div>
+                        <div class="product__item-btn-overlay">
+                            <button class="product__item-btn">ADD TO CART</button>
+                        </div>
+                        <div class="product__item-details">
+                            <h4 class="product__item-name">Unbleached Cotton Pads</h4>
+                            <p class="product__item-price">$30</p>
+                        </div>
+                    </a>
+
+                    <a href="" class="product__item">
+                        <div class="product__item-wrapper-img">
+                            <img src="http://localhost/gitlovehub/du-an-1/assets/images/products/14.png" alt="" class="product__item-img">
+                        </div>
+                        <div class="product__item-btn-overlay">
+                            <button class="product__item-btn">ADD TO CART</button>
+                        </div>
+                        <div class="product__item-details">
+                            <h4 class="product__item-name">Oak Spanish Chair</h4>
+                            <p class="product__item-price">$550</p>
+                        </div>
+                    </a>
+
+                    <a href="" class="product__item">
+                        <div class="product__item-wrapper-img">
+                            <img src="http://localhost/gitlovehub/du-an-1/assets/images/products/15.jpg" alt="" class="product__item-img">
+                        </div>
+                        <div class="product__item-btn-overlay">
+                            <button class="product__item-btn">ADD TO CART</button>
+                        </div>
+                        <div class="product__item-details">
+                            <h4 class="product__item-name">Copenhagen Armchair</h4>
+                            <p class="product__item-price">$300</p>
+                        </div>
+                    </a>
+
+                    <a href="" class="product__item">
+                        <div class="product__item-wrapper-img">
+                            <img src="http://localhost/gitlovehub/du-an-1/assets/images/products/16.jpg" alt="" class="product__item-img">
+                        </div>
+                        <div class="product__item-btn-overlay">
+                            <button class="product__item-btn">ADD TO CART</button>
+                        </div>
+                        <div class="product__item-details">
+                            <h4 class="product__item-name">Anti Dark Light</h4>
+                            <p class="product__item-price">$160</p>
+                        </div>
+                    </a>
+
+                    <a href="" class="product__item">
+                        <div class="product__item-wrapper-img">
+                            <img src="http://localhost/gitlovehub/du-an-1/assets/images/products/17.png" alt="" class="product__item-img">
+                        </div>
+                        <div class="product__item-btn-overlay">
+                            <button class="product__item-btn">ADD TO CART</button>
+                        </div>
+                        <div class="product__item-details">
+                            <h4 class="product__item-name">Table Lamp</h4>
+                            <p class="product__item-price">$75</p>
+                        </div>
+                    </a>
+
+                    <a href="" class="product__item">
+                        <div class="product__item-wrapper-img">
+                            <img src="http://localhost/gitlovehub/du-an-1/assets/images/products/18.png" alt="" class="product__item-img">
+                        </div>
+                        <div class="product__item-btn-overlay">
+                            <button class="product__item-btn">ADD TO CART</button>
+                        </div>
+                        <div class="product__item-details">
+                            <h4 class="product__item-name">Mat Black Lamp</h4>
+                            <p class="product__item-price">$85</p>
+                        </div>
+                    </a>
+
+                    <a href="" class="product__item">
+                        <div class="product__item-wrapper-img">
+                            <img src="http://localhost/gitlovehub/du-an-1/assets/images/products/19.jpg" alt="" class="product__item-img">
+                        </div>
+                        <div class="product__item-btn-overlay">
+                            <button class="product__item-btn">ADD TO CART</button>
+                        </div>
+                        <div class="product__item-details">
+                            <h4 class="product__item-name">Comfy Chair</h4>
+                            <p class="product__item-price">$260</p>
+                        </div>
+                    </a>
+                </div>
+                <div class="trending-controls">
+                    <div class="button-prev"></div>
+                    <div class="button-next"></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <div class="news">
+        <div class="news-text">
+            <h2>Newsletter</h2>
+            <form>
+                <input type="email" placeholder="username@email.com" required>
+                <button class="raise" type="submit">
+                    <span>Submit</span>
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <footer class="footer">
+        <div class="grid wide">
+            <div class="footer__inner">
+                <div class="footer__text">
+                    <p>Copyright © 2023, All right reserved.</p>
+                    <ul class="footer__social">
+                        <li class="footer__social-item">
+                            <a href="https://www.facebook.com" class="footer__social-link" target="_blank"
+                                rel="noopener" aria-label="Facebook">
+                                <span class="Icon-Wrapper--clickable">
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="Icon Icon--facebook"
+                                        viewBox="0 0 320 512"><!--! Font Awesome Pro 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc. -->
+                                        <path
+                                            d="M279.14 288l14.22-92.66h-88.91v-60.13c0-25.35 12.42-50.06 52.24-50.06h40.42V6.26S260.43 0 225.36 0c-73.22 0-121.08 44.38-121.08 124.72v70.62H22.89V288h81.39v224h100.17V288z" />
+                                    </svg>
+                                </span>
+                            </a>
+                        </li>
+                        <li class="footer__social-item">
+                            <a href="https://twitter.com" class="footer__social-link" target="_blank" rel="noopener"
+                                aria-label="Twitter">
+                                <span class="Icon-Wrapper--clickable">
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="Icon Icon--x"
+                                        viewBox="0 0 512 512"><!--! Font Awesome Pro 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc. -->
+                                        <path
+                                            d="M389.2 48h70.6L305.6 224.2 487 464H345L233.7 318.6 106.5 464H35.8L200.7 275.5 26.8 48H172.4L272.9 180.9 389.2 48zM364.4 421.8h39.1L151.1 88h-42L364.4 421.8z" />
+                                    </svg>
+                                </span>
+                            </a>
+                        </li>
+                        <li class="footer__social-item">
+                            <a href="https://www.instagram.com" class="footer__social-link" target="_blank"
+                                rel="noopener" aria-label="Instagram">
+                                <span class="Icon-Wrapper--clickable">
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="Icon Icon--instagram"
+                                        viewBox="0 0 448 512"><!--! Font Awesome Pro 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc. -->
+                                        <path
+                                            d="M224.1 141c-63.6 0-114.9 51.3-114.9 114.9s51.3 114.9 114.9 114.9S339 319.5 339 255.9 287.7 141 224.1 141zm0 189.6c-41.1 0-74.7-33.5-74.7-74.7s33.5-74.7 74.7-74.7 74.7 33.5 74.7 74.7-33.6 74.7-74.7 74.7zm146.4-194.3c0 14.9-12 26.8-26.8 26.8-14.9 0-26.8-12-26.8-26.8s12-26.8 26.8-26.8 26.8 12 26.8 26.8zm76.1 27.2c-1.7-35.9-9.9-67.7-36.2-93.9-26.2-26.2-58-34.4-93.9-36.2-37-2.1-147.9-2.1-184.9 0-35.8 1.7-67.6 9.9-93.9 36.1s-34.4 58-36.2 93.9c-2.1 37-2.1 147.9 0 184.9 1.7 35.9 9.9 67.7 36.2 93.9s58 34.4 93.9 36.2c37 2.1 147.9 2.1 184.9 0 35.9-1.7 67.7-9.9 93.9-36.2 26.2-26.2 34.4-58 36.2-93.9 2.1-37 2.1-147.8 0-184.8zM398.8 388c-7.8 19.6-22.9 34.7-42.6 42.6-29.5 11.7-99.5 9-132.1 9s-102.7 2.6-132.1-9c-19.6-7.8-34.7-22.9-42.6-42.6-11.7-29.5-9-99.5-9-132.1s-2.6-102.7 9-132.1c7.8-19.6 22.9-34.7 42.6-42.6 29.5-11.7 99.5-9 132.1-9s102.7-2.6 132.1 9c19.6 7.8 34.7 22.9 42.6 42.6 11.7 29.5 9 99.5 9 132.1s2.7 102.7-9 132.1z" />
+                                    </svg>
+                                </span>
+                            </a>
+                        </li>
+                        <li class="footer__social-item">
+                            <a href="https://www.youtube.com" class="footer__social-link" target="_blank" rel="noopener"
+                                aria-label="YouTube">
+                                <span class="Icon-Wrapper--clickable">
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="Icon Icon--youtube"
+                                        viewBox="0 0 576 512"><!--! Font Awesome Pro 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc. -->
+                                        <path
+                                            d="M549.655 124.083c-6.281-23.65-24.787-42.276-48.284-48.597C458.781 64 288 64 288 64S117.22 64 74.629 75.486c-23.497 6.322-42.003 24.947-48.284 48.597-11.412 42.867-11.412 132.305-11.412 132.305s0 89.438 11.412 132.305c6.281 23.65 24.787 41.5 48.284 47.821C117.22 448 288 448 288 448s170.78 0 213.371-11.486c23.497-6.321 42.003-24.171 48.284-47.821 11.412-42.867 11.412-132.305 11.412-132.305s0-89.438-11.412-132.305zm-317.51 213.508V175.185l142.739 81.205-142.739 81.201z" />
+                                    </svg>
+                                </span>
+                            </a>
+                        </li>
+                        <li class="footer__social-item">
+                            <a href="https://www.tiktok.com" class="footer__social-link" target="_blank" rel="noopener"
+                                aria-label="TikTok">
+                                <span class="Icon-Wrapper--clickable">
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="Icon Icon--tiktok"
+                                        viewBox="0 0 448 512"><!--! Font Awesome Pro 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc. -->
+                                        <path
+                                            d="M448,209.91a210.06,210.06,0,0,1-122.77-39.25V349.38A162.55,162.55,0,1,1,185,188.31V278.2a74.62,74.62,0,1,0,52.23,71.18V0l88,0a121.18,121.18,0,0,0,1.86,22.17h0A122.18,122.18,0,0,0,381,102.39a121.43,121.43,0,0,0,67,20.14Z" />
+                                    </svg>
+                                </span>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+                <div class="footer__links">
+                    <h3 class="footer__link-title">LINKS</h3>
+                    <ul>
+                        <li class="footer__link-item">
+                            <a href="" class="">TERMS OF SERVICE</a>
+                        </li>
+                        <li class="footer__link-item">
+                            <a href="" class="">PRIVACY POLICY</a>
+                        </li>
+                    </ul>
+                </div>
+                <div class="footer__links">
+                    <h3 class="footer__link-title">INFORMATION</h3>
+                    <ul>
+                        <li class="footer__link-item">
+                            <a href="" class="">FAQ</a>
+                        </li>
+                        <li class="footer__link-item">
+                            <a href="" class="">RETURNS & EXCHANGES</a>
+                        </li>
+                        <li class="footer__link-item">
+                            <a href="" class="">CONTACT</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer__aside">
+                <div class="footer__aside-copyright">
+                    <p>© KIA Shop</p>
+                    <p>Web Design by Trần Hưng</p>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <a href="#home" class="scrolltop-btn" id="scroll-top">
+        <svg xmlns="http://www.w3.org/2000/svg" height="1em" class="angles-up"
+            viewBox="0 0 448 512"><!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc. -->
+            <path
+                d="M241 47c-9.4-9.4-24.6-9.4-33.9 0L47 207c-9.4 9.4-9.4 24.6 0 33.9s24.6 9.4 33.9 0l143-143L367 241c9.4 9.4 24.6 9.4 33.9 0s9.4-24.6 0-33.9L241 47zM401 399L241 239c-9.4-9.4-24.6-9.4-33.9 0L47 399c-9.4 9.4-9.4 24.6 0 33.9s24.6 9.4 33.9 0l143-143L367 433c9.4 9.4 24.6 9.4 33.9 0s9.4-24.6 0-33.9z" />
+        </svg>
+    </a>
+
+    <script src="./http://localhost/gitlovehub/du-an-1/assets/js/home.js"></script>
+</body>
+
+</html>

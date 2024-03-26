@@ -100,7 +100,7 @@ function updateProduct($id) {
     require_once PATH_VIEW_ADMIN . 'layouts/master.php';
 }
 
-function updateProductStatus($id, $value) {
+function updateStatusProduct($id, $value) {
     updateStatus('tbl_products', $id, $value);
     if ($value == 1) {
         header('Location: ?act=product-bin');

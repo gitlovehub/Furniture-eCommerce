@@ -1,7 +1,7 @@
 <?php require_once 'show-toast.php'; ?>
 <div class="content-wrapper">
+    
     <!-- Content -->
-
     <div class="container-xxl flex-grow-1 container-p-y">
         <h4 class="py-3 mb-4">
             Add a new Product

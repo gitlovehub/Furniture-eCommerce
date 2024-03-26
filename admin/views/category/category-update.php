@@ -1,4 +1,3 @@
-<?php require_once 'show-toast.php'; ?>
 <div class="content-wrapper">
 
     <!-- Content -->

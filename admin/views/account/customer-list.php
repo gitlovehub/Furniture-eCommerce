@@ -43,7 +43,18 @@
                         <?php foreach ($list as $item) : ?>
                             <?php if ($item['role'] == 0) : ?>
                                 <tr>
-                                    <td><?= $item['name'] ?></td>
+                                    <td>
+                                        <?= $item['name'] ?>
+                                        <?php
+                                        $registrationTime = strtotime($item['registration_date']);
+                                        $currentTime = time();
+                                        $oneDayAgo = strtotime('-48 hours');
+
+                                        if ($registrationTime >= $oneDayAgo && $registrationTime <= $currentTime) {
+                                            echo '<span class="badge bg-label-primary">New</span>';
+                                        }
+                                        ?>
+                                    </td>
                                     <td><?= $item['email'] ?></td>
                                     <td><?= $item['address'] ?></td>
                                     <td><?= $item['phone'] ?></td>

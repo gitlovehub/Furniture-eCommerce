@@ -15,8 +15,8 @@ if (!function_exists('getAdmin')) {
     }
 }
 
-if (!function_exists('checkUniqueForCreate')) {
-    function checkUniqueForCreate($name) {
+if (!function_exists('checkUniqueCreateCategory')) {
+    function checkUniqueCreateCategory($name) {
         try {
             $sql = "SELECT * FROM tbl_categories WHERE name = :name LIMIT 1";
             $stmt = $GLOBALS['conn']->prepare($sql);
@@ -30,8 +30,8 @@ if (!function_exists('checkUniqueForCreate')) {
     }
 }
 
-if (!function_exists('checkUniqueForUpdate')) {
-    function checkUniqueForUpdate($id, $name) {
+if (!function_exists('checkUniqueUpdateCategory')) {
+    function checkUniqueUpdateCategory($id, $name) {
         try {
             $sql = "SELECT * FROM tbl_categories WHERE name = :name AND id <> :id LIMIT 1";
             $stmt = $GLOBALS['conn']->prepare($sql);
@@ -40,6 +40,30 @@ if (!function_exists('checkUniqueForUpdate')) {
             $stmt->execute();
             $data = $stmt->fetch();
             return empty($data) ? true : false;
+        } catch (\Exception $e) {
+            debug($e);
+        }
+    }
+}
+
+if (!function_exists('getBanner')) {
+    function getBanner() {
+        try {
+            $sql = "SELECT 
+                        b.`id`, 
+                        b.`grid`,
+                        b.`title`, 
+                        b.`image`, 
+                        b.`status`, 
+                        c.`name` AS `c_name`
+                    FROM 
+                        `tbl_banner` AS b
+                    LEFT JOIN 
+                        `tbl_categories` AS c ON b.`id_category` = c.`id`
+                    WHERE 
+                        1 ORDER BY id DESC";
+            $stmt = $GLOBALS['conn']->query($sql);
+            return $stmt->fetchAll(PDO::FETCH_ASSOC);
         } catch (\Exception $e) {
             debug($e);
         }
@@ -65,7 +89,7 @@ if (!function_exists('getProducts')) {
                     LEFT JOIN 
                         `tbl_categories` AS c ON p.`id_category` = c.`id`
                     WHERE 
-                        1";
+                        1 ORDER BY id DESC";
             $stmt = $GLOBALS['conn']->query($sql);
             return $stmt->fetchAll(PDO::FETCH_ASSOC);
         } catch (\Exception $e) {
@@ -87,7 +111,7 @@ if (!function_exists('getOrders')) {
                     FROM 
                         `tbl_orders` o
                     JOIN 
-                        `tbl_accounts` a ON o.`id_customer` = a.`id`";
+                        `tbl_accounts` a ON o.`id_customer` = a.`id` ORDER BY date DESC";
             $stmt = $GLOBALS['conn']->query($sql);
             return $stmt->fetchAll(PDO::FETCH_ASSOC);
         } catch (\Exception $e) {
@@ -126,7 +150,7 @@ if (!function_exists('getOrderDetails')) {
                     INNER JOIN 
                         tbl_accounts a ON o.id_customer = a.id
                     WHERE 
-                        o.id = ?";
+                        o.id = ? ORDER BY od.quantity DESC";
             $stmt = $GLOBALS['conn']->prepare($sql);
             $stmt->execute([$id]);
             return $stmt->fetchAll(PDO::FETCH_ASSOC);

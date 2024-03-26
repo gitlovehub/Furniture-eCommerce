@@ -70,7 +70,7 @@ function updateCategory($id) {
     require_once PATH_VIEW_ADMIN . 'layouts/master.php';
 }
 
-function updateCategoryStatus($id, $value) {
+function updateStatusCategory($id, $value) {
     updateStatus('tbl_categories', $id, $value);
     if ($value == 1) {
         header('Location: ?act=category-bin');
@@ -94,7 +94,7 @@ function validateCreateCategory($data) {
         $errors['categoryName'] = 'This field is required.';
     } elseif (strlen($data['name']) > 50) {
         $errors['categoryName'] = 'Please enter between 1 and 50 characters.';
-    } elseif (!checkUniqueForCreate($data['name'])) {
+    } elseif (!checkUniqueCreateCategory($data['name'])) {
         $errors[] = 'The entered data is a duplicate.';
     }
     return $errors;
@@ -106,7 +106,7 @@ function validateUpdateCategory($id, $data) {
         $errors['categoryName'] = 'This field is required.';
     } elseif (strlen($data['name']) > 50) {
         $errors['categoryName'] = 'Please enter between 1 and 50 characters.';
-    } elseif (!checkUniqueForCreate($id, $data['name'])) {
+    } elseif (!checkUniqueUpdateCategory($id, $data['name'])) {
         $errors[] = 'The entered data is a duplicate.';
     }
     return $errors;

@@ -99,7 +99,15 @@
                 <i class="menu-icon tf-icons bx bx-receipt"></i>
                 <span>Order</span>
             </a>
-        </li>        
+        </li>
+
+        <!-- Banner -->
+        <li class="menu-item py-1">
+            <a href="?act=banner-list" class="menu-link">
+                <i class="menu-icon tf-icons bx bx-images"></i>
+                <span>Banner</span>
+            </a>
+        </li>
 
     </ul>
 </aside>

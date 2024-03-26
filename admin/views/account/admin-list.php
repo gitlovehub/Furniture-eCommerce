@@ -29,21 +29,32 @@
 
                         <?php foreach ($list as $item) : ?>
                             <?php if ($item['role'] == 1) : ?>
-                            <tr>
-                                <td><?= $item['name'] ?></td>
-                                <td><?= $item['email'] ?></td>
-                                <td><?= $item['address'] ?></td>
-                                <td><?= $item['phone'] ?></td>
-                                <td>
-                                    <span class="badge bg-label-success">
+                                <tr>
+                                    <td>
+                                        <?= $item['name'] ?>
                                         <?php
-                                        if ($item['status'] == 1) {
-                                            echo 'Active';
+                                        $registrationTime = strtotime($item['registration_date']);
+                                        $currentTime = time();
+                                        $oneDayAgo = strtotime('-48 hours');
+
+                                        if ($registrationTime >= $oneDayAgo && $registrationTime <= $currentTime) {
+                                            echo '<span class="badge bg-label-primary">New</span>';
                                         }
                                         ?>
-                                    </span>
-                                </td>
-                            </tr>
+                                    </td>
+                                    <td><?= $item['email'] ?></td>
+                                    <td><?= $item['address'] ?></td>
+                                    <td><?= $item['phone'] ?></td>
+                                    <td>
+                                        <span class="badge bg-label-success">
+                                            <?php
+                                            if ($item['status'] == 1) {
+                                                echo 'Active';
+                                            }
+                                            ?>
+                                        </span>
+                                    </td>
+                                </tr>
                             <?php endif ?>
                         <?php endforeach; ?>
 

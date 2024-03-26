@@ -24,24 +24,27 @@ match ($act) {
     'login'  => authLogin(),
     'logout' => authLogout(),
 
+    // CRU Banner
+    'banner-list'          => bannerList(),
+    'update-banner'        => updateBanner($_GET["id"]),
+
     // CRUD Category
     'create-category'        => createCategory(),
     'category-list'          => CategoryList(),
     'update-category'        => updateCategory($_GET["id"]),
     'delete-category'        => deleteCategory($_GET["id"]),
     'category-bin'           => categoryBin(),
-    'update-status-category' => updateCategoryStatus($_GET["id"], $_GET["value"]),
+    'update-status-category' => updateStatusCategory($_GET["id"], $_GET["value"]),
 
     // CRU Product
     'create-product'        => createProduct(),
     'product-list'          => productList(),
     'update-product'        => updateProduct($_GET["id"]),
     'product-bin'           => productBin(),
-    'update-status-product' => updateProductStatus($_GET["id"], $_GET["value"]),
+    'update-status-product' => updateStatusProduct($_GET["id"], $_GET["value"]),
     'add-gallery'           => addGallery($_GET["id"]),
     'delete-image'          => deleteImage($_GET["id"], $_GET["back"]),
     
-
     // Review
     'manage-reviews' => manageReviews(),
 
@@ -54,7 +57,6 @@ match ($act) {
     // Order
     'order-list'    => orderList(),
     'order-details' => orderDetails($_GET["id"]),
-
 
 };
 
