@@ -52,50 +52,18 @@
                         </svg>
                     </div>
                     <ul class="navbar__mobile-list">
+                        <?php $listCategory = selectStatusActive('tbl_categories'); ?>
+                        <?php foreach ($listCategory as $category) : ?>
+                            <li class="navbar__mobile-item">
+                                <a href="?act=category-filter&id=<?= $category['id'] ?>" class="navbar__mobile-item-link">
+                                    <span>[</span>
+                                    <span class="text-uppercase"><?= $category['name'] ?></span>
+                                    <span>]</span>
+                                </a>
+                            </li>
+                        <?php endforeach; ?>
                         <li class="navbar__mobile-item">
-                            <a href="" class="navbar__mobile-item-link">
-                                <span>[</span>
-                                <span>FURNITURE</span>
-                                <span>]</span>
-                            </a>
-                        </li>
-                        <li class="navbar__mobile-item">
-                            <a href="" class="navbar__mobile-item-link">
-                                <span>[</span>
-                                <span>ELECTRONIC</span>
-                                <span>]</span>
-                            </a>
-                        </li>
-                        <li class="navbar__mobile-item">
-                            <a href="" class="navbar__mobile-item-link">
-                                <span>[</span>
-                                <span>LAMP</span>
-                                <span>]</span>
-                            </a>
-                        </li>
-                        <li class="navbar__mobile-item">
-                            <a href="" class="navbar__mobile-item-link">
-                                <span>[</span>
-                                <span>KITCHEN</span>
-                                <span>]</span>
-                            </a>
-                        </li>
-                        <li class="navbar__mobile-item">
-                            <a href="" class="navbar__mobile-item-link">
-                                <span>[</span>
-                                <span>CHAIR</span>
-                                <span>]</span>
-                            </a>
-                        </li>
-                        <li class="navbar__mobile-item">
-                            <a href="" class="navbar__mobile-item-link">
-                                <span>[</span>
-                                <span>SKINCARE</span>
-                                <span>]</span>
-                            </a>
-                        </li>
-                        <li class="navbar__mobile-item">
-                            <a href="login.html" class="navbar__mobile-item-link">
+                            <a href="?act=login" class="navbar__mobile-item-link">
                                 <span>[</span>
                                 <span>ACCOUNT</span>
                                 <span>]</span>

@@ -63,33 +63,33 @@
                 </ul>
             </div>
             <div class="footer__links">
-                <h3 class="footer__link-title">LINKS</h3>
+                <h3 class="footer__link-title fs-2">LINKS</h3>
                 <ul>
-                    <li class="footer__link-item">
+                    <li class="footer__link-item fs-4">
                         <a href="" class="">TERMS OF SERVICE</a>
                     </li>
-                    <li class="footer__link-item">
+                    <li class="footer__link-item fs-4">
                         <a href="" class="">PRIVACY POLICY</a>
                     </li>
                 </ul>
             </div>
             <div class="footer__links">
-                <h3 class="footer__link-title">INFORMATION</h3>
+                <h3 class="footer__link-title fs-2">INFORMATION</h3>
                 <ul>
-                    <li class="footer__link-item">
+                    <li class="footer__link-item fs-4">
                         <a href="" class="">FAQ</a>
                     </li>
-                    <li class="footer__link-item">
+                    <li class="footer__link-item fs-4">
                         <a href="" class="">RETURNS & EXCHANGES</a>
                     </li>
-                    <li class="footer__link-item">
+                    <li class="footer__link-item fs-4">
                         <a href="" class="">CONTACT</a>
                     </li>
                 </ul>
             </div>
         </div>
         <div class="footer__aside">
-            <div class="footer__aside-copyright">
+            <div class="footer__aside-copyright fs-4">
                 <p>© KIA Shop</p>
                 <p>Web Design by Trần Hưng</p>
             </div>

@@ -58,6 +58,7 @@
         });
     </script>
 
+    <script src="<?= BASE_URL ?>assets/js/base.js"></script>
     <script src="<?= $js ?? null ?>"></script>
 
 </body>

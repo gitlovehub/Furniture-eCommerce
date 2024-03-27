@@ -31,6 +31,23 @@ closeBtn.addEventListener('click', () => {
     document.body.classList.remove('ov-hidden');
 });
 
+/*=============== Open Cart ===============*/ 
+const cartIcons = document.querySelectorAll('.cart-icon');
+const cartOverlay = document.querySelector('.cart-overlay');
+const cartClose = document.querySelector('.cart-close');
+
+cartIcons.forEach(cartIcon => {
+    cartIcon.addEventListener('click', () => {
+        cartOverlay.classList.add('active');
+        document.body.classList.add('ov-hidden');
+    });
+});
+
+cartClose.addEventListener('click', () => {
+    cartOverlay.classList.remove('active');
+    document.body.classList.remove('ov-hidden');
+});
+
 /*=============== SHOW SCROLL UP ===============*/ 
 const scrollTop = () => {
     const scrollTop = document.getElementById('scroll-top')

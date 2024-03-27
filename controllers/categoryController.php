@@ -13,14 +13,13 @@ function categories() {
 
 function categoryFilter($id) {
     $js = '';
-    $view = 'category/categoryFilter';
     $listCategory = selectStatusActive('tbl_categories');
     
     // Lấy danh sách sản phẩm thuộc danh mục đã chọn (nếu có)
-    $selectedProduct = [];
+    $listProducts = [];
     if ($id !== null) {
-        $view = 'category/categoryFilter';
-        $selectedProduct = selectProductsByCategoryId($id);
+        $view = 'category/filter';
+        $listProducts = selectProductsByCategoryId($id);
     } else {
         // Nếu không có danh mục được chọn, hiển thị tất cả các sản phẩm
         $view = 'category/categories';
@@ -28,3 +27,4 @@ function categoryFilter($id) {
     }
     require_once PATH_VIEW . 'layouts/master.php';
 }
+

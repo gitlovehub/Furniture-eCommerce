@@ -11,10 +11,10 @@
                 $gridClass = 'grid-' . $banner['grid'];
                 ?>
                 <div class="featured <?= $gridClass ?>">
-                    <a href="" class="home__featured-link">
+                    <a href="?act=category-filter&id=<?= $banner['id_category'] ?>" class="home__featured-link">
                         <div class="overlay-img"></div>
                         <img src="<?= BASE_URL . $banner['image'] ?>" alt="" class="home__featured-img">
-                        <p class="home__featured-title"><?= $banner['title'] ?></p>
+                        <p class="home__featured-title fs-2"><?= $banner['title'] ?></p>
                     </a>
                 </div>
             <?php endforeach; ?>
@@ -25,7 +25,7 @@
 
 <section class="product">
     <div class="grid wide">
-        <h2 class="page-title">Products we are proud of</h2>
+        <h2 class="page-title fs-2">Products we are proud of</h2>
         <div class="grid-products">
 
             <?php foreach (array_slice($listProducts, 0, 8) as $product) : ?>
@@ -37,8 +37,8 @@
                         <button class="product__item-btn">ADD TO CART</button>
                     </div>
                     <div class="product__item-details">
-                        <h4 class="product__item-name"><?= $product['name'] ?></h4>
-                        <p class="product__item-price">£<?= $product['price'] ?></p>
+                        <h4 class="product__item-name fs-4"><?= $product['name'] ?></h4>
+                        <p class="product__item-price fs-3">£<?= $product['price'] ?></p>
                     </div>
                 </div>
             <?php endforeach; ?>
@@ -52,13 +52,13 @@
         <div class="banner-container">
             <?php $lastBanner = end($listBanner); ?>
             <div class="banner__text-side">
-                <h2 class="banner__text-title">
+                <h2 class="banner__text-title fs-2">
                     <?= $lastBanner['title'] ?>
                 </h2>
-                <p class="banner__text-subtitle">
+                <p class="banner__text-subtitle fs-4">
                     <?= $lastBanner['description'] ?>
                 </p>
-                <a href="" class="banner-btn">Shop now</a>
+                <a href="?act=category-filter&id=<?= $lastBanner['id_category'] ?>" class="banner-btn">Shop now</a>
             </div>
             <div class="banner__img-side">
                 <img src="<?= BASE_URL . $lastBanner['image'] ?>" alt="" class="banner-img">
@@ -69,7 +69,7 @@
 
 <section class="trending">
     <div class="grid wide">
-        <h2 class="page-title">Trending Now</h2>
+        <h2 class="page-title fs-2">Trending Now</h2>
 
         <div class="trending-container">
             <div class="trending-slider" id="slider">
@@ -83,8 +83,8 @@
                             <button class="product__item-btn">ADD TO CART</button>
                         </div>
                         <div class="product__item-details">
-                            <h4 class="product__item-name"><?= $product['name'] ?></h4>
-                            <p class="product__item-price">£<?= $product['price'] ?></p>
+                            <h4 class="product__item-name fs-4"><?= $product['name'] ?></h4>
+                            <p class="product__item-price fs-3">£<?= $product['price'] ?></p>
                         </div>
                     </div>
                 <?php endforeach; ?>
