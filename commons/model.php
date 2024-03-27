@@ -1,7 +1,5 @@
 <?php 
 
-// CRUD
-
 if (!function_exists('selectAll')) {
     function selectAll($tableName) {
         try {

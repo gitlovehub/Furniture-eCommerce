@@ -13,8 +13,17 @@ require_file(PATH_MODEL);
 $act = $_GET["act"] ?? '/';
 
 match ($act) {
-    '/'        => index(),
-    'home-page' => index(),
+    '/'          => index(),
+    'home-page'  => index(),
+
+    // Auth
+    'login'    => login(),
+    // 'register' => register(),
+
+    // Cate
+    'categories'      => categories(),
+    'category-filter' => categoryFilter($_GET["id"]),
+
 
 };
 

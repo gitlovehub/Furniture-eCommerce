@@ -12,5 +12,5 @@ define('PATH_VIEW_ADMIN'      , __DIR__ . '/../admin/views/');
 define('PATH_UPLOAD', '../');
 
 
-define('BASE_URL'      , 'http://localhost/gitlovehub/du-an-1/');
-define('BASE_URL_ADMIN', 'http://localhost/gitlovehub/du-an-1/admin/');
+define('BASE_URL'      , 'http://localhost/du-an-1/');
+define('BASE_URL_ADMIN', 'http://localhost/du-an-1/admin/');

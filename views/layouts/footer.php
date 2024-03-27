@@ -2,7 +2,7 @@
     <div class="news-text">
         <h2>Newsletter</h2>
         <form>
-            <input type="email" placeholder="username@email.com" required>
+            <input type="email" name="email" placeholder="username@email.com" autocomplete="off" required>
             <button class="raise" type="submit">
                 <span>Submit</span>
             </button>

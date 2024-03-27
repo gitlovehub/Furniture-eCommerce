@@ -356,8 +356,12 @@ section {
 }
 
 .category__filter-btn:hover button {
-  background-color: #eee;
   border: 2px solid rgb(0, 0, 0);
+}
+
+.category__filter-btn.active button {
+  background-color: #000;
+  color: #FFF;
 }
 
 .product__name {

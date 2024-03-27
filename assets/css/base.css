@@ -347,7 +347,7 @@ h2 {
 
 .news {
   margin-top: 10rem;
-  padding: 10rem 0;
+  padding: 11rem 0;
   text-align: center;
   background-color: #131313;
 }
@@ -526,6 +526,7 @@ body::-webkit-scrollbar-thumb:hover {
   border-top: 2px solid rgba(0, 0, 0, 0.205);
   display: grid;
   place-items: center;
+  z-index: 1;
 }
 
 .product__item-btn {

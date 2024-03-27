@@ -6,13 +6,13 @@
             </a>
 
             <div class="header__navbar-menu hide-on-mobile">
-                <a href="categories.html" class="header__navbar-menu-link">
+                <a href="?act=categories" class="header__navbar-menu-link">
                     CATEGORIES
                 </a>
                 <a href="register.html" class="header__navbar-menu-link">
                     REGISTER
                 </a>
-                <a href="login.html" class="header__navbar-menu-link">
+                <a href="?act=login" class="header__navbar-menu-link">
                     LOGIN
                 </a>
                 <button class="header__navbar-menu-link cart-icon has-cart" data-item-count="7">
