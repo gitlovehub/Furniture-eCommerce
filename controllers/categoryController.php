@@ -1,14 +1,15 @@
 <?php
 
 function categories() {
-    $js           = '';
+    $js           = BASE_URL.'assets/js/range.js';
+    $css          = BASE_URL.'assets/css/range.css';
     $titleBar     = 'Categories';
     $view         = 'category/categories';
     $listCategory = selectStatusActive('tbl_categories');
     $listProducts = selectStatusActive('tbl_products');
 
     usort($listProducts, function ($a, $b) {
-        return $b['view'] - $a['view'];
+        return strcmp($a['name'], $b['name']);
     });
 
     require_once PATH_VIEW . 'layouts/master.php';
@@ -32,4 +33,3 @@ function categoryFilter($id) {
 
     require_once PATH_VIEW . 'layouts/master.php';
 }
-

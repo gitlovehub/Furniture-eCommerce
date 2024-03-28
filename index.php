@@ -24,7 +24,10 @@ match ($act) {
     'categories'      => categories(),
     'category-filter' => categoryFilter($_GET["id"]),
 
-
+    // Product
+    'search-product'   => searchProduct(),
+    'product-detail'   => productDetail($_GET["id"]),
+    
 };
 
 require_once './commons/disconnect-db.php';

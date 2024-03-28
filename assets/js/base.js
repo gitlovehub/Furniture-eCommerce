@@ -48,6 +48,23 @@ cartClose.addEventListener('click', () => {
     document.body.classList.remove('ov-hidden');
 });
 
+/*=============== Open Search ===============*/ 
+const searchIcons = document.querySelectorAll('.search-icon');
+const searchOverlay = document.querySelector('.search-overlay');
+const searchClose = document.querySelector('.search-close');
+
+searchIcons.forEach(searchIcon => {
+    searchIcon.addEventListener('click', () => {
+        searchOverlay.classList.add('active');
+        document.body.classList.add('ov-hidden');
+    });
+});
+
+searchClose.addEventListener('click', () => {
+    searchOverlay.classList.remove('active');
+    document.body.classList.remove('ov-hidden');
+});
+
 /*=============== SHOW SCROLL UP ===============*/ 
 const scrollTop = () => {
     const scrollTop = document.getElementById('scroll-top')

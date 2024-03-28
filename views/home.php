@@ -28,9 +28,9 @@
         <h2 class="page-title fs-2">Products we are proud of</h2>
         <div class="grid-products">
 
-            <?php foreach (array_slice($listProducts, 0, 8) as $product) : ?>
+            <?php foreach ($bestSelling as $product) : ?>
                 <div class="product__item">
-                    <div class="product__item-wrapper-img" style="min-height: 300px;">
+                    <div onclick="redirectToProductDetail(<?= $product['id'] ?>)" class="product__item-wrapper-img" style="min-height: 300px;">
                         <img src="<?= BASE_URL . $product['thumbnail'] ?>" alt="" class="product__item-img">
                     </div>
                     <div class="product__item-btn-overlay">
@@ -50,33 +50,33 @@
 <section class="banner">
     <div class="grid wide">
         <div class="banner-container">
-            <?php $lastBanner = end($listBanner); ?>
+            <?php $banner = end($listBanner); ?>
             <div class="banner__text-side">
                 <h2 class="banner__text-title fs-2">
-                    <?= $lastBanner['title'] ?>
+                    <?= $banner['title'] ?>
                 </h2>
                 <p class="banner__text-subtitle fs-4">
-                    <?= $lastBanner['description'] ?>
+                    <?= $banner['description'] ?>
                 </p>
-                <a href="?act=category-filter&id=<?= $lastBanner['id_category'] ?>" class="banner-btn">Shop now</a>
+                <a href="?act=category-filter&id=<?= $banner['id_category'] ?>" class="banner-btn">Shop now</a>
             </div>
             <div class="banner__img-side">
-                <img src="<?= BASE_URL . $lastBanner['image'] ?>" alt="" class="banner-img">
+                <img src="<?= BASE_URL . $banner['image'] ?>" alt="" class="banner-img">
             </div>
         </div>
     </div>
 </section>
 
-<section class="trending">
+<section class="carousel">
     <div class="grid wide">
-        <h2 class="page-title fs-2">Trending Now</h2>
+        <h2 class="page-title fs-2">Top Viewed Products</h2>
 
-        <div class="trending-container">
-            <div class="trending-slider" id="slider">
+        <div class="carousel-container">
+            <div class="carousel-slider" id="slider">
 
-                <?php foreach ($trendingProducts as $product) : ?>
+                <?php foreach ($topViews as $product) : ?>
                     <div class="product__item">
-                        <div class="product__item-wrapper-img" style="min-height: 220px;">
+                        <div onclick="redirectToProductDetail(<?= $product['id'] ?>)" class="product__item-wrapper-img" style="min-height: 220px;">
                             <img src="<?= BASE_URL . $product['thumbnail'] ?>" alt="" class="product__item-img">
                         </div>
                         <div class="product__item-btn-overlay">
@@ -90,7 +90,7 @@
                 <?php endforeach; ?>
 
             </div>
-            <div class="trending-controls">
+            <div class="carousel-controls">
                 <div class="button-prev"></div>
                 <div class="button-next"></div>
             </div>

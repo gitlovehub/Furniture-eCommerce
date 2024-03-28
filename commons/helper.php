@@ -21,8 +21,8 @@ if (!function_exists('debug')) {
 
 if (!function_exists('page404')) {
     function page404() {
-        echo "<h2>Page Not Found :(</h2>";
-        echo "<h4>Oops! 😖 The requested URL was not found on this server.</h4>";
+        echo '<h2 class="text-center p-5">Page Not Found :(</h2>';
+        echo '<p class="text-center">Oops! 😖 The requested URL was not found on this server.</p>';
         die;
     }
 }

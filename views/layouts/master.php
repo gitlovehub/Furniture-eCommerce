@@ -32,7 +32,7 @@
 
 <body>
 
-    <?php require_once 'cart-overlay.php'; ?>
+    <?php require_once 'overlay.php'; ?>
 
     <?php require_once 'header.php'; ?>
 
@@ -49,13 +49,18 @@
     </a>
 
     <script>
-        // Lặp qua mỗi phần tử trong NodeList và gán sự kiện click cho mỗi phần tử
-        document.querySelectorAll('.product__item-img').forEach(function(item) {
-            item.addEventListener('click', function() {
-                // Điều hướng đến trang khác khi click vào thẻ div
-                window.location.href = 'https://www.example.com'; // Thay URL bằng đường dẫn mong muốn
-            });
-        });
+        function redirectToProductDetail(productId) {
+            window.location.href = '<?= BASE_URL ?>?act=product-detail&id=' + productId;
+        }
+
+        function goBack() {
+            window.history.back();
+        }
+
+        function changeBigImage(image) {
+            var bigImage = document.getElementById('big-image');
+            bigImage.src = image.src;
+        }
     </script>
 
     <script src="<?= BASE_URL ?>assets/js/base.js"></script>

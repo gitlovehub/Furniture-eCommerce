@@ -15,6 +15,12 @@
                 <a href="?act=login" class="header__navbar-menu-link">
                     LOGIN
                 </a>
+                <button class="header__navbar-menu-link search-icon">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="#000000" width="1.2em" height="1.2em" viewBox="0 0 32 32" version="1.1">
+                        <title>search</title>
+                        <path d="M16.906 20.188l5.5 5.5-2.25 2.281-5.75-5.781c-1.406 0.781-3.031 1.219-4.719 1.219-5.344 0-9.688-4.344-9.688-9.688s4.344-9.688 9.688-9.688 9.719 4.344 9.719 9.688c0 2.5-0.969 4.781-2.5 6.469zM3.219 13.719c0 3.594 2.875 6.469 6.469 6.469s6.469-2.875 6.469-6.469-2.875-6.469-6.469-6.469-6.469 2.875-6.469 6.469z" />
+                    </svg>
+                </button>
                 <button class="header__navbar-menu-link cart-icon has-cart" data-item-count="7">
                     <svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 24 24" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg">
                         <g>
@@ -27,6 +33,12 @@
             </div>
 
             <div class="header__navbar-mobile hide-on-pc hide-on-tablet">
+                <button class="header__navbar-menu-link search-icon">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="#000000" width="1.2em" height="1.2em" viewBox="0 0 32 32" version="1.1">
+                        <title>search</title>
+                        <path d="M16.906 20.188l5.5 5.5-2.25 2.281-5.75-5.781c-1.406 0.781-3.031 1.219-4.719 1.219-5.344 0-9.688-4.344-9.688-9.688s4.344-9.688 9.688-9.688 9.719 4.344 9.719 9.688c0 2.5-0.969 4.781-2.5 6.469zM3.219 13.719c0 3.594 2.875 6.469 6.469 6.469s6.469-2.875 6.469-6.469-2.875-6.469-6.469-6.469-6.469 2.875-6.469 6.469z" />
+                    </svg>
+                </button>
                 <button class="header__navbar-menu-link cart-icon has-cart" data-item-count="7">
                     <svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 24 24" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg">
                         <g>
@@ -52,6 +64,13 @@
                         </svg>
                     </div>
                     <ul class="navbar__mobile-list">
+                        <li class="navbar__mobile-item">
+                            <a href="?act=categories" class="navbar__mobile-item-link">
+                                <span>[</span>
+                                <span>All</span>
+                                <span>]</span>
+                            </a>
+                        </li>
                         <?php $listCategory = selectStatusActive('tbl_categories'); ?>
                         <?php foreach ($listCategory as $category) : ?>
                             <li class="navbar__mobile-item">

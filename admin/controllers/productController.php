@@ -114,8 +114,8 @@ function updateStatusProduct($id, $value) {
 function addGallery($id) {
     $titleBar    = 'Products';
     $view        = 'product/product-gallery';
-    $list        = getGallery('tbl_gallery', $id);
     $show        = selectOne('tbl_products', $id);
+    $gallery     = getGallery('tbl_gallery', $id);
 
     if (isset($_POST['btnAddGallery'])) {
 

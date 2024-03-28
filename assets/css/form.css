@@ -79,7 +79,7 @@
   gap: 0.5rem;
 }
 
-input[type='checkbox'] {
+input[type="checkbox"] {
   width: 16px;
   height: 16px;
   cursor: pointer;
@@ -89,7 +89,7 @@ input[type='checkbox'] {
   width: 100%;
 }
 
-.link-create{
+.link-create {
   color: red;
   font-weight: 700;
 }

@@ -20,7 +20,7 @@
                         <img src="<?= PATH_UPLOAD . $show['thumbnail'] ?>" width="400px">
                     </div>
                     <div class="card-body row">
-                        <?php foreach ($list as $item) : ?>
+                        <?php foreach ($gallery as $item) : ?>
                             <div class="col-md-4 mb-4 position-relative">
                                 <a href="?act=delete-image&id=<?= $item['id'] ?>&back=<?= $_GET["id"] ?>" class="img-link d-block position-relative">
                                     <div class="ovl position-absolute top-50 start-50 translate-middle">
