@@ -1,7 +1,8 @@
 const rangeInput = document.querySelectorAll(".range-input input"),
-priceInput = document.querySelectorAll(".price-input input"),
-range = document.querySelector(".slider .progress");
+priceInput = document.querySelectorAll(".range-field input"),
+range = document.querySelector(".range-slider .progress");
 let priceGap = 1000;
+
 priceInput.forEach(input =>{
     input.addEventListener("input", e =>{
         let minPrice = parseInt(priceInput[0].value),
@@ -35,4 +36,21 @@ rangeInput.forEach(input =>{
             range.style.right = 100 - (maxVal / rangeInput[1].max) * 100 + "%";
         }
     });
+});
+
+/*=============== Open Filter ===============*/ 
+const filterIcons = document.querySelectorAll('.filter-icon');
+const filterOverlay = document.querySelector('.filter-overlay');
+const filterClose = document.querySelector('.filter-close');
+
+filterIcons.forEach(filterIcon => {
+    filterIcon.addEventListener('click', () => {
+        filterOverlay.classList.add('active');
+        document.body.classList.add('ov-hidden');
+    });
+});
+
+filterClose.addEventListener('click', () => {
+    filterOverlay.classList.remove('active');
+    document.body.classList.remove('ov-hidden');
 });

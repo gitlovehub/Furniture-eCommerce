@@ -1,31 +1,32 @@
-<section id="home">
-    <div class="grid wide">
-        <span class="d-flex align-items-center">
-            <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="tabler-icon tabler-icon-chevron-left">
-                <path d="M15 6l-6 6l6 6"></path>
-            </svg><a href="#" onclick="goBack()" class="header__navbar-menu-link fs-3">Back</a>
+<section id="intro">
+    <div class="grid wide pt-5">
+        <span class="header__navbar-menu-link">
+            <i class="fa-solid fa-chevron-left"></i>
+            <span onclick="goBack()" class="fs-3">Back</span>
         </span>
         <h1 class="product__name">
-            <?= $show['name'] ?>
-            <span id="discount-stick" class="shadow-sm">
-                –<?= $show['discount'] ?>%
-            </span>
+            <?= $item['name'] ?>
+            <?php if ($item['discount'] != 0) : ?>
+                <span id="discount-stick" class="fs-3 ms-4 shadow">
+                    –<?= $item['discount'] ?>%
+                </span>
+            <?php endif; ?>
         </h1>
         <div class="product__container">
             <div class="product__left">
                 <div class="big-img">
-                    <img src="<?= BASE_URL . $show['thumbnail'] ?>" id="big-image">
+                    <img src="<?= BASE_URL . $item['thumbnail'] ?>" id="big-image">
                 </div>
                 <div class="small-imgs">
-                    <img onclick="changeBigImage(this)" src="<?= BASE_URL . $show['thumbnail'] ?>" class="shadow-sm">
-                    <?php foreach ($gallery as $item) : ?>
-                        <img onclick="changeBigImage(this)" src="<?= BASE_URL . $item['url'] ?>" class="shadow-sm">
+                    <img onclick="changeBigImage(this)" src="<?= BASE_URL . $item['thumbnail'] ?>" class="shadow-sm">
+                    <?php foreach ($gallery as $image) : ?>
+                        <img onclick="changeBigImage(this)" src="<?= BASE_URL . $image['url'] ?>" class="shadow-sm">
                     <?php endforeach ?>
                 </div>
             </div>
             <div class="product__right">
                 <p class="product__desc">
-                    <?= $show['description'] ?>
+                    <?= $item['description'] ?>
                 </p>
                 <h2>Color:</h2>
                 <div class="product__clr">
@@ -46,19 +47,16 @@
                 <div class="product__qty">
                     <div class="product__qty-btns">
                         <button onclick="updateQuantity(-1)">–</button>
-                        <p class="number" id="quantity">1</p>
+                        <p class="number" id="qty">1</p>
                         <button onclick="updateQuantity(+1)">+</button>
                     </div>
-                    <?php
-                    // Lấy giá cơ bản và phần trăm giảm giá từ $show
-                    $basePrice = $show['price'];
-                    $discount  = $show['discount'];
-                    // Tính toán giá sau khi được giảm giá
-                    $price = $basePrice - ($basePrice * $discount / 100);
-                    ?>
                     <div class="product__price">
-                        <span class="text-secondary text-decoration-line-through">£<?= $show['price'] ?></span>
-                        <span id="price">£<?= $price ?></span>
+                        <?php if ($sale == $cost) : ?>
+                            <span id="price">£<?= $sale ?></span>
+                        <?php else : ?>
+                            <span class="text-secondary fw-light text-decoration-line-through">£<?= $cost ?></span>
+                            <span id="price">£<?= $sale ?></span>
+                        <?php endif; ?>
                     </div>
                 </div>
                 <div class="product__act">
@@ -73,7 +71,7 @@
 <!-- Comments here -->
 <section class="comments">
     <div class="grid wide">
-        <h2 class="page-title">Comments</h2>
+        <h2 class="page-title fs-1">Comments</h2>
         <div class="col-12 col-xl-6">
             <!-- comment box -->
             <div style="height: 300px;">
@@ -169,14 +167,25 @@
 <!-- More like this -->
 <section class="carousel">
     <div class="grid wide">
-        <h2 class="page-title">More like this</h2>
+        <h2 class="page-title fs-1">More like this</h2>
 
         <div class="carousel-container">
             <div class="carousel-slider" id="slider">
 
-                <?php foreach ($similarProducts as $product) : ?>
+                <?php foreach ($sameCate as $product) : ?>
+                    <?php
+                    $basePrice = $product['price'];
+                    $discount  = $product['discount'];
+                    // Tính toán giá sau khi được giảm giá
+                    $price = $basePrice - ($basePrice * $discount / 100);
+                    ?>
                     <div class="product__item">
                         <div onclick="redirectToProductDetail(<?= $product['id'] ?>)" class="product__item-wrapper-img" style="min-height: 220px;">
+                            <?php if ($product['discount'] != 0) : ?>
+                                <span id="discount-stick" class="shadow fs-5 position-absolute">
+                                    –<?= $product['discount'] ?>%
+                                </span>
+                            <?php endif; ?>
                             <img src="<?= BASE_URL . $product['thumbnail'] ?>" alt="" class="product__item-img">
                         </div>
                         <div class="product__item-btn-overlay">
@@ -184,15 +193,22 @@
                         </div>
                         <div class="product__item-details">
                             <h4 class="product__item-name fs-4"><?= $product['name'] ?></h4>
-                            <p class="product__item-price fs-3">£<?= $product['price'] ?></p>
+                            <p class="product__item-price fs-3">
+                                <?php if ($price == $basePrice) : ?>
+                                    <span>£<?= $basePrice ?></span>
+                                <?php else : ?>
+                                    <span class="text-secondary fw-light text-decoration-line-through">£<?= $basePrice ?></span>
+                                    <span>£<?= $price ?></span>
+                                <?php endif; ?>
+                            </p>
                         </div>
                     </div>
                 <?php endforeach; ?>
 
             </div>
             <div class="carousel-controls">
-                <div class="button-prev"></div>
-                <div class="button-next"></div>
+                <div class="carousel-btn-prev"></div>
+                <div class="carousel-btn-next"></div>
             </div>
         </div>
     </div>
@@ -200,7 +216,7 @@
 
 <script>
     function updateQuantity(change) {
-        var quantityElement = document.getElementById('quantity');
+        var quantityElement = document.getElementById('qty');
         var currentQuantity = parseInt(quantityElement.textContent);
         var newQuantity = currentQuantity + change;
         if (newQuantity > 0) {
@@ -211,8 +227,8 @@
 
     function updatePrice(quantity) {
         var priceElement = document.getElementById('price');
-        var price = parseFloat('<?= $price ?>');
-        var totalPrice = quantity * price;
-        priceElement.textContent = '£' + totalPrice; // Làm tròn đến 2 chữ số thập phân
+        var price = parseFloat('<?= $sale ?>');
+        var totalPrice = price * quantity;
+        priceElement.textContent = '£' + totalPrice;
     }
 </script>

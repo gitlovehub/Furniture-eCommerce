@@ -14,3 +14,6 @@ define('PATH_UPLOAD', '../');
 
 define('BASE_URL'      , 'http://localhost/du-an-1/');
 define('BASE_URL_ADMIN', 'http://localhost/du-an-1/admin/');
+
+define('EMAIL'   , 'hungtdps25636@fpt.edu.vn');
+define('PASSWORD', 'qnqf veff nviy woqf');

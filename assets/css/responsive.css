@@ -21,7 +21,7 @@
   }
 
   .banner__text-side {
-    padding: 5rem 2rem;
+    padding: 5rem;
   }
 
   .banner-btn {
@@ -96,7 +96,6 @@
 
   .account-container {
     flex-direction: column-reverse;
-    gap: 5rem;
   }
 
   .account__header {

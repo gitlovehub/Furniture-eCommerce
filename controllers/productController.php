@@ -3,14 +3,14 @@
 function searchProduct() {
     $titleBar     = 'Searching';
     $view         = 'product/search';
-    $listProducts = selectStatusActive('tbl_products');
+    $listProducts = getStatusActive('tbl_products');
 
     if (isset($_POST['btnSearch'])) {
         $kw = $_POST["keyword"];
-        $_SESSION['search_keyword'] = $kw;
-    } elseif (isset($_SESSION['search_keyword'])) {
+        $_SESSION["search_keyword"] = $kw;
+    } elseif (isset($_SESSION["search_keyword"])) {
         // Retrieve the search keyword from session if it exists
-        $kw = $_SESSION['search_keyword'];
+        $kw = $_SESSION["search_keyword"];
     } else {
         // Default keyword or no keyword
         $kw = '';
@@ -23,6 +23,10 @@ function searchProduct() {
         $listProducts = $searchResults;
     }
 
+    usort($listProducts, function ($a, $b) {
+        return $b['discount'] - $a['discount'];
+    });
+
     require_once PATH_VIEW . 'layouts/master.php';
 }
 
@@ -31,21 +35,32 @@ function noSearchResult() {
 }
 
 function productDetail($id) {
-    $js       = BASE_URL.'assets/js/slider.js';
+    $js       = BASE_URL . 'assets/js/slider.js';
     $titleBar = 'Product Page';
     $view     = 'product/detail';
-    $show     = selectOne('tbl_products', $id);
+    $item     = selectOne('tbl_products', $id);
     $gallery  = getGallery('tbl_gallery', $id);
 
-    $cate = $show['id_category'];
-    $similarProducts = selectProductsByCategoryId($cate);
+    $cost      = $item['price'];
+    $discount  = $item['discount'];
+    // Tính toán giá sau khi được giảm giá
+    $sale = $cost - ($cost * $discount / 100);
 
-    // Loại bỏ sản phẩm hiện tại khỏi mảng $similarProducts
-    foreach ($similarProducts as $key => $product) {
+    // debug($item, 30);
+
+    $cate = $item['id_category'];
+    $sameCate = getProductsByCategoryId($cate);
+
+    // Loại bỏ sản phẩm hiện tại khỏi mảng
+    foreach ($sameCate as $key => $product) {
         if ($product['id'] == $id) {
-            unset($similarProducts[$key]);
+            unset($sameCate[$key]);
         }
     }
+
+    usort($sameCate, function ($a, $b) {
+        return $b['discount'] - $a['discount'];
+    });
 
     require_once PATH_VIEW . 'layouts/master.php';
 }

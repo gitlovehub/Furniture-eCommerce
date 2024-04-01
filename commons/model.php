@@ -13,8 +13,8 @@ if (!function_exists('selectAll')) {
     }
 }
 
-if (!function_exists('selectStatusActive')) {
-    function selectStatusActive($tableName) {
+if (!function_exists('getStatusActive')) {
+    function getStatusActive($tableName) {
         try {
             $sql = "SELECT * FROM $tableName WHERE status=1 ORDER BY id DESC";
             $stmt = $GLOBALS['conn']->prepare($sql);
@@ -26,8 +26,8 @@ if (!function_exists('selectStatusActive')) {
     }
 }
 
-if (!function_exists('selectStatusDeactivated')) {
-    function selectStatusDeactivated($tableName) {
+if (!function_exists('getStatusInactive')) {
+    function getStatusInactive($tableName) {
         try {
             $sql = "SELECT * FROM $tableName WHERE status=0 ORDER BY id DESC";
             $stmt = $GLOBALS['conn']->prepare($sql);
@@ -151,6 +151,91 @@ if (!function_exists('getGallery')) {
             $stmt->bindParam(":id_product", $id);
             $stmt->execute();
             return $stmt->fetchAll();
+        } catch (\Exception $e) {
+            debug($e);
+        }
+    }
+}
+
+if (!function_exists('checkUniqueEmail')) {
+    function checkUniqueEmail($e) {
+        try {
+            $sql = "SELECT * FROM tbl_accounts WHERE email = :email LIMIT 1";
+            $stmt = $GLOBALS['conn']->prepare($sql);
+            $stmt->bindParam(":email", $e);
+            $stmt->execute();
+            $data = $stmt->fetch();
+            return empty($data) ? true : false;
+        } catch (\Exception $e) {
+            debug($e);
+        }
+    }
+}
+
+if (!function_exists('checkLogin')) {
+    function checkLogin($e, $pw) {
+        try {
+            $sql = "SELECT * FROM tbl_accounts WHERE email = :email LIMIT 1";
+            $stmt = $GLOBALS['conn']->prepare($sql);
+            $stmt->bindParam(":email", $e);
+            $stmt->execute();
+            $user = $stmt->fetch();
+            // Kiểm tra xem email tồn tại và mật khẩu phù hợp
+            if ($user && ($pw === $user['password'])) {
+                if ($user['status'] == 0) {
+                    return 'blocked'; // Tài khoản đã bị khoá
+                } elseif ($user['status'] == 1) {
+                    return $user; // Đăng nhập thành công với tài khoản đã được xác minh
+                } elseif ($user['status'] == 2) {
+                    return 'unverified'; // Đăng nhập thành công nhưng tài khoản chưa được xác minh
+                }
+            } else {
+                return false; // Sai thông tin đăng nhập
+            }
+        } catch (\Exception $e) {
+            debug($e);
+        }
+    }
+}
+
+if (!function_exists('updateOptions')) {
+    function updateOptions($tableName, $token, $col, $value) {
+        try {
+            $sql = "UPDATE $tableName SET $col = :value WHERE token = :token";
+            $stmt = $GLOBALS['conn']->prepare($sql);
+            $stmt->bindParam(":value", $value);
+            $stmt->bindParam(":token", $token);
+            $stmt->execute();
+            return true;
+        } catch (\Exception $e) {
+            debug($e);
+        }
+    }
+}
+
+if (!function_exists('getLastByToken')) {
+    function getLastByToken($tableName, $token) {
+        try {
+            $sql = "SELECT * FROM $tableName WHERE token = :token ORDER BY id DESC LIMIT 1";
+            $stmt = $GLOBALS['conn']->prepare($sql);
+            $stmt->bindParam(':token', $token);
+            $stmt->execute();
+            return $stmt->fetch();
+        } catch (\Exception $e) {
+            debug($e);
+        }
+    }
+}
+
+if (!function_exists('getEmailByToken')) {
+    function getEmailByToken($tableName, $token) {
+        try {
+            $sql = "SELECT email FROM $tableName WHERE token = :token ORDER BY id DESC LIMIT 1";
+            $stmt = $GLOBALS['conn']->prepare($sql);
+            $stmt->bindParam(':token', $token);
+            $stmt->execute();
+            $result = $stmt->fetch();
+            return $result['email']; // Trả về email
         } catch (\Exception $e) {
             debug($e);
         }

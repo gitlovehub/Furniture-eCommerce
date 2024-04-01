@@ -1,4 +1,5 @@
 <?php
+session_start();
 
 require_once './commons/env.php';
 require_once './commons/helper.php';
@@ -12,17 +13,30 @@ require_file(PATH_MODEL);
 // Điều hướng
 $act = $_GET["act"] ?? '/';
 
+middleware_auth_checkLogin($act);
+
 match ($act) {
     '/'          => index(),
     'home-page'  => index(),
 
     // Auth
-    'login'    => login(),
-    // 'register' => register(),
+    'login'          => login(),
+    'register'       => register(),
+    'verify-email'   => verifyEmail($_GET["token"]),
+    'waiting-page'   => waitingPage(),
+    'verified'       => verified(),
+    'logout'         => logout(),
+
+    // Acc
+    'settings'        => settings(),
+    'setting-info'    => settingInfo(),
+    'setting-address' => settingAddress(),
+
 
     // Cate
-    'categories'      => categories(),
-    'category-filter' => categoryFilter($_GET["id"]),
+    'categories'    => categories(),
+    'category-menu' => categoryMenu($_GET["id"]),
+    'filter-price'  => filterPrice(),
 
     // Product
     'search-product'   => searchProduct(),

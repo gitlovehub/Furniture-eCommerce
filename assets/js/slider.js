@@ -1,7 +1,7 @@
 /*=============== SLIDER ===============*/ 
 const slider = document.getElementById('slider');
-const prevButton = document.querySelector('.button-prev');
-const nextButton = document.querySelector('.button-next');
+const prevButton = document.querySelector('.carousel-btn-prev');
+const nextButton = document.querySelector('.carousel-btn-next');
 
 let scrollPosition = 0;
 

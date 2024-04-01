@@ -3,14 +3,14 @@
 function bannerList() {
     $titleBar = 'Banner';
     $view     = 'banner/banner-list';
-    $list     = getBanner();
+    $list     = getBanners();
     require_once PATH_VIEW_ADMIN . 'layouts/master.php';
 }
 
 function bannerBin() {
     $titleBar = 'Banner';
     $view     = 'banner/banner-bin';
-    $list     = getBanner();
+    $list     = getBanners();
     require_once PATH_VIEW_ADMIN . 'layouts/master.php';
 }
 
@@ -23,7 +23,7 @@ function updateBanner($id) {
 
     $titleBar = 'Banner';
     $view     = 'banner/banner-update';
-    $listCategory = selectStatusActive('tbl_categories');
+    $listCategory = getStatusActive('tbl_categories');
     
     if (isset($_POST['btnSave'])) {
         $data = [

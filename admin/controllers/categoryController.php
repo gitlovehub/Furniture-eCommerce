@@ -3,14 +3,14 @@
 function categoryList() {
     $titleBar = 'Categories';
     $view     = 'category/category-list';
-    $list     = selectStatusActive('tbl_categories');
+    $list     = getStatusActive('tbl_categories');
     require_once PATH_VIEW_ADMIN . 'layouts/master.php';
 }
 
 function categoryBin() {
     $titleBar = 'Categories';
     $view     = 'category/category-bin';
-    $list     = selectStatusDeactivated('tbl_categories');
+    $list     = getStatusInactive('tbl_categories');
     require_once PATH_VIEW_ADMIN . 'layouts/master.php';
 }
 

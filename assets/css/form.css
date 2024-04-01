@@ -23,6 +23,7 @@
 }
 
 .form__group > input {
+  height: 50px;
   width: 100%;
   padding: 1.2rem 1.4rem;
   outline: none;

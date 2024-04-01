@@ -135,7 +135,7 @@
                         <div class="mb-3">
                             <label class="form-label" for="product-discount">Discount percent</label>
                             <div class="input-group">
-                                <input type="number" min="0" max="100" name="productDiscount" class="form-control" id="product-discount" placeholder="0 to 100"
+                                <input type="number" min="0" max="99" name="productDiscount" class="form-control" id="product-discount" placeholder="0 to 99"
                                 value="<?= isset($_SESSION["data"]) ? $_SESSION["data"]["discount"] : null ?>">
                                 <span class="input-group-text">%</span>
                             </div>

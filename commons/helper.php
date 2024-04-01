@@ -50,3 +50,14 @@ if (!function_exists('middleware_auth_check')) {
         }
     }
 }
+
+if (!function_exists('middleware_auth_checkLogin')) {
+    function middleware_auth_checkLogin($act) {
+        if ($act == 'login') {
+            if (!empty($_SESSION['user'])) {
+                header('Location: ' . BASE_URL);
+                exit();
+            }
+        }
+    }
+}

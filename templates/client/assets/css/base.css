@@ -247,12 +247,8 @@ h2 {
   width: 100%;
 }
 
-.cart-icon,
 .hamburger {
-  font-size: 2.5rem;
   cursor: pointer;
-  border: none;
-  background: none;
 }
 
 .cart-icon.has-cart::before {

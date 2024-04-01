@@ -2,7 +2,7 @@ section {
   padding: 8rem 1.3rem 0;
 }
 
-#home {
+#intro {
   padding-top: 120px;
 }
 
@@ -246,7 +246,7 @@ section {
   right: 0;
 }
 
-.button-prev {
+.carousel-btn-prev {
   background-color: #ddd;
   position: absolute;
   width: 68px;
@@ -259,7 +259,7 @@ section {
   cursor: pointer;
 }
 
-.button-prev::before {
+.carousel-btn-prev::before {
   content: "";
   display: block;
   width: 25px;
@@ -270,15 +270,15 @@ section {
   transition: all ease 0.3s;
 }
 
-.button-prev:hover::before {
+.carousel-btn-prev:hover::before {
   background-color: #ddd;
 }
 
-.button-prev:hover {
+.carousel-btn-prev:hover {
   background-color: #333;
 }
 
-.button-next {
+.carousel-btn-next {
   background-color: #ddd;
   position: absolute;
   width: 68px;
@@ -291,7 +291,7 @@ section {
   cursor: pointer;
 }
 
-.button-next::before {
+.carousel-btn-next::before {
   content: "";
   display: block;
   width: 25px;
@@ -302,11 +302,11 @@ section {
   transition: all ease 0.3s;
 }
 
-.button-next:hover::before {
+.carousel-btn-next:hover::before {
   background-color: #ddd;
 }
 
-.button-next:hover {
+.carousel-btn-next:hover {
   background-color: #333;
 }
 
@@ -316,14 +316,14 @@ section {
   justify-content: center;
 }
 
-.category__filter {
+.category__menu {
   display: flex;
   flex-wrap: wrap;
-  gap: 1.5rem;
   justify-content: center;
+  gap: 2rem;
 }
 
-.category__filter-btn button {
+.category__menu-btn button {
   background-color: initial;
   border: 2px solid rgba(0, 0, 0, 0.3);
   cursor: pointer;
@@ -331,13 +331,13 @@ section {
   transition: all ease 0.3s;
 }
 
-.category__filter-btn:hover button {
+.category__menu-btn:hover button {
   border: 2px solid rgb(0, 0, 0);
 }
 
-.category__filter-btn.active button {
+.category__menu-btn.active button {
   background-color: #000;
-  color: #fff;
+  color: var(--white-clr);
 }
 
 .product__name {
@@ -520,176 +520,10 @@ section {
   color: #000;
 }
 
-.cart-overlay {
-  position: fixed;
-  top: 0;
-  width: 100%;
-  height: 100vh;
-  right: -100%;
-  backdrop-filter: blur(20px);
-  -webkit-backdrop-filter: blur(20px);
-  transition: all ease-in 0.3s;
-  z-index: 999;
-}
-
-.cart-overlay.active {
-  right: 0; /* Slide in from the right when the 'open' class is present */
-}
-
-.ov-hidden {
-  overflow-y: hidden;
-}
-
-.cart-container {
-  position: absolute;
-  right: 0;
-  top: 0;
-  max-width: 500px;
-  min-width: 450px;
-  height: 100%;
-  background-color: var(--white-clr);
-  padding: 20px;
-  display: flex;
-  flex-direction: column;
-  z-index: 998;
-}
-
-.cart-header {
-  height: 50px;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 20px;
-  font-size: var(--font-title);
-}
-
-.cart-close {
-  cursor: pointer;
-  padding: 0.8rem 1rem;
-  transition: all ease 0.3s;
-}
-
-.cart-close:hover {
-  background-color: var(--platinum-clr);
-}
-
-.cart-body {
-  display: flex;
-  flex-direction: column;
-  gap: 1.5rem;
-  overflow-y: scroll;
-  min-height: calc(100vh - 129px - 70px);
-  padding: 5px;
-}
-
-.empty-cart {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
-.empty-cart-img {
-  width: 150px;
-}
-
-.cart-item {
-  background-color: #f2f2f2;
-  display: flex;
-  min-height: 140px;
-  width: 100%;
-  border: 1px solid #717171;
-  border-radius: 3px;
-  overflow: hidden;
-}
-
-.cart-item-start {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  margin: 0.5rem;
-  width: 150px;
-}
-
-.cart-item-start img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-}
-
-.cart-item-mid {
-  flex-grow: 1;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  padding: 1rem;
-  font-weight: 800;
-}
-
-.qty-changer-container {
-  display: flex;
-}
-
-.cart-qty-btn {
-  background-color: var(--black-clr);
-  color: var(--white-clr);
-  padding: 0.7rem 1rem;
-  cursor: pointer;
-}
-
-.cart-qty-btn:hover {
-  opacity: 0.7;
-}
-
-.cart-qty-number {
-  padding: 0.7rem 1.5rem;
-}
-
-.cart-item-end {
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  padding: 1rem;
-  text-align: end;
-  font-weight: 800;
-}
-
-.cart-item-remove:hover path,
-.cart-item-remove {
-  fill: red;
-  cursor: pointer;
-}
-
-.cart-footer {
-  font-family: Fira Code, monospace;
-  border-top: 2px dashed var(--black-clr);
-  margin-top: 2rem;
-  margin-right: 2.5rem;
-  padding-top: 1rem;
-}
-
-.cart-footer-title {
-  text-align: right;
-}
-
-.total-container {
-  padding-top: 1rem;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-}
-
-.total-price {
-  font-size: var(--font-subtitle);
-  font-weight: 800;
-}
-
-.checkout-btn {
-  padding: 13px 16px;
-}
-
 .account-container {
   display: flex;
-  padding: 5rem 0 10rem;
+  padding: 4rem 0 10rem;
+  gap: 5rem;
 }
 
 .account__header {
@@ -709,6 +543,7 @@ section {
 }
 
 .account__header-text {
+  line-height: 1.5;
   font-size: var(--font-subtitle);
 }
 
@@ -739,12 +574,12 @@ section {
   position: relative;
 }
 
-.account__navigation-link:hover span {
-  transition: all ease 0.3s;
+.account__navigation-link i {
+  color: #8e7a7a;
 }
 
-.account__navigation-link:hover span {
-  transform: translateX(1rem);
+.account__navigation-link:hover {
+  background-color: var(--platinum-clr);
 }
 
 .account__navigation svg {
@@ -767,31 +602,34 @@ section {
 }
 
 .account__navigation-link.active,
-.account__navigation-link.active path {
-  font-weight: 600;
-  fill: var(--black-clr);
+.account__navigation-link.active i {
+  font-weight: 700;
+  color: #333;
 }
 
 #discount-stick {
   position: relative;
   display: inline-block;
-  background: #fff;
+  background: orangered;
   width: auto;
   height: 30px;
   line-height: 32px;
-  font-size: 20px;
   font-weight: bold;
-  color: red;
+  color: #fff;
   text-align: center;
-  border-radius: 4px;
+  border-top-left-radius: 4px;
+  border-top-right-radius: 0px;
+  border-bottom-left-radius: 4px;
+  border-bottom-right-radius: 4px;
   padding: 0 15px;
-  margin-left: 2rem;
+  right: 0;
+  top: 0;
 }
 #discount-stick:after {
   content: " ";
   height: 22px;
   width: 22px;
-  background: #fff;
+  background: orangered;
   position: absolute;
   top: 4px;
   left: -9px;
@@ -806,7 +644,7 @@ section {
   content: "";
   width: 7px;
   height: 7px;
-  background: red;
+  background: #fff;
   position: absolute;
   top: 12px;
   left: 0px;

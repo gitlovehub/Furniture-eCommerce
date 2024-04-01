@@ -46,8 +46,8 @@ if (!function_exists('checkUniqueUpdateCategory')) {
     }
 }
 
-if (!function_exists('getBanner')) {
-    function getBanner() {
+if (!function_exists('getBanners')) {
+    function getBanners() {
         try {
             $sql = "SELECT 
                         b.`id`, 

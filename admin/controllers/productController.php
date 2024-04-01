@@ -15,9 +15,9 @@ function productBin() {
 }
 
 function createProduct() {
-    $titleBar = 'Products';
-    $view     = 'product/product-create';
-    $listCategory = selectStatusActive('tbl_categories');
+    $titleBar     = 'Products';
+    $view         = 'product/product-create';
+    $listCategory = getStatusActive('tbl_categories');
     
     if (isset($_POST['btnPublish'])) {
         $data = [
@@ -56,9 +56,9 @@ function updateProduct($id) {
         page404();
     }
 
-    $titleBar = 'Products';
-    $view     = 'product/product-update';
-    $listCategory = selectStatusActive('tbl_categories');
+    $titleBar     = 'Products';
+    $view         = 'product/product-update';
+    $listCategory = getStatusActive('tbl_categories');
     
     if (isset($_POST['btnSave'])) {
         $data = [
@@ -112,10 +112,10 @@ function updateStatusProduct($id, $value) {
 }
 
 function addGallery($id) {
-    $titleBar    = 'Products';
-    $view        = 'product/product-gallery';
-    $show        = selectOne('tbl_products', $id);
-    $gallery     = getGallery('tbl_gallery', $id);
+    $titleBar = 'Products';
+    $view     = 'product/product-gallery';
+    $show     = selectOne('tbl_products', $id);
+    $gallery  = getGallery('tbl_gallery', $id);
 
     if (isset($_POST['btnAddGallery'])) {
 
@@ -188,7 +188,7 @@ function validateCreateProduct($data) {
     }
 
     // Validate instock quantity
-    if (empty($data['instock'])) {
+    if (!isset($data['instock']) || $data['instock'] === '') {
         $errors['productInstock'] = 'This field is required.';
     } elseif (!is_numeric($data['instock']) || $data['instock'] < 0) {
         $errors['productInstock'] = 'Quantity must be a positive numeric value.';
@@ -204,9 +204,9 @@ function validateCreateProduct($data) {
     }
 
     // Validate discount percent
-    if (empty($data['discount'])) {
+    if (!isset($data['discount']) || $data['discount'] === '') {
         $errors['productDiscount'] = 'This field is required.';
-    } elseif (!is_numeric($data['discount']) || $data['discount'] < 0 || $data['discount'] > 100) {
+    } elseif (!is_numeric($data['discount']) || $data['discount'] < 0 || $data['discount'] > 99) {
         $errors['productDiscount'] = 'Discount percent must be a numeric value between 0 and 100.';
     }
 
@@ -238,7 +238,7 @@ function validateUpdateProduct($data) {
     }
 
     // Validate instock quantity
-    if (empty($data['instock'])) {
+    if (!isset($data['instock']) || $data['instock'] === '') {
         $errors['productInstock'] = 'This field is required.';
     } elseif (!is_numeric($data['instock']) || $data['instock'] < 0) {
         $errors['productInstock'] = 'Quantity must be a positive numeric value.';
@@ -254,9 +254,9 @@ function validateUpdateProduct($data) {
     }
 
     // Validate discount percent
-    if (empty($data['discount'])) {
+    if (!isset($data['discount']) || $data['discount'] === '') {
         $errors['productDiscount'] = 'This field is required.';
-    } elseif (!is_numeric($data['discount']) || $data['discount'] < 0 || $data['discount'] > 100) {
+    } elseif (!is_numeric($data['discount']) || $data['discount'] < 0 || $data['discount'] > 99) {
         $errors['productDiscount'] = 'Discount percent must be a numeric value between 0 and 100.';
     }
 

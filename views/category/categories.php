@@ -1,21 +1,22 @@
-<div class="grid wide">
-    <div id="home" class="category__header">
-        <span class="d-flex align-items-center">
-            <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="tabler-icon tabler-icon-chevron-left">
-                <path d="M15 6l-6 6l6 6"></path>
-            </svg><a href="#" onclick="goBack()" class="header__navbar-menu-link fs-3">Back</a>
+<section id="intro">
+    <div class="grid wide pt-5">
+        <span class="header__navbar-menu-link">
+            <i class="fa-solid fa-chevron-left"></i>
+            <span onclick="goBack()" class="fs-3">Back</span>
         </span>
+
         <h3 class="text-center fs-1 fw-semibold p-4">All</h3>
-        <div class="category__filter hide-on-mobile">
-            <a href="?act=categories" class="category__filter-btn">
+
+        <div class="category__menu hide-on-mobile">
+            <a href="?act=categories" class="category__menu-btn">
                 <button>All</button>
             </a>
             <?php foreach ($listCategory as $category) : ?>
                 <?php
                 // Đếm số lượng sản phẩm trong mỗi danh mục
-                $productCount = count(selectProductsByCategoryId($category['id']));
+                $productCount = count(getProductsByCategoryId($category['id']));
                 ?>
-                <a href="?act=category-filter&id=<?= $category['id'] ?>" class="category__filter-btn">
+                <a href="?act=category-menu&id=<?= $category['id'] ?>" class="category__menu-btn">
                     <button>
                         <?= $category['name'] ?>
                     </button>
@@ -23,30 +24,50 @@
             <?php endforeach; ?>
         </div>
 
-        <div class="bg-light mt-4 p-4 shadow-sm rounded-3">
-            <form action="?act=range-price" method="post" class="col-12 col-lg-6">
-                <h3 class="fw-semibold text-uppercase">Price</h3>
-                <div class="price-input w-100 d-flex gap-5 my-4">
-                    <div class="field d-flex align-items-center">
-                        <span>Min</span>
-                        <input type="number" class="form-control text-center fs-4 input-min" value="2500">
+        <span class="filter-icon d-flex align-items-center gap-2 pt-4">
+            <svg class="mb-1" xmlns="http://www.w3.org/2000/svg" width="25px" height="25px" viewBox="0 0 24 24" fill="none">
+                <g id="style=stroke">
+                    <g id="filter-circle">
+                        <path id="vector (Stroke)" fill-rule="evenodd" clip-rule="evenodd" d="M7.75 17.5C7.75 17.0858 7.41421 16.75 7 16.75H2C1.58579 16.75 1.25 17.0858 1.25 17.5C1.25 17.9142 1.58579 18.25 2 18.25H7C7.41421 18.25 7.75 17.9142 7.75 17.5Z" fill="#000000" />
+                        <path id="vector (Stroke)_2" fill-rule="evenodd" clip-rule="evenodd" d="M16.25 6.5C16.25 6.08579 16.5858 5.75 17 5.75H22C22.4142 5.75 22.75 6.08579 22.75 6.5C22.75 6.91421 22.4142 7.25 22 7.25H17C16.5858 7.25 16.25 6.91421 16.25 6.5Z" fill="#000000" />
+                        <path id="vector (Stroke)_3" fill-rule="evenodd" clip-rule="evenodd" d="M22.75 17.5C22.75 17.0858 22.4142 16.75 22 16.75H13C12.5858 16.75 12.25 17.0858 12.25 17.5C12.25 17.9142 12.5858 18.25 13 18.25H22C22.4142 18.25 22.75 17.9142 22.75 17.5Z" fill="#000000" />
+                        <path id="vector (Stroke)_4" fill-rule="evenodd" clip-rule="evenodd" d="M1.25 6.5C1.25 6.08579 1.58579 5.75 2 5.75H11C11.4142 5.75 11.75 6.08579 11.75 6.5C11.75 6.91421 11.4142 7.25 11 7.25H2C1.58579 7.25 1.25 6.91421 1.25 6.5Z" fill="#000000" />
+                        <path id="vector (Stroke)_5" fill-rule="evenodd" clip-rule="evenodd" d="M10 15.1499C11.2426 15.1499 12.25 16.1573 12.25 17.3999C12.25 18.6425 11.2426 19.6499 10 19.6499C8.75736 19.6499 7.75 18.6425 7.75 17.3999C7.75 16.1573 8.75736 15.1499 10 15.1499ZM13.75 17.3999C13.75 15.3288 12.0711 13.6499 10 13.6499C7.92893 13.6499 6.25 15.3288 6.25 17.3999C6.25 19.471 7.92893 21.1499 10 21.1499C12.0711 21.1499 13.75 19.471 13.75 17.3999Z" fill="#000000" />
+                        <path id="vector (Stroke)_6" fill-rule="evenodd" clip-rule="evenodd" d="M14 4.1499C12.7574 4.1499 11.75 5.15726 11.75 6.3999C11.75 7.64254 12.7574 8.6499 14 8.6499C15.2426 8.6499 16.25 7.64254 16.25 6.3999C16.25 5.15726 15.2426 4.1499 14 4.1499ZM10.25 6.3999C10.25 4.32883 11.9289 2.6499 14 2.6499C16.0711 2.6499 17.75 4.32883 17.75 6.3999C17.75 8.47097 16.0711 10.1499 14 10.1499C11.9289 10.1499 10.25 8.47097 10.25 6.3999Z" fill="#000000" />
+                    </g>
+                </g>
+            </svg>
+            <span onclick="" class="header__navbar-menu-link fs-3" style="line-height: 25px;">Filter</span>
+        </span>
+    </div>
+</section>
+
+<div class="filter-overlay">
+    <div class="filter-container">
+        <div class="filter-header border-bottom border-dark">
+            <h1 class="filter-title fw-bold text-uppercase">Filter</h1>
+            <div class="filter-close">✖</div>
+        </div>
+
+        <div class="filter-body">
+            <form action="?act=filter-price" method="post" class="">
+                <h3 class="fw-semibold fs-3 py-4">Price</h3>
+                <div class="range-container">
+                    <div class="range-field d-flex mb-4">
+                        <input type="number" readonly class="w-100 border-0 text-start fs-3 p-0 input-min" value="2500">
+                        <input type="number" readonly class="w-100 border-0 text-end fs-3 p-0 input-max" value="7500">
                     </div>
-                    <div class="field d-flex align-items-center">
-                        <span>Max</span>
-                        <input type="number" class="form-control text-center fs-4 input-max" value="7500">
+                    <div class="range-slider">
+                        <div class="progress bg-primary"></div>
                     </div>
-                    <button class="btn btn-outline-dark fs-4 px-5" type="submit" name="btnRange">Submit</button>
-                </div>
-                <div class="slider">
-                    <div class="progress bg-primary"></div>
-                </div>
-                <div class="range-input">
-                    <input type="range" class="range-min" min="0" max="10000" value="2500" step="100" name="min">
-                    <input type="range" class="range-max" min="0" max="10000" value="7500" step="100" name="max">
+                    <div class="range-input">
+                        <input type="range" class="range-min" min="0" max="10000" value="2500" step="100" name="min">
+                        <input type="range" class="range-max" min="0" max="10000" value="7500" step="100" name="max">
+                    </div>
+                    <button type="submit" name="btnRange" class="btn btn-outline-dark fs-4 mt-4 float-end">Submit</button>
                 </div>
             </form>
         </div>
-
     </div>
 </div>
 
@@ -55,16 +76,36 @@
         <div class="grid-products">
 
             <?php foreach ($listProducts as $product) : ?>
+                <?php
+                $basePrice = $product['price'];
+                $discount  = $product['discount'];
+                // Tính toán giá sau khi được giảm giá
+                $price = $basePrice - ($basePrice * $discount / 100);
+                ?>
                 <div class="product__item">
                     <div onclick="redirectToProductDetail(<?= $product['id'] ?>)" class="product__item-wrapper-img" style="min-height: 300px;">
+                        <?php if ($product['discount'] != 0) : ?>
+                            <span id="discount-stick" class="shadow fs-4 position-absolute">
+                                –<?= $product['discount'] ?>%
+                            </span>
+                        <?php endif; ?>
                         <img src="<?= BASE_URL . $product['thumbnail'] ?>" alt="" class="product__item-img">
                     </div>
                     <div class="product__item-btn-overlay">
                         <button class="product__item-btn">ADD TO CART</button>
                     </div>
                     <div class="product__item-details">
-                        <h4 class="product__item-name fs-4"><?= $product['name'] ?></h4>
-                        <p class="product__item-price fs-3">£<?= $product['price'] ?></p>
+                        <h4 class="product__item-name fs-3">
+                            <?= $product['name'] ?>
+                        </h4>
+                        <p class="product__item-price fs-3">
+                            <?php if ($price == $basePrice) : ?>
+                                <span>£<?= $basePrice ?></span>
+                            <?php else : ?>
+                                <span class="text-secondary fw-light text-decoration-line-through">£<?= $basePrice ?></span>
+                                <span>£<?= $price ?></span>
+                            <?php endif; ?>
+                        </p>
                     </div>
                 </div>
             <?php endforeach; ?>

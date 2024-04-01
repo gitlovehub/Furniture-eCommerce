@@ -14,6 +14,9 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
 
+    <!-- Font-awesome here -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
     <!-- Latest compiled and minified CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <!-- Latest compiled JavaScript -->
@@ -24,7 +27,10 @@
     <link rel="stylesheet" href="<?= BASE_URL ?>assets/css/grid.css">
     <link rel="stylesheet" href="<?= BASE_URL ?>assets/css/style.css">
     <link rel="stylesheet" href="<?= $css ?? null ?>">
+    <link rel="stylesheet" href="<?= BASE_URL ?>assets/css/toast.css">
     <link rel="stylesheet" href="<?= BASE_URL ?>assets/css/responsive.css">
+    
+    <!-- Title bar here-->
     <title>
         <?= $titleBar ?? 'Furniture Store' ?>
     </title>
@@ -41,6 +47,7 @@
     <!-- Content wrapper -->
 
     <?php require_once 'footer.php'; ?>
+    <?php require_once 'toast.php'; ?>
 
     <a href="#top" class="scrolltop-btn" id="scroll-top">
         <svg xmlns="http://www.w3.org/2000/svg" height="1em" class="angles-up" viewBox="0 0 448 512"><!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc. -->
@@ -64,6 +71,7 @@
     </script>
 
     <script src="<?= BASE_URL ?>assets/js/base.js"></script>
+    <script src="<?= BASE_URL ?>assets/js/toast.js"></script>
     <script src="<?= $js ?? null ?>"></script>
 
 </body>

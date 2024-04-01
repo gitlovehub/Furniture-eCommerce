@@ -3,21 +3,21 @@
 function adminList() {
     $titleBar = 'Accounts';
     $view     = 'account/admin-list';
-    $list     = selectStatusActive('tbl_accounts');
+    $list     = getStatusActive('tbl_accounts');
     require_once PATH_VIEW_ADMIN . 'layouts/master.php';
 }
 
 function customerList() {
     $titleBar = 'Accounts';
     $view     = 'account/customer-list';
-    $list     = selectStatusActive('tbl_accounts');
+    $list     = getStatusActive('tbl_accounts');
     require_once PATH_VIEW_ADMIN . 'layouts/master.php';
 }
 
 function customerBin() {
     $titleBar = 'Accounts';
     $view     = 'account/customer-bin';
-    $list     = selectStatusDeactivated('tbl_accounts');
+    $list     = getStatusInactive('tbl_accounts');
     require_once PATH_VIEW_ADMIN . 'layouts/master.php';
 }
 
