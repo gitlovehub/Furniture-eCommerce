@@ -1,10 +1,9 @@
-<?php require_once 'show-toast.php'; ?>
 <div class="content-wrapper">
 
     <!-- Content -->
     <div class="container-xxl flex-grow-1 container-p-y">
         <h4 class="py-3 mb-4">
-            Show Deactivated Accounts
+            Show Blocked Accounts
         </h4>
 
         <!-- Basic Bootstrap Table -->
@@ -50,14 +49,14 @@
                                     <span class="badge bg-label-secondary">
                                         <?php
                                         if ($item['status'] == 0) {
-                                            echo 'Deactivated';
+                                            echo 'Blocked';
                                         }
                                         ?>
                                     </span>
                                 </td>
                                 <td>
                                     <div class="float-end">
-                                        <button onclick="openModalStatus(<?= $item['id'] ?>, 1, 'customer', 'Active account?', '')" class="btn btn-success p-2">
+                                        <button onclick="openModalUpdateStatus(<?= $item['id'] ?>, 1, 'customer', 'Active account?', '')" class="btn btn-success p-2">
                                             Active
                                         </button>
                                     </div>

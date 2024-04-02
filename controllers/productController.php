@@ -39,15 +39,13 @@ function productDetail($id) {
     $titleBar = 'Product Page';
     $view     = 'product/detail';
     $item     = selectOne('tbl_products', $id);
-    $gallery  = getGallery('tbl_gallery', $id);
+    $gallery  = getVariants('tbl_gallery', $id);
+    $colors   = getVariants('tbl_colors', $id);
 
     $cost      = $item['price'];
     $discount  = $item['discount'];
     // Tính toán giá sau khi được giảm giá
     $sale = $cost - ($cost * $discount / 100);
-
-    // debug($item, 30);
-
     $cate = $item['id_category'];
     $sameCate = getProductsByCategoryId($cate);
 

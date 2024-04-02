@@ -1,4 +1,3 @@
-<?php require_once 'show-toast.php'; ?>
 <div class="content-wrapper">
 
     <!-- Content -->
@@ -58,7 +57,7 @@
                                         <a href="?act=update-category&id=<?= $item['id'] ?>" class="btn btn-primary p-2">
                                             <i class="bx bx-edit-alt"></i>
                                         </a>
-                                        <button onclick="openModalStatus(<?= $item['id'] ?>, 0, 'category', 'Move to Bin?', 'You can find it in the recycle bin.')" class="btn btn-danger p-2">
+                                        <button onclick="openModalUpdateStatus(<?= $item['id'] ?>, 0, 'category', 'Move to Bin?', 'You can find it in the recycle bin.')" class="btn btn-danger p-2">
                                             <i class="bx bx-trash"></i>
                                         </button>
                                     </div>

@@ -124,9 +124,6 @@
                                         <a href="?act=order-details&id=<?= $item['id'] ?>" class="btn btn-primary p-2">
                                             <i class="bx bx-show-alt"></i>
                                         </a>
-                                        <button onclick="" class="btn btn-danger p-2">
-                                            <i class="bx bx-trash"></i>
-                                        </button>
                                     </div>
                                 </td>
                             </tr>

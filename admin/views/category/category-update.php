@@ -16,11 +16,11 @@
                         <div class="col">
                             <div class="d-flex justify-content-end gap-2">
                                 <a href="?act=category-list" class="btn btn-secondary" type="button">
-                                    <i class="bx bx-arrow-back me-0 me-sm-1"></i>
+                                    <i class="bx bx-arrow-back me-1"></i>
                                     Back to list
                                 </a>
                                 <button type="submit" class="btn btn-primary" name="btnSave">
-                                    <i class="bx bx-save me-0 me-sm-1"></i>
+                                    <i class="bx bx-save me-1"></i>
                                     Save
                                 </button>
                             </div>

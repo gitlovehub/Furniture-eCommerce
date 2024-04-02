@@ -6,7 +6,7 @@
         </div>
         <div class="text">
             <h5 class="fs-2 fw-bold">Error</h5>
-            <p class="message-error text-wrap fs-4 fw-semibold p-2"></p>
+            <p class="message-error text-wrap fs-4 fw-semibold pt-3"></p>
         </div>
     </div>
     <div class="fs-2 toast-close">✖</div>
@@ -22,7 +22,7 @@
         </div>
         <div class="text">
             <h5 class="fs-2 fw-bold">Success</h5>
-            <p class="message-success text-wrap fs-4 fw-semibold p-2"></p>
+            <p class="message-success text-wrap fs-4 fw-semibold pt-3"></p>
         </div>
     </div>
     <div class="fs-2 toast-close">✖</div>

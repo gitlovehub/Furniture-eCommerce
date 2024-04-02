@@ -1,10 +1,9 @@
-<?php require_once 'show-toast.php'; ?>
 <div class="content-wrapper">
 
     <!-- Content -->
     <div class="container-xxl flex-grow-1 container-p-y">
         <h4 class="py-3 mb-4">
-        Show Deactivated Categories
+        Show Inactive Categories
         </h4>
 
         <!-- Basic Bootstrap Table -->
@@ -16,7 +15,7 @@
                 <div class="col">
                     <div class="d-flex justify-content-end gap-2">
                         <a href="?act=category-list" class="btn btn-secondary" type="button">
-                            <i class="bx bx-arrow-back me-0 me-sm-1"></i>
+                            <i class="bx bx-arrow-back me-1"></i>
                             Back
                         </a>
                     </div>
@@ -44,17 +43,17 @@
                                     <span class="badge bg-label-secondary">
                                         <?php
                                         if ($item['status'] == 0) {
-                                            echo 'Deactivated';
+                                            echo 'Inactive';
                                         }
                                         ?>
                                     </span>
                                 </td>
                                 <td>
                                     <div class="float-end">
-                                        <button onclick="openModalStatus(<?= $item['id'] ?>, 1, 'category', 'Active now?', '')" class="btn btn-success p-2">
+                                        <button onclick="openModalUpdateStatus(<?= $item['id'] ?>, 1, 'category', 'Active now?', '')" class="btn btn-success p-2">
                                             Active
                                         </button>
-                                        <button onclick="openModalDelete(<?= $item['id'] ?>)" class="btn btn-danger p-2">
+                                        <button onclick="openModalDelete(<?= $item['id'] ?>, 'delete-category')" class="btn btn-danger p-2">
                                             <i class="bx bx-trash"></i>
                                         </button>
                                     </div>

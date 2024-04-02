@@ -4,7 +4,7 @@
             <i class="fa-solid fa-chevron-left"></i>
             <span onclick="goBack()" class="fs-3">Back</span>
         </span>
-        <h1 class="product__name">
+        <h1 class="product__name fs-1">
             <?= $item['name'] ?>
             <?php if ($item['discount'] != 0) : ?>
                 <span id="discount-stick" class="fs-3 ms-4 shadow">
@@ -25,44 +25,49 @@
                 </div>
             </div>
             <div class="product__right">
-                <p class="product__desc">
+                <p class="product__desc fs-2">
                     <?= $item['description'] ?>
                 </p>
-                <h2>Color:</h2>
-                <div class="product__clr">
-                    <div class="variant-input">
-                        <input type="radio" value="clr1" id="clr-1" name="options-clr" autofocus>
-                        <label for="clr-1" style="background: #f368e0;"></label>
+                <form action="?act=add-to-cart&id=<?= $item['id'] ?>" method="post">
+
+                    <?php if (!empty($colors)) : ?>
+                        <h2>Color:</h2>
+                        <div class="product__clr">
+                            <?php $i = 1 ?>
+                            <?php foreach ($colors as $color) : ?>
+                                <div class="variant-input">
+                                    <input type="radio" value="<?= $color['id'] ?>" id="clr-<?= $i ?>" name="color" autofocus>
+                                    <label for="clr-<?= $i ?>" style="background: #<?= $color['hex'] ?>;"></label>
+                                </div>
+                                <?php $i++; ?>
+                            <?php endforeach ?>
+                        </div>
+                    <?php else : ?>
+                        <input type="hidden" name="color" value="0">
+                    <?php endif; ?>
+
+                    <h2 class="fs-1">Quantity:</h2>
+                    <div class="product__qty">
+                        <div class="product__qty-btns">
+                            <button type="button" onclick="updateQuantity(-1)">–</button>
+                            <p id="qty" class="product__qty-number">1</p>
+                            <input type="hidden" min="1" name="quantity" value="1" class="number" id="qty-hidden" readonly>
+                            <button type="button" onclick="updateQuantity(+1)">+</button>
+                        </div>
+                        <div class="product__price">
+                            <?php if ($sale == $cost) : ?>
+                                <span id="price">£<?= $sale ?></span>
+                            <?php else : ?>
+                                <span class="text-secondary fw-light text-decoration-line-through">£<?= $cost ?></span>
+                                <span id="price" class="fs-1">£<?= $sale ?></span>
+                            <?php endif; ?>
+                        </div>
                     </div>
-                    <div class="variant-input">
-                        <input type="radio" value="clr2" id="clr-2" name="options-clr">
-                        <label for="clr-2" style="background: #ff9f43;"></label>
+                    <div class="product__act">
+                        <button type="submit" name="btnAddToCart" class="product-outline-btn fs-3">add to cart</button>
+                        <button type="submit" name="btnBuyNow" class="product__item-btn fs-3">buy now</button>
                     </div>
-                    <div class="variant-input">
-                        <input type="radio" value="clr3" id="clr-3" name="options-clr">
-                        <label for="clr-3" style="background: #ee5253;"></label>
-                    </div>
-                </div>
-                <h2>Quantity:</h2>
-                <div class="product__qty">
-                    <div class="product__qty-btns">
-                        <button onclick="updateQuantity(-1)">–</button>
-                        <p class="number" id="qty">1</p>
-                        <button onclick="updateQuantity(+1)">+</button>
-                    </div>
-                    <div class="product__price">
-                        <?php if ($sale == $cost) : ?>
-                            <span id="price">£<?= $sale ?></span>
-                        <?php else : ?>
-                            <span class="text-secondary fw-light text-decoration-line-through">£<?= $cost ?></span>
-                            <span id="price">£<?= $sale ?></span>
-                        <?php endif; ?>
-                    </div>
-                </div>
-                <div class="product__act">
-                    <button class="product__act-add product-outline-btn">add to cart</button>
-                    <button class="product__act-buy product__item-btn">buy now</button>
-                </div>
+                </form>
             </div>
         </div>
     </div>
@@ -216,13 +221,19 @@
 
 <script>
     function updateQuantity(change) {
-        var quantityElement = document.getElementById('qty');
-        var currentQuantity = parseInt(quantityElement.textContent);
+        var quantityHidden = document.getElementById('qty-hidden');
+        var currentQuantity = parseInt(quantityHidden.value);
         var newQuantity = currentQuantity + change;
         if (newQuantity > 0) {
-            quantityElement.textContent = newQuantity;
+            quantityHidden.value = newQuantity;
             updatePrice(newQuantity);
+            updateQuantityDisplay(newQuantity);
         }
+    }
+
+    function updateQuantityDisplay(quantity) {
+        var quantityDisplay = document.getElementById('qty');
+        quantityDisplay.textContent = quantity;
     }
 
     function updatePrice(quantity) {

@@ -20,28 +20,29 @@ match ($act) {
     'home-page'  => index(),
 
     // Auth
-    'login'          => login(),
-    'register'       => register(),
-    'verify-email'   => verifyEmail($_GET["token"]),
-    'waiting-page'   => waitingPage(),
-    'verified'       => verified(),
-    'logout'         => logout(),
+    'login'            => login(),
+    'register'         => register(),
+    'verify-email'     => verifyEmail($_GET["token"]),
+    'waiting-page'     => waitingPage(),
+    'verified'         => verified(),
+    'logout'           => logout(),
 
     // Acc
-    'settings'        => settings(),
-    'setting-info'    => settingInfo(),
-    'setting-address' => settingAddress(),
+    'settings'         => settings(),
+    'setting-info'     => settingInfo(),
+    'setting-address'  => settingAddress(),
 
 
     // Cate
-    'categories'    => categories(),
-    'category-menu' => categoryMenu($_GET["id"]),
-    'filter-price'  => filterPrice(),
+    'categories'       => categories(),
+    'category-menu'    => categoryMenu($_GET["id"]),
+    'filter-price'     => filterPrice(),
 
     // Product
     'search-product'   => searchProduct(),
     'product-detail'   => productDetail($_GET["id"]),
-    
+    'add-to-cart'      => addToCart($_GET["id"]),
+    'delete-cart-item' => deleteItem($_GET["id"]),
 };
 
 require_once './commons/disconnect-db.php';

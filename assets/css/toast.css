@@ -23,7 +23,7 @@
   right: 10px;
   padding: 5px;
   cursor: pointer;
-  opacity: 0.7;
+  opacity: 0.5;
 }
 
 .toast-close:hover {

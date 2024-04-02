@@ -1,4 +1,3 @@
-<?php require_once 'show-toast.php'; ?>
 <div class="content-wrapper">
     
     <!-- Content -->
@@ -6,7 +5,7 @@
         <h4 class="py-3 mb-4">
             Add a new Product
             <a href="?act=product-list" class="btn btn-secondary float-end" type="button">
-                <i class="bx bx-arrow-back me-0 me-sm-1"></i>
+                <i class="bx bx-arrow-back me-1"></i>
                 Back to list
             </a>
         </h4>
@@ -154,7 +153,7 @@
                 <div class="d-flex justify-content-end gap-2">
                     <button type="reset" class="btn btn-outline-secondary">Reset</button>
                     <button class="btn btn-primary" type="submit" name="btnPublish">
-                        <i class="bx bx-upload me-0 me-sm-1"></i>
+                        <i class="bx bx-upload me-1"></i>
                         Publish product
                     </button>
                 </div>

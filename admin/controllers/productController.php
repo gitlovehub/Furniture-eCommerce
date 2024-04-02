@@ -115,10 +115,9 @@ function addGallery($id) {
     $titleBar = 'Products';
     $view     = 'product/product-gallery';
     $show     = selectOne('tbl_products', $id);
-    $gallery  = getGallery('tbl_gallery', $id);
+    $gallery  = getVariants('tbl_gallery', $id);
 
     if (isset($_POST['btnAddGallery'])) {
-
         $data = [
             "id_product" => $id ?? null,
         ];
@@ -129,7 +128,7 @@ function addGallery($id) {
         }
 
         // Validate
-        $errors = validateGallery($data);
+        $errors = validateAddGallery($data);
         if (!empty($errors)) {
             $_SESSION["errors"] = $errors;
             header('Location: ?act=add-gallery&id=' . $id);
@@ -144,17 +143,61 @@ function addGallery($id) {
     require_once PATH_VIEW_ADMIN . 'layouts/master.php';
 }
 
-function validateGallery($data) {
-    // Check if product gallery is not uploaded
-    if ($_FILES['productGallery']['size'] == 0) {
-        $errors['productGallery'] = 'Please upload an image.';
-    }
-    return $errors;
+function deleteImage($id, $product) {
+    deleteOne('tbl_gallery', $id);
+    header('Location: ?act=add-gallery&id=' . $product);
+    exit();
 }
 
-function deleteImage($id, $back) {
-    delete('tbl_gallery', $id);
-    header('Location: ?act=add-gallery&id=' . $back);
+function addColor($id) {
+    $titleBar = 'Products';
+    $view     = 'product/product-variant';
+    $show     = selectOne('tbl_products', $id);
+    $colors   = getVariants('tbl_colors', $id);
+    
+    if (isset($_POST['btnPublishColor'])) {
+        $data = [
+            "id_product" => $id ?? null,
+            "name"       => $_POST["colorName"] ?? null,
+            "hex"        => $_POST["colorHex"] ?? null,
+        ];
+
+        // Validate
+        $errors = [];
+
+        // Validate name
+        if (empty($data['name'])) {
+            $errors['colorName'] = 'This field is required.';
+        } elseif (strlen($data['name']) > 50) {
+            $errors['colorName'] = 'Please enter between 1 and 50 characters.';
+        }
+    
+        // Validate hex
+        if (empty($data['hex'])) {
+            $errors['colorHex'] = 'This field is required.';
+        } elseif (strlen($data['hex']) > 50) {
+            $errors['colorHex'] = 'Please enter between 1 and 50 characters.';
+        } elseif (!preg_match('/^[0-9a-fA-F]+$/', $data['hex'])) {
+            $errors['colorHex'] = 'Hex value can only contain numbers and letters.';
+        }
+
+        if (!empty($errors)) {
+            $_SESSION["errors"] = $errors;
+            header('Location: ?act=add-color-product&id=' . $id);
+            exit();
+        }
+
+        insert('tbl_colors', $data);
+        $_SESSION["success"]='';
+        header('Location: ?act=add-color-product&id=' . $id);
+        exit();
+    }
+    require_once PATH_VIEW_ADMIN . 'layouts/master.php';
+}
+
+function deleteColor($id, $product) {
+    deleteOne('tbl_colors', $id);
+    header('Location: ?act=add-color-product&id=' . $product);
     exit();
 }
 
@@ -260,5 +303,13 @@ function validateUpdateProduct($data) {
         $errors['productDiscount'] = 'Discount percent must be a numeric value between 0 and 100.';
     }
 
+    return $errors;
+}
+
+function validateAddGallery($data) {
+    // Check if product gallery is not uploaded
+    if ($_FILES['productGallery']['size'] == 0) {
+        $errors['productGallery'] = 'Please upload an image.';
+    }
     return $errors;
 }

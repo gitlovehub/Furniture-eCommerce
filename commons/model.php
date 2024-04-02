@@ -130,8 +130,8 @@ if (!function_exists('update')) {
     }
 }
 
-if (!function_exists('delete')) {
-    function delete($tableName, $id) {
+if (!function_exists('deleteOne')) {
+    function deleteOne($tableName, $id) {
         try {
             $sql = "DELETE FROM $tableName WHERE id = :id";
             $stmt = $GLOBALS['conn']->prepare($sql);
@@ -143,8 +143,8 @@ if (!function_exists('delete')) {
     }
 }
 
-if (!function_exists('getGallery')) {
-    function getGallery($tableName, $id) {
+if (!function_exists('getVariants')) {
+    function getVariants($tableName, $id) {
         try {
             $sql = "SELECT * FROM $tableName WHERE id_product = :id_product";
             $stmt = $GLOBALS['conn']->prepare($sql);

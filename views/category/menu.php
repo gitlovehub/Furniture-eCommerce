@@ -53,7 +53,7 @@
                         <img src="<?= BASE_URL . $product['thumbnail'] ?>" alt="" class="product__item-img">
                     </div>
                     <div class="product__item-btn-overlay">
-                        <button class="product__item-btn">ADD TO CART</button>
+                        <button onclick="redirectToProductDetail(<?= $product['id'] ?>)" class="btn btn-outline-danger px-4 fs-3">View</button>
                     </div>
                     <div class="product__item-details">
                         <h4 class="product__item-name fs-3">

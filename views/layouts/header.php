@@ -1,10 +1,12 @@
 <?php
 // Một mảng chứa các session bạn muốn hiển thị toast
 $toastSessions = [
-    "login-success"    => "Success",
-    "login-blocked"    => "Error",
-    "login-unverified" => "Error",
-    "send-failed"      => "Error",
+    "login-success"     => "Success",
+    "addtocart-success" => "Success",
+    "login-blocked"     => "Error",
+    "login-unverified"  => "Error",
+    "send-failed"       => "Error",
+    "missing-color"     => "Error",
 ];
 
 // Duyệt qua mảng session và hiển thị toast nếu session tồn tại

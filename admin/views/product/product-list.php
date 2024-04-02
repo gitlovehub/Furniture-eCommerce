@@ -1,4 +1,3 @@
-<?php require_once 'show-toast.php'; ?>
 <div class="content-wrapper">
 
     <!-- Content -->
@@ -20,7 +19,7 @@
                             Recycle Bin
                         </a>
                         <a href="?act=create-product" class="btn btn-info" type="button">
-                            <i class="bx bx-plus me-0 me-sm-1"></i>
+                            <i class="bx bx-plus me-1"></i>
                             Create Product
                         </a>
                     </div>
@@ -76,9 +75,12 @@
                                             <a href="?act=update-product&id=<?= $item['id'] ?>" class="btn btn-primary p-2">
                                                 <i class="bx bx-edit-alt"></i>
                                             </a>
-                                            <button onclick="openModalStatus(<?= $item['id'] ?>, 0, 'product', 'Move to Bin?', 'You can find it in the recycle bin.')" class="btn btn-danger p-2">
+                                            <button onclick="openModalUpdateStatus(<?= $item['id'] ?>, 0, 'product', 'Move to Bin?', 'You can find it in the recycle bin.')" class="btn btn-danger p-2">
                                                 <i class="bx bx-trash"></i>
                                             </button>
+                                            <a href="?act=add-color-product&id=<?= $item['id'] ?>" class="btn btn-dark p-2">
+                                                <i class="bx bx-spray-can"></i>
+                                            </a>
                                         </div>
                                     </td>
                                 </tr>

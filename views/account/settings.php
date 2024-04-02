@@ -1,5 +1,10 @@
 <section id="intro">
     <div class="grid wide pt-5">
+        <span class="header__navbar-menu-link">
+            <i class="fa-solid fa-chevron-left"></i>
+            <span onclick="goBack()" class="fs-3">Back</span>
+        </span>
+
         <div class="account-container">
             <aside class="account__navigation">
                 <a href="?act=setting-info" class="account__navigation-link">

@@ -1,14 +1,19 @@
-<?php require_once 'show-toast.php'; ?>
 <div class="content-wrapper">
     <!-- Content -->
 
     <div class="container-xxl flex-grow-1 container-p-y">
         <h4 class="py-3 mb-4">
             Customize a Product Gallery
-            <a href="?act=product-list" class="btn btn-secondary float-end" type="button">
-                <i class="bx bx-arrow-back me-0 me-sm-1"></i>
-                Back to list
-            </a>
+            <div class="float-end">
+                <a href="?act=product-list" class="btn btn-secondary" type="button">
+                    <i class="bx bx-arrow-back me-1"></i>
+                    Back to list
+                </a>
+                <a href="?act=add-color-product&id=<?= $show['id'] ?>" class="btn btn-dark p-2">
+                    <i class="bx bx-spray-can me-1"></i>
+                    Add color
+                </a>
+            </div>
         </h4>
         <div class="row">
             <div class="col-sm-12 col-lg-8">
@@ -22,9 +27,9 @@
                     <div class="card-body row">
                         <?php foreach ($gallery as $item) : ?>
                             <div class="col-md-4 mb-4 position-relative">
-                                <a href="?act=delete-image&id=<?= $item['id'] ?>&back=<?= $_GET["id"] ?>" class="img-link d-block position-relative">
+                                <a href="?act=delete-image&id=<?= $item['id'] ?>&product=<?= $_GET["id"] ?>" class="img-link d-block position-relative">
                                     <div class="ovl position-absolute top-50 start-50 translate-middle">
-                                        <i class="bx bx-x-circle position-absolute top-50 start-50 translate-middle fs-2"></i>
+                                        <i class="bx bx-x-circle text-danger position-absolute top-50 start-50 translate-middle fs-2"></i>
                                     </div>
                                     <img src="<?= PATH_UPLOAD . $item['url'] ?>" width="100%" height="100%" class="img-thumbnail shadow-lg">
                                 </a>
@@ -56,7 +61,7 @@
                             <div class="float-end">
                                 <button type="reset" class="btn btn-outline-secondary me-2">Reset</button>
                                 <button class="btn btn-primary" type="submit" name="btnAddGallery">
-                                    <i class="bx bx-upload me-0 me-sm-1"></i>
+                                    <i class="bx bx-upload me-1"></i>
                                     Add to Gallery
                                 </button>
                             </div>

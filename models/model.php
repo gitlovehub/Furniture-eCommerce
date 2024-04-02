@@ -37,3 +37,82 @@ if (!function_exists('searchProductsByPrice')) {
         return $products;
     }
 }
+
+if (!function_exists('getCartByCustomer')) {
+    function getCartByCustomer($tableName, $id) {
+        try {
+            $sql = "SELECT c.id AS id_cart, c.id_customer, c.id_product, c.quantity, c.id_color, p.id AS id_product, p.thumbnail AS thumbnail, p.name AS product, p.price, p.discount, pc.name AS color
+            FROM $tableName AS c
+            LEFT JOIN tbl_products AS p ON c.id_product = p.id
+            LEFT JOIN tbl_colors AS pc ON c.id_color = pc.id
+            WHERE c.id_customer = :id_customer";
+
+            $stmt = $GLOBALS['conn']->prepare($sql);
+            $stmt->bindParam(':id_customer', $id);
+            $stmt->execute();
+            return $stmt->fetchAll();
+        } catch (\Exception $e) {
+            debug($e);
+        }
+    }
+}
+
+function insertToCart($customerId, $productId, $quantity, $colorId) {
+    try {
+        // Kiểm tra xem $colorId có giá trị khác 0 không
+        if ($colorId != 0) {
+            // Kiểm tra xem sản phẩm đã tồn tại trong giỏ hàng của khách hàng chưa
+            $stmt = $GLOBALS['conn']->prepare("SELECT * FROM tbl_carts WHERE id_customer = :id_customer AND id_product = :id_product AND id_color = :id_color");
+            $stmt->bindParam(':id_customer', $customerId);
+            $stmt->bindParam(':id_product', $productId);
+            $stmt->bindParam(':id_color', $colorId);
+            $stmt->execute();
+            $existingCartItem = $stmt->fetch();
+            // Nếu sản phẩm đã tồn tại trong giỏ hàng
+            if ($existingCartItem) {
+                // Kiểm tra xem sản phẩm có cùng màu không
+                if ($existingCartItem['id_color'] == $colorId) {
+                    // Tăng số lượng sản phẩm
+                    $newQuantity = $existingCartItem['quantity'] + $quantity;
+                    $stmt = $GLOBALS['conn']->prepare("UPDATE tbl_carts SET quantity = :newQuantity WHERE id = :cartItemId");
+                    $stmt->bindParam(':newQuantity', $newQuantity);
+                    $stmt->bindParam(':cartItemId', $existingCartItem['id']);
+                    $stmt->execute();
+                    return true; // Trả về true nếu cập nhật số lượng thành công
+                }
+            }
+        }
+        
+        // Kiểm tra xem sản phẩm đã tồn tại trong giỏ hàng của khách hàng chưa (không phụ thuộc vào màu sắc)
+        $stmt = $GLOBALS['conn']->prepare("SELECT * FROM tbl_carts WHERE id_customer = :id_customer AND id_product = :id_product");
+        $stmt->bindParam(':id_customer', $customerId);
+        $stmt->bindParam(':id_product', $productId);
+        $stmt->execute();
+        $existingCartItem = $stmt->fetch();
+        
+        // Nếu sản phẩm đã tồn tại trong giỏ hàng
+        if ($existingCartItem) {
+            // Tăng số lượng sản phẩm
+            $newQuantity = $existingCartItem['quantity'] + $quantity;
+            $stmt = $GLOBALS['conn']->prepare("UPDATE tbl_carts SET quantity = :newQuantity WHERE id = :cartItemId");
+            $stmt->bindParam(':newQuantity', $newQuantity);
+            $stmt->bindParam(':cartItemId', $existingCartItem['id']);
+            $stmt->execute();
+            return true; // Trả về true nếu cập nhật số lượng thành công
+        }
+        
+        // Nếu sản phẩm chưa tồn tại trong giỏ hàng, thêm mới vào cart
+        $stmt = $GLOBALS['conn']->prepare("INSERT INTO tbl_carts (id_customer, id_product, quantity, id_color) VALUES (:customerId, :productId, :quantity, :colorId)");
+        $stmt->bindParam(':customerId', $customerId);
+        $stmt->bindParam(':productId', $productId);
+        $stmt->bindParam(':quantity', $quantity);
+        $stmt->bindParam(':colorId', $colorId);
+        $stmt->execute();
+        return true; // Trả về true nếu thêm vào giỏ hàng thành công
+    } catch (PDOException $e) {
+        echo "Error: " . $e->getMessage();
+        return false; // Trả về false nếu có lỗi xảy ra
+    } finally {
+        $GLOBALS['conn'] = null;
+    }
+}

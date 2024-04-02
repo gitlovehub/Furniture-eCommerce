@@ -1,4 +1,3 @@
-<?php require_once 'show-toast.php'; ?>
 <div class="content-wrapper">
 
     <!-- Content -->
@@ -69,7 +68,7 @@
                                     </td>
                                     <td>
                                         <div class="float-end">
-                                            <button onclick="openModalStatus(<?= $item['id'] ?>, 0, 'customer', 'Move to Bin?', 'You can find it in the recycle bin.')" class="btn btn-danger p-2">
+                                            <button onclick="openModalUpdateStatus(<?= $item['id'] ?>, 0, 'customer', 'Move to Bin?', 'You can find it in the recycle bin.')" class="btn btn-danger p-2">
                                                 <i class="bx bx-trash"></i>
                                             </button>
                                         </div>

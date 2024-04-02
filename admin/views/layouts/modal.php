@@ -13,7 +13,7 @@
 </div>
 
 <script>
-    function openModalDelete(id) {
+    function openModalDelete(id, url) {
         document.body.style.overflow = 'hidden';
         document.getElementById('question').innerHTML = 'Delete item?';
         document.getElementById('message').innerHTML  = 'You cannot undo this action.';
@@ -21,10 +21,10 @@
         document.getElementById('iosModal').style.display = 'block';
 
         // Set the href attribute dynamically for the "OK" button
-        document.getElementById('ok-btn').href = '?act=delete-category&id=' + id;
+        document.getElementById('ok-btn').href = '?act=' + url + '&id=' + id;
     }
 
-    function openModalStatus(id, value, table, question, message) {
+    function openModalUpdateStatus(id, value, table, question, message) {
         document.body.style.overflow = 'hidden';
         document.getElementById('question').innerHTML = question;
         document.getElementById('message').innerHTML  = message;

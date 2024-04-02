@@ -29,7 +29,7 @@
     <link rel="stylesheet" href="<?= $css ?? null ?>">
     <link rel="stylesheet" href="<?= BASE_URL ?>assets/css/toast.css">
     <link rel="stylesheet" href="<?= BASE_URL ?>assets/css/responsive.css">
-    
+
     <!-- Title bar here-->
     <title>
         <?= $titleBar ?? 'Furniture Store' ?>
@@ -64,6 +64,10 @@
             window.history.back();
         }
 
+        function goHome() {
+            window.location.href = '<?= BASE_URL ?>';
+        }
+
         function changeBigImage(image) {
             var bigImage = document.getElementById('big-image');
             bigImage.src = image.src;
@@ -74,6 +78,7 @@
     <script src="<?= BASE_URL ?>assets/js/toast.js"></script>
     <script src="<?= $js ?? null ?>"></script>
 
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 </body>
 
 </html>

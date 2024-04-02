@@ -82,7 +82,7 @@ function updateStatusCategory($id, $value) {
 }
 
 function deleteCategory($id) {
-    delete('tbl_categories', $id);
+    deleteOne('tbl_categories', $id);
     $_SESSION["success"]='';
     header('Location: ?act=category-bin');
     exit();

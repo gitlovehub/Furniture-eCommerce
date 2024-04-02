@@ -73,16 +73,13 @@
     grid-template-columns: 1fr 1fr;
   }
 
+  .product__qty,
   .product__act {
     flex-direction: column;
   }
 
   .product__act button {
     width: 100%;
-  }
-
-  .product__item-btn {
-    font-size: var(--font-smaller);
   }
 
   .specifications {

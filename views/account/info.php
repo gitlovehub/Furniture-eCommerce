@@ -1,6 +1,11 @@
 <section id="intro">
-    <div class="grid wide">
-        <h1 class="text-uppercase text-center pt-5">
+    <div class="grid wide pt-5">
+        <span class="header__navbar-menu-link">
+            <i class="fa-solid fa-chevron-left"></i>
+            <span onclick="goHome()" class="fs-3">Home</span>
+        </span>
+
+        <h1 class="text-uppercase text-center pt-4">
             Account Details
         </h1>
         <div class="account-container">

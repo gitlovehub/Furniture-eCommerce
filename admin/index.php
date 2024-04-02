@@ -17,16 +17,16 @@ $act = $_GET["act"] ?? '/';
 middleware_auth_check($act);
 
 match ($act) {
-    '/' => dashboard(),
+    '/'         => dashboard(),
     'dashboard' => dashboard(),
 
     // Authentication
-    'login'  => authLogin(),
-    'logout' => authLogout(),
+    'login'     => authLogin(),
+    'logout'    => authLogout(),
 
     // CRU Banner
-    'banner-list'          => bannerList(),
-    'update-banner'        => updateBanner($_GET["id"]),
+    'banner-list'            => bannerList(),
+    'update-banner'          => updateBanner($_GET["id"]),
 
     // CRUD Category
     'create-category'        => createCategory(),
@@ -37,16 +37,20 @@ match ($act) {
     'update-status-category' => updateStatusCategory($_GET["id"], $_GET["value"]),
 
     // CRU Product
-    'create-product'        => createProduct(),
-    'product-list'          => productList(),
-    'update-product'        => updateProduct($_GET["id"]),
-    'product-bin'           => productBin(),
-    'update-status-product' => updateStatusProduct($_GET["id"], $_GET["value"]),
-    'add-gallery'           => addGallery($_GET["id"]),
-    'delete-image'          => deleteImage($_GET["id"], $_GET["back"]),
+    'create-product'         => createProduct(),
+    'product-list'           => productList(),
+    'update-product'         => updateProduct($_GET["id"]),
+    'product-bin'            => productBin(),
+    'update-status-product'  => updateStatusProduct($_GET["id"], $_GET["value"]),
+
+    // Variants
+    'add-gallery'            => addGallery($_GET["id"]),
+    'delete-image'           => deleteImage($_GET["id"], $_GET["product"]),
+    'add-color-product'      => addColor($_GET["id"]),
+    'delete-color'           => deleteColor($_GET["id"], $_GET["product"]),
     
     // Review
-    'manage-reviews' => manageReviews(),
+    'manage-reviews'         => manageReviews(),
 
     // Account
     'admin-list'             => adminList(),
@@ -55,8 +59,8 @@ match ($act) {
     'update-status-customer' => updateCustomerStatus($_GET["id"], $_GET["value"]),
 
     // Order
-    'order-list'    => orderList(),
-    'order-details' => orderDetails($_GET["id"]),
+    'order-list'             => orderList(),
+    'order-details'          => orderDetails($_GET["id"]),
 
 };
 

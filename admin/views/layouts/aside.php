@@ -1,3 +1,20 @@
+<?php require_once 'toast.php'; 
+// Kiểm tra xem có thông báo thành công từ session không?
+if (isset($_SESSION["success"])) {
+    // Hiển thị toast
+    echo '<script>
+            document.addEventListener("DOMContentLoaded", function() {
+                document.querySelector(".bs-toast").classList.add("show");
+                setTimeout(function() {
+                    document.querySelector(".bs-toast").classList.remove("show");
+                }, 5000);
+            });
+        </script>';
+
+    // Xóa thông báo thành công từ session
+    unset($_SESSION["success"]);
+}
+?>
 <aside id="layout-menu" class="layout-menu menu-vertical menu bg-menu-theme">
     <div class="app-brand demo">
         <a href="?act=dashboard" class="app-brand-link">
