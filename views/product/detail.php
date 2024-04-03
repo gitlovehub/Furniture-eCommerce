@@ -1,9 +1,13 @@
 <section id="intro">
     <div class="grid wide pt-5">
-        <span class="header__navbar-menu-link">
-            <i class="fa-solid fa-chevron-left"></i>
-            <span onclick="goBack()" class="fs-3">Back</span>
-        </span>
+        <nav class="breadcrumb" aria-label="breadcrumb">
+            <ol class="breadcrumb fs-3 fw-semibold">
+                <li class="breadcrumb-item"><a href="?act=home-page">Home</a></li>
+                <li class="breadcrumb-item"><a href="?act=categories">Categories</a></li>
+                <li class="breadcrumb-item active" aria-current="page">Product details</li>
+            </ol>
+        </nav>
+
         <h1 class="product__name fs-1">
             <?= $item['name'] ?>
             <?php if ($item['discount'] != 0) : ?>
@@ -56,10 +60,10 @@
                         </div>
                         <div class="product__price">
                             <?php if ($sale == $cost) : ?>
-                                <span id="price">£<?= $sale ?></span>
+                                <span id="price">£<?= number_format($sale, 2, '.', ',') ?></span>
                             <?php else : ?>
-                                <span class="text-secondary fw-light text-decoration-line-through">£<?= $cost ?></span>
-                                <span id="price" class="fs-1">£<?= $sale ?></span>
+                                <span class="text-secondary fw-light text-decoration-line-through">£<?= number_format($cost, 2, '.', ',') ?></span>
+                                <span id="price" class="fs-1">£<?= number_format($sale, 2, '.', ',') ?></span>
                             <?php endif; ?>
                         </div>
                     </div>
@@ -242,4 +246,26 @@
         var totalPrice = price * quantity;
         priceElement.textContent = '£' + totalPrice;
     }
+
+    document.addEventListener('DOMContentLoaded', function() {
+        const labels = document.querySelectorAll('.variant-input label');
+        let focusedInput = null;
+
+        labels.forEach(label => {
+            label.addEventListener('click', function() {
+                // Lấy input tương ứng với label và focus vào nó
+                const input = label.previousElementSibling;
+                input.focus();
+                focusedInput = input;
+            });
+        });
+
+        document.addEventListener('click', function(event) {
+            // Kiểm tra xem click có nằm ngoài input đang được focus hay không
+            if (focusedInput && !focusedInput.contains(event.target)) {
+                // Nếu click ngoài input đang được focus, giữ lại focus cho input đó
+                focusedInput.focus();
+            }
+        });
+    });
 </script>

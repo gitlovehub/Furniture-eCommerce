@@ -1,11 +1,11 @@
 <section id="intro">
     <div class="grid wide pt-5">
-        <span class="header__navbar-menu-link">
-            <i class="fa-solid fa-chevron-left"></i>
-            <span onclick="goHome()" class="fs-3">Home</span>
-        </span>
+        <div class="d-flex align-items-center" style="line-height: 18px;">
+            <i class="fa-solid fa-angle-left fs-3"></i>
+            <span onclick="goHome()" class="header__navbar-menu-link fs-3">Home</span>
+        </div>
 
-        <h1 class="text-uppercase text-center pt-4">
+        <h1 class="text-uppercase text-center mt-3 pt-5">
             Account Details
         </h1>
         <div class="account-container">
@@ -30,8 +30,8 @@
                     <span>Log Out</span>
                 </a>
             </aside>
-            <form action="" class="row w-100 pt-4" method="post" enctype="multipart/form-data">
-                <div class="col-sm-12 col-lg-8">
+            <form action="" class="row w-100 d-flex flex-sm-row flex-column-reverse pt-4" method="post" enctype="multipart/form-data">
+                <div class="col-12 col-sm-8">
                     <div class="form__group">
                         <label class="fw-semibold" for="username">Username</label>
                         <input type="username" id="username" name="username">
@@ -58,16 +58,16 @@
                             <span class="fw-semibold rounded px-2 py-1 text-bg-success">Active</span>
                         </h4>
                     </div>
-                    <button type="button" name="btnSaveInfo" class="btn btn-danger fs-3 fw-semibold w-100">
+                    <button type="button" name="btnSaveInfo" class="btn btn-danger fs-3 fw-semibold w-100 mt-5">
                         <i class="fa-regular fa-floppy-disk me-2"></i>
                         Save
                     </button>
                 </div>
 
-                <div class="col-sm-12 col-lg-4">
-                    <div class="col-6 m-auto text-center">
-                        <div class="avt" style="width: 150px; height: 150px;">
-                            <img src="https://images.unsplash.com/photo-1711677371551-1c65c61ab5d8?q=80&w=1887&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" class="avt-img rounded-circle h-100" style="object-fit: cover;" alt="avatar">
+                <div class="col-12 col-sm-4 mb-5">
+                    <div class="col-12 m-auto mb-5 text-center">
+                        <div class="avt m-auto" style="width: 150px; height: 150px;">
+                            <img src="https://images.unsplash.com/placeholder-avatars/extra-large.jpg?bg=fff&crop=faces&dpr=1&h=150&w=150&auto=format&fit=crop&q=60&ixlib=rb-4.0.3" class="avt-img rounded-circle h-100" style="object-fit: cover;" alt="default">
                         </div>
                         <label for="upload" class="btn btn-outline-secondary fs-4 mt-4"><i class="fa-regular fa-image me-2"></i>Choose image</label>
                         <input type="file" id="upload" hidden>

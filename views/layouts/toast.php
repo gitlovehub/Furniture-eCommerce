@@ -1,7 +1,7 @@
 <div class="toast-wrapper toast-error shadow-lg">
 
     <div class="d-flex align-items-center gap-4">
-        <div class="fs-1" style="color: #eb3b5a;">
+        <div class="fs-1" style="color: #e84118;">
             <i class="fa-solid fa-triangle-exclamation"></i>
         </div>
         <div class="text">
@@ -17,7 +17,7 @@
 <div class="toast-wrapper toast-success shadow-lg">
 
     <div class="d-flex align-items-center gap-4">
-        <div class="fs-1" style="color: #20bf6b;">
+        <div class="fs-1" style="color: #13d16c;">
             <i class="fa-solid fa-circle-check"></i>
         </div>
         <div class="text">

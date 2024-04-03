@@ -4,7 +4,7 @@ if (!function_exists('getProductsByCategoryId')) {
     function getProductsByCategoryId($id) {
         try {
             // Sử dụng tham số truyền vào ($id) để lấy các sản phẩm theo id danh mục
-            $sql = "SELECT * FROM tbl_products WHERE id_category = :id_category AND status = 1";
+            $sql  = "SELECT * FROM tbl_products WHERE id_category = :id_category AND status = 1";
             $stmt = $GLOBALS['conn']->prepare($sql);
             $stmt->bindParam(':id_category', $id, PDO::PARAM_INT);
             $stmt->execute();
@@ -17,7 +17,7 @@ if (!function_exists('getProductsByCategoryId')) {
 
 if (!function_exists('searchProductsByName')) {
     function searchProductsByName($keyword) {
-        $sql = "SELECT * FROM tbl_products WHERE name LIKE ? AND status = 1";
+        $sql  = "SELECT * FROM tbl_products WHERE name LIKE ? AND status = 1";
         $stmt = $GLOBALS['conn']->prepare($sql);
         $stmt->bindValue(1, "%$keyword%", PDO::PARAM_STR);
         $stmt->execute();
@@ -28,7 +28,7 @@ if (!function_exists('searchProductsByName')) {
 
 if (!function_exists('searchProductsByPrice')) {
     function searchProductsByPrice($minPrice, $maxPrice) {
-        $sql = "SELECT * FROM tbl_products WHERE price BETWEEN ? AND ? AND status = 1";
+        $sql  = "SELECT * FROM tbl_products WHERE price BETWEEN ? AND ? AND status = 1";
         $stmt = $GLOBALS['conn']->prepare($sql);
         $stmt->bindValue(1, $minPrice, PDO::PARAM_INT);
         $stmt->bindValue(2, $maxPrice, PDO::PARAM_INT);
@@ -70,21 +70,19 @@ function insertToCart($customerId, $productId, $quantity, $colorId) {
             $existingCartItem = $stmt->fetch();
             // Nếu sản phẩm đã tồn tại trong giỏ hàng
             if ($existingCartItem) {
-                // Kiểm tra xem sản phẩm có cùng màu không
-                if ($existingCartItem['id_color'] == $colorId) {
-                    // Tăng số lượng sản phẩm
-                    $newQuantity = $existingCartItem['quantity'] + $quantity;
-                    $stmt = $GLOBALS['conn']->prepare("UPDATE tbl_carts SET quantity = :newQuantity WHERE id = :cartItemId");
-                    $stmt->bindParam(':newQuantity', $newQuantity);
-                    $stmt->bindParam(':cartItemId', $existingCartItem['id']);
-                    $stmt->execute();
-                    return true; // Trả về true nếu cập nhật số lượng thành công
-                }
+                // Tăng số lượng sản phẩm nếu cả id_product và id_color đều trùng khớp
+                $newQuantity = $existingCartItem['quantity'] + $quantity;
+                $stmt = $GLOBALS['conn']->prepare("UPDATE tbl_carts SET quantity = :newQuantity WHERE id = :cartItemId");
+                $stmt->bindParam(':newQuantity', $newQuantity);
+                $stmt->bindParam(':cartItemId', $existingCartItem['id']);
+                $stmt->execute();
+                return true; // Trả về true nếu cập nhật số lượng thành công
             }
         }
-        
+
+        // Nếu không có id_color hoặc không tìm thấy sản phẩm với id_product và id_color tương ứng
         // Kiểm tra xem sản phẩm đã tồn tại trong giỏ hàng của khách hàng chưa (không phụ thuộc vào màu sắc)
-        $stmt = $GLOBALS['conn']->prepare("SELECT * FROM tbl_carts WHERE id_customer = :id_customer AND id_product = :id_product");
+        $stmt = $GLOBALS['conn']->prepare("SELECT * FROM tbl_carts WHERE id_customer = :id_customer AND id_product = :id_product AND id_color = 0");
         $stmt->bindParam(':id_customer', $customerId);
         $stmt->bindParam(':id_product', $productId);
         $stmt->execute();
@@ -114,5 +112,19 @@ function insertToCart($customerId, $productId, $quantity, $colorId) {
         return false; // Trả về false nếu có lỗi xảy ra
     } finally {
         $GLOBALS['conn'] = null;
+    }
+}
+
+function updateCartItemQuantity($id, $newQuantity) {
+    try {
+        $newQuantity = intval($newQuantity);
+        $sql  = "UPDATE tbl_carts SET quantity = :newQuantity WHERE id = :id";
+        $stmt = $GLOBALS['conn']->prepare($sql);
+        $stmt->bindParam(':newQuantity', $newQuantity);
+        $stmt->bindParam(':id', $id);
+        $stmt->execute();
+        return true; // Trả về true nếu cập nhật số lượng thành công
+    } catch (\Exception $e) {
+        debug($e);
     }
 }

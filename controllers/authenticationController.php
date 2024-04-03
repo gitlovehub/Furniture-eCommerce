@@ -92,7 +92,7 @@ function register() {
 
             insert('tbl_accounts', $data);
             
-            if (sendEmail('VERIFY EMAIL', 'verify-email', $data['token'], $data['email'])) {
+            if (sendEmail('Please check Sign-up verification link', 'verify-email', $data['token'], $data['email'])) {
                 header('Location: ?act=waiting-page');
                 exit();
             } else {
@@ -148,6 +148,24 @@ function verifyEmail($token) {
 
 function verified() {
     require_once PATH_VIEW . 'authentication/verified-page.php';
+}
+
+function forgotPassword() {
+    $js       = BASE_URL.'assets/js/form.js';
+    $css      = BASE_URL.'assets/css/form.css';
+    $titleBar = 'Forgot Password';
+    $view     = 'authentication/forgot-password';
+
+    require_once PATH_VIEW . 'layouts/master.php';
+}
+
+function resetPassword() {
+    $js       = BASE_URL.'assets/js/form.js';
+    $css      = BASE_URL.'assets/css/form.css';
+    $titleBar = 'Reset Password';
+    $view     = 'authentication/reset-password';
+
+    require_once PATH_VIEW . 'layouts/master.php';
 }
 
 function validateLogin($data) {

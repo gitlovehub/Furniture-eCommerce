@@ -1,9 +1,10 @@
 <section id="intro">
     <div class="grid wide pt-5">
-        <span class="header__navbar-menu-link">
-            <i class="fa-solid fa-chevron-left"></i>
-            <span onclick="goBack()" class="fs-3">Back</span>
-        </span>
+        <div class="d-flex align-items-center" style="line-height: 18px;">
+            <i class="fa-solid fa-angle-left fs-3"></i>
+            <span onclick="goBack()" class="header__navbar-menu-link fs-3">Back</span>
+        </div>
+
         <h3 class="text-center fs-1 fw-semibold p-4">
             Search Results for:
             “<?= $kw ?>”
@@ -47,10 +48,10 @@ if (empty($listProducts) || empty($kw)) {
                         </h4>
                         <p class="product__item-price fs-3">
                             <?php if ($price == $basePrice) : ?>
-                                <span>£<?= $basePrice ?></span>
+                                <span>£<?= number_format($basePrice, 2, '.', ',') ?></span>
                             <?php else : ?>
-                                <span class="text-secondary fw-light text-decoration-line-through">£<?= $basePrice ?></span>
-                                <span>£<?= $price ?></span>
+                                <span class="text-secondary fw-light text-decoration-line-through">£<?= number_format($basePrice, 2, '.', ',') ?></span>
+                                <span>£<?= number_format($price, 2, '.', ',') ?></span>
                             <?php endif; ?>
                         </p>
                     </div>

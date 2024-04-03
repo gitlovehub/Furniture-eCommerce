@@ -4,13 +4,19 @@
 
 .form-container {
   max-width: 420px;
+  min-height: 525px;
   margin: auto;
   padding: 4rem 1.3rem;
+  animation: slideIn 1s both;
 }
 
 .form-heading {
   text-align: center;
   padding: 2rem 0;
+}
+
+.form-heading h1 {
+  word-spacing: 1rem;
 }
 
 .form-heading p {
@@ -70,7 +76,8 @@
   justify-content: space-between;
 }
 
-.form__group a:hover {
+.form__group-link:hover {
+  cursor: pointer;
   text-decoration: underline;
 }
 
@@ -90,7 +97,36 @@ input[type="checkbox"] {
   width: 100%;
 }
 
-.link-create {
-  color: red;
-  font-weight: 700;
+.hide-form {
+  display: none;
+}
+
+@keyframes slideIn {
+  from {
+      transform: translateY(10%);
+      opacity: 0;
+  }
+  to {
+      transform: translateY(0);
+      opacity: 1;
+  }
+}
+
+@keyframes slideOut {
+  from {
+      transform: translateY(0);
+      opacity: 1;
+  }
+  to {
+      transform: translateY(10%);
+      opacity: 0;
+  }
+}
+
+.slideOut {
+  animation: slideOut 1s both;
+}
+
+.slideIn {
+  animation: slideIn 1s both;
 }

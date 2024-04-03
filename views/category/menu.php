@@ -1,9 +1,6 @@
 <section id="intro">
     <div class="grid wide pt-5">
-        <span class="header__navbar-menu-link">
-            <i class="fa-solid fa-chevron-left"></i>
-            <span onclick="goBack()" class="fs-3">Back</span>
-        </span>
+
         <?php
         $currentName = '';
         foreach ($listCategory as $categoryItem) {
@@ -13,6 +10,17 @@
             }
         }
         ?>
+
+        <nav class="breadcrumb" aria-label="breadcrumb">
+            <ol class="breadcrumb fs-3 fw-semibold">
+                <li class="breadcrumb-item"><a href="?act=home-page">Home</a></li>
+                <li class="breadcrumb-item"><a href="?act=categories">Categories</a></li>
+                <li class="breadcrumb-item active" aria-current="page">
+                    <?= $currentName ?>
+                </li>
+            </ol>
+        </nav>
+
         <h3 class="text-center fs-1 fw-semibold p-4">
             <?= $currentName ?>
         </h3>
@@ -61,10 +69,10 @@
                         </h4>
                         <p class="product__item-price fs-3">
                             <?php if ($price == $basePrice) : ?>
-                                <span>£<?= $basePrice ?></span>
+                                <span>£<?= number_format($basePrice, 2, '.', ',') ?></span>
                             <?php else : ?>
-                                <span class="text-secondary fw-light text-decoration-line-through">£<?= $basePrice ?></span>
-                                <span>£<?= $price ?></span>
+                                <span class="text-secondary fw-light text-decoration-line-through">£<?= number_format($basePrice, 2, '.', ',') ?></span>
+                                <span>£<?= number_format($price, 2, '.', ',') ?></span>
                             <?php endif; ?>
                         </p>
                     </div>

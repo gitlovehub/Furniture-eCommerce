@@ -6,7 +6,7 @@
   transform: translateX(-50%);
   border-radius: 12px;
   background: white;
-  padding: 20px 55px 20px 25px;
+  padding: 20px 25px 25px;
   overflow: hidden;
   transition: all ease-in-out 0.7s;
   z-index: 100;
@@ -23,7 +23,7 @@
   right: 10px;
   padding: 5px;
   cursor: pointer;
-  opacity: 0.5;
+  opacity: 0.3;
 }
 
 .toast-close:hover {
@@ -48,11 +48,13 @@
 }
 
 .progress-success:before {
-  background-color: #20bf6b;
+  background-color: #13d16c;
+  box-shadow: 0 -2px 15px rgba(19, 209, 108, 0.55);
 }
 
 .progress-error:before {
-  background-color: #eb3b5a;
+  background-color: #e84118;
+  box-shadow: 0 -2px 15px rgba(232, 65, 23, 0.55);
 }
 
 .toast-progress.appear:before {

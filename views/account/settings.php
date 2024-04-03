@@ -1,9 +1,9 @@
 <section id="intro">
     <div class="grid wide pt-5">
-        <span class="header__navbar-menu-link">
-            <i class="fa-solid fa-chevron-left"></i>
-            <span onclick="goBack()" class="fs-3">Back</span>
-        </span>
+        <div class="d-flex align-items-center" style="line-height: 18px;">
+            <i class="fa-solid fa-angle-left fs-3"></i>
+            <span onclick="goBack()" class="header__navbar-menu-link fs-3">Back</span>
+        </div>
 
         <div class="account-container">
             <aside class="account__navigation">

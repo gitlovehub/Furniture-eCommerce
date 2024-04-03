@@ -17,13 +17,14 @@
     <div class="cart-container shadow-sm">
         <div class="cart-header fs-2">
             <h3 class="fw-bold">
-                Your Shopping Cart
+                Quick View Cart
             </h3>
             <div class="cart-close">✖</div>
         </div>
 
         <div class="cart-body">
             <?php $carts = getCartByCustomer('tbl_carts', $_SESSION["user"]['id'] ?? ''); ?>
+            <?php $dataItemCount=0 ?>
             <?php if (empty($carts)) : ?>
                 <div class="m-auto text-center">
                     <img src="<?= BASE_URL ?>assets/images/empty-cart.png" style="width: 180px;">
@@ -34,15 +35,20 @@
                 <!-- When has items -->
                 <!-- Add HTML string here -->
                 <?php foreach ($carts as $cart) : ?>
+                    <?php $dataItemCount++ ?>
                     <div class="cart-item">
-                        <div onclick="redirectToProductDetail(<?= $cart['id_product'] ?>)" class="cart-item-start">
+                        <div onclick="redirectToProductDetail(<?= $cart['id_product'] ?>)" class="cart-item-start m-0">
                             <img src="<?= BASE_URL . $cart['thumbnail'] ?>" alt="product img" class="cart-item-img" layout="fill">
                         </div>
                         <div class="w-100 p-3 d-flex flex-column justify-content-between">
                             <div class="d-flex justify-content-between">
-                                <div class="d-flex flex-column gap-3">
+                                <div class="d-flex flex-column gap-4">
                                     <h4 class="fs-3 fw-bold"><?= $cart['product'] ?></h4>
-                                    <span class="fs-4 fw-semibold"><?= $cart['color'] ?></span>
+                                    <?php if (!empty($cart['color'])) : ?>
+                                        <span>Color:
+                                            <span class="fs-4 fw-bold"><?= $cart['color'] ?></span>
+                                        </span>
+                                    <?php endif; ?>
                                 </div>
                                 <a href="?act=delete-cart-item&id=<?= $cart['id_cart'] ?>" class="cart-item-remove" style="height: fit-content;">
                                     <svg width="20" height="20" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -53,12 +59,15 @@
                                 </a>
                             </div>
                             <div class="d-flex justify-content-between align-items-end">
-                                <div class="d-flex">
-                                    <div class="cart-qty-btn qty-minus"><span>−</span></div>
-                                    <div class="cart-qty-number fw-bold"><?= $cart['quantity'] ?></div>
-                                    <div class="cart-qty-btn qty-plus"><span>+</span></div>
+                                <div>
+                                    <span>Qty:</span>
+                                    <span class="fw-bold"><?= $cart['quantity'] ?></span>
                                 </div>
-                                <div class="fs-3 fw-bold">£<?= $cart['price'] - ($cart['price'] * $cart['discount'] / 100); ?></div>
+                                <div>
+                                    <span>Unit price:</span>
+                                    <?php $unit = $cart['price'] - ($cart['price'] * $cart['discount'] / 100); ?>
+                                    <span class="fs-3 fw-bold">£<?= number_format($unit, 2, '.', ',') ?></span>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -67,8 +76,8 @@
         </div>
         <?php if (!empty($carts)) : ?>
             <div class="cart-footer">
-                <div class="d-flex justify-content-between align-items-center mb-3">
-                    <h2>Total:</h2>
+                <div class="d-flex justify-content-between align-items-center py-4">
+                    <h2 class="fs-2">Subtotal:</h2>
                     <?php
                     $totalPrice = 0; // Khởi tạo biến tổng giá trị của giỏ hàng
                     foreach ($carts as $cart) {
@@ -77,9 +86,12 @@
                         $totalPrice += $productPrice;
                     }
                     ?>
-                    <span class="fs-2 fw-bold">£<?= $totalPrice ?></span>
+                    <h2 class="fs-2">£<?= number_format($totalPrice, 2, '.', ',') ?></h2>
                 </div>
-                <button class="btn btn-danger px-4 py-2 fs-4 float-end">Go to Checkout</button>
+                <div class="d-flex gap-4">
+                    <a href="?act=review-cart" class="btn btn-outline-success w-100 py-2 fs-4 fw-semibold">Review cart</a>
+                    <a href="" class="btn btn-danger w-100 py-2 fs-4 fw-semibold">Go to Checkout</a>
+                </div>
             </div>
         <?php endif; ?>
     </div>

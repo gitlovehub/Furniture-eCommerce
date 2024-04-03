@@ -13,19 +13,21 @@ require_file(PATH_MODEL);
 // Điều hướng
 $act = $_GET["act"] ?? '/';
 
-middleware_auth_checkLogin($act);
+middleware_auth_checkClient($act);
 
 match ($act) {
     '/'          => index(),
     'home-page'  => index(),
 
     // Auth
-    'login'            => login(),
     'register'         => register(),
-    'verify-email'     => verifyEmail($_GET["token"]),
-    'waiting-page'     => waitingPage(),
-    'verified'         => verified(),
+    'login'            => login(),
     'logout'           => logout(),
+    'waiting-page'     => waitingPage(),
+    'verify-email'     => verifyEmail($_GET["token"]),
+    'verified'         => verified(),
+    'forgot-password'  => forgotPassword(),
+    'reset-password'   => resetPassword(),
 
     // Acc
     'settings'         => settings(),
@@ -42,7 +44,13 @@ match ($act) {
     'search-product'   => searchProduct(),
     'product-detail'   => productDetail($_GET["id"]),
     'add-to-cart'      => addToCart($_GET["id"]),
-    'delete-cart-item' => deleteItem($_GET["id"]),
+    'delete-cart-item' => deleteQuickCartItem($_GET["id"]),
+
+    // Cart
+    'review-cart'      => reviewCart(),
+    'update-cart'      => updateCart($_POST["productQty"]),
+    'remove-cart'      => removeCartItem($_GET["id"]),
+
 };
 
 require_once './commons/disconnect-db.php';

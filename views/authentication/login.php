@@ -2,7 +2,7 @@
     <div class="grid wide">
         <div class="form-container">
             <div class="form-heading">
-                <h1>LOGIN</h1>
+                <h1 class="fw-bold">LOGIN</h1>
                 <P>Please enter your e-mail and password:</P>
             </div>
             <form action="" method="post">
@@ -48,7 +48,7 @@
                         <input type="checkbox" id="stayLoggedIn" name="stayLoggedIn">
                         <label for="stayLoggedIn">Stay logged in</label>
                     </div>
-                    <a class="form__group-link link-forgot" href="forgotPassword.html">Forgot password?</a>
+                    <a href="?act=forgot-password" class="form__group-link btnForgot">Forgot password?</a>
                 </div>
                 <div class="form__group">
                     <button class="btn-submit" name="btnLogin" type="submit">Login</button>
@@ -56,7 +56,7 @@
                 <div class="form__group">
                     <span>
                         Don't have an account?
-                        <a class="form__group-link link-create" href="?act=register">Create one</a>
+                        <a class="form__group-link fw-bold text-danger" href="?act=register">Create one</a>
                     </span>
                 </div>
             </form>

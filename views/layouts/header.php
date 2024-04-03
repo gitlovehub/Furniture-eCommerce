@@ -1,12 +1,15 @@
 <?php
 // Một mảng chứa các session bạn muốn hiển thị toast
 $toastSessions = [
-    "login-success"     => "Success",
-    "addtocart-success" => "Success",
-    "login-blocked"     => "Error",
-    "login-unverified"  => "Error",
-    "send-failed"       => "Error",
-    "missing-color"     => "Error",
+    "login-success"      => "Success",
+    "addtocart-success"  => "Success",
+    "updatecart-success" => "Success",
+    "deleteitem-success" => "Success",
+    "login-blocked"      => "Error",
+    "login-unverified"   => "Error",
+    "send-failed"        => "Error",
+    "missing-color"      => "Error",
+    "login-first"     => "Error",
 ];
 
 // Duyệt qua mảng session và hiển thị toast nếu session tồn tại
@@ -19,6 +22,14 @@ foreach ($toastSessions as $sessionKey => $toastType) {
               </script>';
         unset($_SESSION[$sessionKey]); // Xóa session sau khi hiển thị
     }
+}
+
+if (isset($_SESSION["cart-overlay"])) {
+    echo "<script>
+            document.querySelector('.cart-overlay').classList.add('active');
+            document.body.classList.add('ov-hidden');
+        </script>";
+    unset($_SESSION["cart-overlay"]);
 }
 ?>
 
@@ -33,13 +44,13 @@ foreach ($toastSessions as $sessionKey => $toastType) {
                 </div>
 
                 <?php if (isset($_SESSION["user"])) : ?>
-                    <button class="header__navbar-menu-link header__navbar-icon-btn user-icon">
+                    <a href="?act=settings" class="header__navbar-menu-link header__navbar-icon-btn user-icon">
                         <svg width="1.6em" height="1.6em" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                             <path d="M21 12C21 16.9706 16.9706 21 12 21C7.02944 21 3 16.9706 3 12C3 7.02944 7.02944 3 12 3C16.9706 3 21 7.02944 21 12Z" stroke="#323232" stroke-width="2" />
                             <path d="M15 10C15 11.6569 13.6569 13 12 13C10.3431 13 9 11.6569 9 10C9 8.34315 10.3431 7 12 7C13.6569 7 15 8.34315 15 10Z" stroke="#323232" stroke-width="2" />
                             <path d="M6.16406 18.5C6.90074 16.5912 8.56373 16 12.0001 16C15.4661 16 17.128 16.5578 17.855 18.5" stroke="#323232" stroke-width="2" stroke-linecap="round" />
                         </svg>
-                    </button>
+                    </a>
                 <?php endif; ?>
             </div>
 
@@ -51,6 +62,7 @@ foreach ($toastSessions as $sessionKey => $toastType) {
                 <a href="?act=categories" class="header__navbar-menu-link">
                     Categories
                 </a>
+
                 <?php if (empty($_SESSION["user"])) : ?>
                     <a href="?act=register" class="header__navbar-menu-link">
                         Register
@@ -59,6 +71,7 @@ foreach ($toastSessions as $sessionKey => $toastType) {
                         Login
                     </a>
                 <?php endif; ?>
+
                 <button class="header__navbar-menu-link header__navbar-icon-btn search-icon">
                     <svg xmlns="http://www.w3.org/2000/svg" fill="#000000" width="1.6em" height="1.6em" viewBox="0 0 32 32" version="1.1">
                         <title>search</title>
@@ -66,15 +79,37 @@ foreach ($toastSessions as $sessionKey => $toastType) {
                     </svg>
                 </button>
 
-                <button class="header__navbar-menu-link header__navbar-icon-btn cart-icon" data-item-count="7">
-                    <svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 24 24" height="1.6em" width="1.6em" xmlns="http://www.w3.org/2000/svg">
-                        <g>
-                            <path fill="none" d="M0 0h24v24H0z"></path>
-                            <path d="M4 16V4H2V2h3a1 1 0 0 1 1 1v12h12.438l2-8H8V5h13.72a1 1 0 0 1 .97 1.243l-2.5 10a1 1 0 0 1-.97.757H5a1 1 0 0 1-1-1zm2 7a2 2 0 1 1 0-4 2 2 0 0 1 0 4zm12 0a2 2 0 1 1 0-4 2 2 0 0 1 0 4z">
-                            </path>
-                        </g>
-                    </svg>
-                </button>
+                <?php
+                $current_url = $_SERVER['REQUEST_URI'];
+                $cart_url    = BASE_URL . '?act=review-cart';
+                $current_parts = explode('/', $current_url);
+                $current_path  = end($current_parts);
+                $cart_parts = explode('/', $cart_url);
+                $cart_path  = end($cart_parts);
+                $hasCart = $dataItemCount > 0 ? 'has-cart' : '';
+                ?>
+
+                <?php if ($current_path == $cart_path) : ?>
+                    <a href="?act=review-cart" class="header__navbar-menu-link header__navbar-icon-btn cart-icon <?= $hasCart ?>" data-item-count="<?= $dataItemCount ?>">
+                        <svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 24 24" height="1.6em" width="1.6em" xmlns="http://www.w3.org/2000/svg">
+                            <g>
+                                <path fill="none" d="M0 0h24v24H0z"></path>
+                                <path d="M4 16V4H2V2h3a1 1 0 0 1 1 1v12h12.438l2-8H8V5h13.72a1 1 0 0 1 .97 1.243l-2.5 10a1 1 0 0 1-.97.757H5a1 1 0 0 1-1-1zm2 7a2 2 0 1 1 0-4 2 2 0 0 1 0 4zm12 0a2 2 0 1 1 0-4 2 2 0 0 1 0 4z">
+                                </path>
+                            </g>
+                        </svg>
+                    </a>
+                <?php else : ?>
+                    <button class="header__navbar-menu-link header__navbar-icon-btn cart-icon <?= $hasCart ?>" data-item-count="<?= $dataItemCount ?>">
+                        <svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 24 24" height="1.6em" width="1.6em" xmlns="http://www.w3.org/2000/svg">
+                            <g>
+                                <path fill="none" d="M0 0h24v24H0z"></path>
+                                <path d="M4 16V4H2V2h3a1 1 0 0 1 1 1v12h12.438l2-8H8V5h13.72a1 1 0 0 1 .97 1.243l-2.5 10a1 1 0 0 1-.97.757H5a1 1 0 0 1-1-1zm2 7a2 2 0 1 1 0-4 2 2 0 0 1 0 4zm12 0a2 2 0 1 1 0-4 2 2 0 0 1 0 4z">
+                                </path>
+                            </g>
+                        </svg>
+                    </button>
+                <?php endif; ?>
 
                 <?php if (isset($_SESSION["user"])) : ?>
                     <div class="header__navbar-dropdown position-relative">
@@ -101,6 +136,7 @@ foreach ($toastSessions as $sessionKey => $toastType) {
                         </ul>
                     </div>
                 <?php endif; ?>
+
             </div>
 
             <div class="header__navbar-mobile hide-on-pc hide-on-tablet">
@@ -155,7 +191,7 @@ foreach ($toastSessions as $sessionKey => $toastType) {
                                     <span>]</span>
                                 </a>
                             </li>
-                        <?php else: ?>
+                        <?php else : ?>
                             <li class="navbar__mobile-item">
                                 <a href="?act=settings" class="navbar__mobile-item-link">
                                     <span>[</span>

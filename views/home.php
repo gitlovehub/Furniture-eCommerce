@@ -47,10 +47,10 @@
                         </h4>
                         <p class="product__item-price fs-3">
                             <?php if ($price == $basePrice) : ?>
-                                <span>£<?= $basePrice ?></span>
+                                <span>£<?= number_format($basePrice, 0, '.', ',') ?></span>
                             <?php else : ?>
-                                <span class="text-secondary fw-light text-decoration-line-through">£<?= $basePrice ?></span>
-                                <span>£<?= $price ?></span>
+                                <span class="text-secondary fw-light text-decoration-line-through">£<?= number_format($basePrice, 0, '.', ',') ?></span>
+                                <span>£<?= number_format($price, 0, '.', ',') ?></span>
                             <?php endif; ?>
                         </p>
                     </div>
@@ -111,10 +111,10 @@
                             <h4 class="product__item-name fs-4"><?= $product['name'] ?></h4>
                             <p class="product__item-price fs-3">
                                 <?php if ($price == $basePrice) : ?>
-                                    <span>£<?= $basePrice ?></span>
+                                    <span>£<?= number_format($basePrice, 0, '.', ',') ?></span>
                                 <?php else : ?>
-                                    <span class="text-secondary fw-light text-decoration-line-through">£<?= $basePrice ?></span>
-                                    <span>£<?= $price ?></span>
+                                    <span class="text-secondary fw-light text-decoration-line-through">£<?= number_format($basePrice, 0, '.', ',') ?></span>
+                                    <span>£<?= number_format($price, 0, '.', ',') ?></span>
                                 <?php endif; ?>
                             </p>
                         </div>
