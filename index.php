@@ -50,6 +50,8 @@ match ($act) {
     'review-cart'      => reviewCart(),
     'update-cart'      => updateCart($_POST["productQty"]),
     'remove-cart'      => removeCartItem($_GET["id"]),
+    'checkout'         => checkout(),
+
 
 };
 

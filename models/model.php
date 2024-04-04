@@ -41,7 +41,7 @@ if (!function_exists('searchProductsByPrice')) {
 if (!function_exists('getCartByCustomer')) {
     function getCartByCustomer($tableName, $id) {
         try {
-            $sql = "SELECT c.id AS id_cart, c.id_customer, c.id_product, c.quantity, c.id_color, p.id AS id_product, p.thumbnail AS thumbnail, p.name AS product, p.price, p.discount, pc.name AS color
+            $sql = "SELECT c.id AS id_cart, pc.color_thumbnail AS color_thumbnail, c.id_customer, c.id_product, c.quantity, c.id_color, p.id AS id_product, p.thumbnail AS thumbnail, p.name AS product, p.price, p.discount, pc.name AS color
             FROM $tableName AS c
             LEFT JOIN tbl_products AS p ON c.id_product = p.id
             LEFT JOIN tbl_colors AS pc ON c.id_color = pc.id
@@ -107,11 +107,8 @@ function insertToCart($customerId, $productId, $quantity, $colorId) {
         $stmt->bindParam(':colorId', $colorId);
         $stmt->execute();
         return true; // Trả về true nếu thêm vào giỏ hàng thành công
-    } catch (PDOException $e) {
-        echo "Error: " . $e->getMessage();
-        return false; // Trả về false nếu có lỗi xảy ra
-    } finally {
-        $GLOBALS['conn'] = null;
+    } catch (\Exception $e) {
+        debug($e);
     }
 }
 

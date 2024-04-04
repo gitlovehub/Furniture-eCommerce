@@ -50,9 +50,9 @@
                                 <tr>
                                     <td><?= $item['c_name'] ?></td>
                                     <td><?= $item['name'] ?></td>
-                                    <td class="text-center"><?= $item['price'] ?></td>
+                                    <td class="text-center"><?= number_format($item['price'], 0, '.', ',') ?></td>
                                     <td class="text-center"><?= $item['discount'] ?>%</td>
-                                    <td class="text-center"><?= $item['instock'] ?></td>
+                                    <td class="text-center"><?= number_format($item['instock'], 0, '.', ',') ?></td>
                                     <td class="text-center">
                                         <a href="?act=add-gallery&id=<?= $item['id'] ?>" class="img-link d-block position-relative">
                                             <div class="ovl position-absolute top-50 start-50 translate-middle">
@@ -79,7 +79,7 @@
                                                 <i class="bx bx-trash"></i>
                                             </button>
                                             <a href="?act=add-color-product&id=<?= $item['id'] ?>" class="btn btn-dark p-2">
-                                                <i class="bx bx-spray-can"></i>
+                                                <i class="bx bx-brush"></i>
                                             </a>
                                         </div>
                                     </td>

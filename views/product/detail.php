@@ -22,34 +22,28 @@
                     <img src="<?= BASE_URL . $item['thumbnail'] ?>" id="big-image">
                 </div>
                 <div class="small-imgs">
-                    <img onclick="changeBigImage(this)" src="<?= BASE_URL . $item['thumbnail'] ?>" class="shadow-sm">
+                    <img onclick="changeImage(this)" src="<?= BASE_URL . $item['thumbnail'] ?>" class="shadow-sm">
                     <?php foreach ($gallery as $image) : ?>
-                        <img onclick="changeBigImage(this)" src="<?= BASE_URL . $image['url'] ?>" class="shadow-sm">
+                        <img onclick="changeImage(this)" src="<?= BASE_URL . $image['url'] ?>" class="shadow-sm">
                     <?php endforeach ?>
                 </div>
             </div>
             <div class="product__right">
-                <p class="product__desc fs-2">
+                <p class="product__desc fs-2 lh-sm">
                     <?= $item['description'] ?>
                 </p>
                 <form action="?act=add-to-cart&id=<?= $item['id'] ?>" method="post">
-
-                    <?php if (!empty($colors)) : ?>
-                        <h2>Color:</h2>
-                        <div class="product__clr">
-                            <?php $i = 1 ?>
-                            <?php foreach ($colors as $color) : ?>
-                                <div class="variant-input">
-                                    <input type="radio" value="<?= $color['id'] ?>" id="clr-<?= $i ?>" name="color" autofocus>
-                                    <label for="clr-<?= $i ?>" style="background: #<?= $color['hex'] ?>;"></label>
-                                </div>
-                                <?php $i++; ?>
-                            <?php endforeach ?>
-                        </div>
-                    <?php else : ?>
-                        <input type="hidden" name="color" value="0">
-                    <?php endif; ?>
-
+                    <h2>Color:</h2>
+                    <div class="product__clr">
+                        <?php $i = 1 ?>
+                        <?php foreach ($colors as $color) : ?>
+                            <div class="variant-input">
+                                <input type="radio" value="<?= $color['id'] ?>" id="clr-<?= $i ?>" name="color" autofocus>
+                                <label for="clr-<?= $i ?>" style="background: #<?= $color['hex'] ?>;"></label>
+                            </div>
+                            <?php $i++; ?>
+                        <?php endforeach ?>
+                    </div>
                     <h2 class="fs-1">Quantity:</h2>
                     <div class="product__qty">
                         <div class="product__qty-btns">
@@ -60,10 +54,10 @@
                         </div>
                         <div class="product__price">
                             <?php if ($sale == $cost) : ?>
-                                <span id="price">£<?= number_format($sale, 2, '.', ',') ?></span>
+                                <span id="price">£<?= number_format($sale, 0, '.', ',') ?></span>
                             <?php else : ?>
-                                <span class="text-secondary fw-light text-decoration-line-through">£<?= number_format($cost, 2, '.', ',') ?></span>
-                                <span id="price" class="fs-1">£<?= number_format($sale, 2, '.', ',') ?></span>
+                                <span class="text-secondary fw-light text-decoration-line-through">£<?= number_format($cost, 0, '.', ',') ?></span>
+                                <span id="price" class="fs-1">£<?= number_format($sale, 0, '.', ',') ?></span>
                             <?php endif; ?>
                         </div>
                     </div>
@@ -224,6 +218,18 @@
 </section>
 
 <script>
+    function changeImage(image) {
+        var bigImage = document.getElementById('big-image');
+        // Thay đổi ảnh lớn với hiệu ứng slide
+        bigImage.src = image.src;
+        bigImage.classList.add('slide-img');
+        // Loại bỏ lớp slide-in sau khi hoàn thành animation
+        bigImage.addEventListener('animationend', function() {
+            bigImage.classList.remove('slide-img');
+        });
+    }
+
+
     function updateQuantity(change) {
         var quantityHidden = document.getElementById('qty-hidden');
         var currentQuantity = parseInt(quantityHidden.value);

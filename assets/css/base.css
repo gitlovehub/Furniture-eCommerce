@@ -1,3 +1,4 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat&display=swap');
 /* http://meyerweb.com/eric/tools/css/reset/ 
    v2.0 | 20110126
    License: none (public domain)
@@ -195,7 +196,7 @@ a {
   height: 2px;
   background-color: #000;
   transition: all ease 0.3s;
-  opacity: 0.2;
+  opacity: 0.1;
 }
 
 .link-hover-0::after {
@@ -238,7 +239,7 @@ a {
   height: 2px;
   background-color: #000;
   transition: all ease 0.3s;
-  opacity: 0.05;
+  opacity: 0;
 }
 
 #span:hover .link-hover-100::before {
@@ -261,6 +262,7 @@ h2 {
 }
 
 .btn-submit {
+  width: 100%;
   outline: none;
   border: 1px solid var(--black-clr);
   background: var(--black-clr);
@@ -297,7 +299,7 @@ h2 {
   width: 15rem;
 }
 
-.header__navbar-logo-img {
+.header__navbar-logo-svg {
   transition: all ease-in 0.3s;
 }
 
@@ -352,6 +354,25 @@ h2 {
   color: #fff;
   font-weight: 600;
   font-size: 16px;
+}
+
+.checkout-qty::before {
+  position: absolute;
+  top: -8px;
+  right: -4px;
+  content: attr(cart-qty);
+  display: block;
+  width: 2.4rem;
+  height: 2.4rem;
+  background-color: rgba(0, 0, 0, 0.56);
+  border-radius: 50%;
+  text-align: center;
+  line-height: 2.4rem;
+  color: #fff;
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 600;
+  font-size: 14px;
+  box-shadow: 4px -2px 7px 0px #00000069;
 }
 
 .navbar__mobile {
@@ -597,8 +618,8 @@ body::-webkit-scrollbar-thumb:hover {
   left: 2px;
   right: 2px;
   top: calc(100% - 82px);
-  backdrop-filter: blur(3px);
-  -webkit-backdrop-filter: blur(3px);
+  backdrop-filter: blur(7px);
+  -webkit-backdrop-filter: blur(7px);
   transform-origin: bottom;
   transform-style: preserve-3d;
   transform: rotateX(90deg);
@@ -719,17 +740,16 @@ body::-webkit-scrollbar-thumb:hover {
   top: 0;
   width: 100%;
   height: 100vh;
-  right: -100%;
   backdrop-filter: blur(20px);
   -webkit-backdrop-filter: blur(20px);
   transition: all ease 0.5s;
   opacity: 0;
-  z-index: 999;
+  z-index: -10;
 }
 
 .cart-overlay.active {
+  z-index: 999;
   opacity: 1;
-  right: 0; /* Slide in from the right when the 'open' class is present */
 }
 
 .ov-hidden {
@@ -738,8 +758,8 @@ body::-webkit-scrollbar-thumb:hover {
 
 .cart-container {
   position: absolute;
-  right: 0;
   top: 0;
+  right: -100%;
   max-width: 500px;
   min-width: 450px;
   height: 100%;
@@ -747,6 +767,11 @@ body::-webkit-scrollbar-thumb:hover {
   padding: 20px;
   display: flex;
   flex-direction: column;
+  transition: all ease 0.5s;
+}
+
+.cart-overlay.active .cart-container {
+  right: 0;
 }
 
 .cart-header {
@@ -773,30 +798,27 @@ body::-webkit-scrollbar-thumb:hover {
   align-items: center;
   gap: 1.5rem;
   overflow-y: auto;
-  min-height: calc(100vh - 129px - 70px);
-  padding: 5px;
+  height: 570px;
 }
 
 .cart-item {
-  background-color: #f2f2f2;
+  background-color: #f5f5f5;
   display: flex;
   height: 108px;
   width: 100%;
-  border: 1px solid #717171;
   border-radius: 3px;
-  overflow: hidden;
+  border: 1px solid #cfcfcf;
 }
 
 .cart-item-start {
+  position: relative;
   display: flex;
   justify-content: center;
   align-items: center;
-  margin: 0.5rem;
-  width: 200px;
+  width: 180px;
 }
 
 .cart-item-start img {
-  width: 100%;
   height: 100%;
   cursor: pointer;
 }
@@ -834,16 +856,12 @@ body::-webkit-scrollbar-thumb:hover {
 }
 
 .cart-footer {
-  font-family: Fira Code, monospace;
-  border-top: 2px dashed var(--black-clr);
   margin-top: 2rem;
-  margin-right: 2.5rem;
 }
 
 .filter-overlay {
   position: fixed;
   top: 0;
-  left: 0;
   width: 100%;
   height: 100vh;
   background-color: rgba(0, 0, 0, 0.3);
@@ -857,10 +875,6 @@ body::-webkit-scrollbar-thumb:hover {
 .filter-overlay.active {
   opacity: 1;
   z-index: 999;
-}
-
-.ov-hidden {
-  overflow-y: hidden;
 }
 
 .filter-container {
@@ -917,37 +931,39 @@ body::-webkit-scrollbar-thumb:hover {
   display: block;
 }
 
-/* PC: width >= 1024px */
-@media screen and (min-width: 63.9375em) {
-  .hide-on-pc {
-    display: none;
-  }
+.or {
+  position: relative;
+  z-index: 2;
 }
 
-/* Mobile and Tablet: width < 1024px */
-@media screen and (max-width: 63.9375em) {
-  .news-text {
-    max-width: 400px;
-    margin: auto;
-    padding: 0 1.3rem;
-  }
-
-  .news form {
-    display: grid;
-    gap: 2rem;
-  }
+.or::before {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  content: 'OR';
+  display: block;
+  width: 40px;
+  height: 100%;
+  background-color: #fff;
+  z-index: 1;
 }
 
-/* Tablet: width >= 740px and width < 1024px */
-@media screen and (min-width: 46.25em) and (max-width: 63.9375em) {
-  .hide-on-tablet {
-    display: none;
-  }
-
-  .header__navbar-logo {
-    width: 12rem;
-  }
+.or::after {
+  top: 50%;
+  position: absolute;
+  content: '';
+  display: block;
+  width: 100%;
+  height: 1px;
+  background-color: #ccc;
+  z-index: 0;
 }
+
+.checkout-summary {
+  background-color: #f5f5f5;
+}
+
 
 /* Mobile: width < 740px */
 @media screen and (max-width: 46.1875em) {

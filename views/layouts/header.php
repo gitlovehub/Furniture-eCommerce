@@ -55,7 +55,17 @@ if (isset($_SESSION["cart-overlay"])) {
             </div>
 
             <a href="?act=home-page" class="header__navbar-logo">
-                <img src="<?= BASE_URL ?>assets/images/logo.png" alt="" class="header__navbar-logo-img">
+                <div class="header__navbar-logo-svg">
+                    <svg xmlns="http://www.w3.org/2000/svg" xmlns:cc="http://creativecommons.org/ns#" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" version="1.1" viewBox="0 0 300 118.62" xml:space="preserve">
+                        <g fill="#000" stroke-width="1.1801">
+                            <path d="m96.307 69.753c8.3784 11.447 18.881 12.037 18.881 12.037h18.291l8.2604-12.037z" />
+                            <path d="m73.414 51.698c8.3784 11.447 18.881 12.037 18.881 12.037h53.575l8.2604-12.037z" />
+                            <path d="m50.639 33.643c8.3784 11.447 18.881 12.037 18.881 12.037h88.741l8.2604-12.037z" />
+                            <path d="m8.9828 3.5518c16.875 22.893 37.762 24.073 37.762 24.073h131.22l-43.544 63.369c-8.7324 12.627 12.627 24.073 12.627 24.073l60.183-87.442s20.887-1.1801 37.762-24.073z" />
+                            <path d="m291.02 3.5518h-29.266c-16.875 22.893-37.762 24.073-37.762 24.073h21.241l-43.544 63.369c-8.7324 12.627 12.627 24.073 12.627 24.073z" />
+                        </g>
+                    </svg>
+                </div>
             </a>
 
             <div class="header__navbar-menu hide-on-mobile">

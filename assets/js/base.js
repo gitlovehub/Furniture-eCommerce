@@ -8,11 +8,11 @@ function scrollFunction() {
     if (document.body.scrollTop > 0 || document.documentElement.scrollTop > 0) {
         document.querySelector(".header-sticky").style.height = "60px";
         document.querySelector(".header").style.boxShadow = "0 4px 5px -5px rgba(0, 0, 0, 1)";
-        document.querySelector(".header__navbar-logo-img").style.width = "70%";
+        document.querySelector(".header__navbar-logo-svg").style.width = "70%";
     } else {
         document.querySelector(".header-sticky").style.height = "120px";
         document.querySelector(".header").style.boxShadow = "none";
-        document.querySelector(".header__navbar-logo-img").style.width = "100%";
+        document.querySelector(".header__navbar-logo-svg").style.width = "100%";
     }
 }
 

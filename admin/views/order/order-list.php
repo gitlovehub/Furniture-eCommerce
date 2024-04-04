@@ -83,8 +83,7 @@
                 <table class="table table-hover">
                     <thead>
                         <tr>
-                            <th class="col-1">ID</th>
-                            <th class="col-2">Date</th>
+                            <th class="col-3">Date time</th>
                             <th class="col-2">Customers</th>
                             <th class="col-2">Payment</th>
                             <th class="col-2">Delivery</th>
@@ -100,17 +99,16 @@
 
                         <?php foreach ($list as $item) : ?>
                             <tr>
-                                <td><?= $item['id'] ?></td>
                                 <td><?= $item['date'] ?></td>
                                 <td><?= $item['customer_name'] ?></td>
                                 <td>
-                                    <span class="badge <?= ($item['payment_status'] == 0) ? 'bg-label-warning' : (($item['payment_status'] == 1) ? 'bg-label-success' : 'bg-label-danger') ?> mx-3">
+                                    <span class="badge <?= ($item['payment_status'] == 0) ? 'bg-label-warning' : (($item['payment_status'] == 1) ? 'bg-label-success' : 'bg-label-danger') ?>">
                                         <?= ($item['payment_status'] == 0) ? 'Pending' : (($item['payment_status'] == 1) ? 'Paid' : 'Canceled') ?>
                                     </span>
                                 </td>
                                 <td>
                                     <span class="badge <?= ($item['delivery_status'] == 0) ? 'bg-label-warning' : (($item['delivery_status'] == 1) ? 'bg-label-primary' : (($item['delivery_status'] == 2) ? 'bg-label-success' : 'bg-label-danger')) ?>">
-                                        <?= ($item['delivery_status'] == 0) ? 'Pending' : (($item['delivery_status'] == 1) ? 'In transit' : (($item['delivery_status'] == 2) ? 'Delivered' : 'Delivery failed')) ?>
+                                        <?= ($item['delivery_status'] == 0) ? 'Pending' : (($item['delivery_status'] == 1) ? 'In transit' : (($item['delivery_status'] == 2) ? 'Delivered' : 'failed')) ?>
                                     </span>
                                 </td>
                                 <td>

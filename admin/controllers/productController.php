@@ -162,6 +162,11 @@ function addColor($id) {
             "hex"        => $_POST["colorHex"] ?? null,
         ];
 
+        // Xử lý file
+        if ($_FILES['colorThumbnail']['error'] === UPLOAD_ERR_OK) {
+            $data['color_thumbnail'] = upload_file($_FILES['colorThumbnail'], 'uploads/product/');
+        }
+
         // Validate
         $errors = [];
 
@@ -179,6 +184,11 @@ function addColor($id) {
             $errors['colorHex'] = 'Please enter between 1 and 50 characters.';
         } elseif (!preg_match('/^[0-9a-fA-F]+$/', $data['hex'])) {
             $errors['colorHex'] = 'Hex value can only contain numbers and letters.';
+        }
+
+        // Validate color thumbnail
+        if ($_FILES['colorThumbnail']['size'] == 0) {
+            $errors['colorThumbnail'] = 'Please upload an image.';
         }
 
         if (!empty($errors)) {

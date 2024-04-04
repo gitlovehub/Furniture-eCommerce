@@ -24,7 +24,7 @@
 
         <div class="cart-body">
             <?php $carts = getCartByCustomer('tbl_carts', $_SESSION["user"]['id'] ?? ''); ?>
-            <?php $dataItemCount=0 ?>
+            <?php $dataItemCount = 0 ?>
             <?php if (empty($carts)) : ?>
                 <div class="m-auto text-center">
                     <img src="<?= BASE_URL ?>assets/images/empty-cart.png" style="width: 180px;">
@@ -37,12 +37,16 @@
                 <?php foreach ($carts as $cart) : ?>
                     <?php $dataItemCount++ ?>
                     <div class="cart-item">
-                        <div onclick="redirectToProductDetail(<?= $cart['id_product'] ?>)" class="cart-item-start m-0">
-                            <img src="<?= BASE_URL . $cart['thumbnail'] ?>" alt="product img" class="cart-item-img" layout="fill">
+                        <div onclick="redirectToProductDetail(<?= $cart['id_product'] ?>)" class="cart-item-start">
+                            <?php if (!empty($cart['color_thumbnail'])) : ?>
+                                <img src="<?= BASE_URL . $cart['color_thumbnail'] ?>" alt="product img" class="cart-item-img">
+                            <?php else : ?>
+                                <img src="<?= BASE_URL . $cart['thumbnail'] ?>" alt="product img" class="cart-item-img">
+                            <?php endif; ?>
                         </div>
                         <div class="w-100 p-3 d-flex flex-column justify-content-between">
                             <div class="d-flex justify-content-between">
-                                <div class="d-flex flex-column gap-4">
+                                <div class="d-flex flex-column gap-3">
                                     <h4 class="fs-3 fw-bold"><?= $cart['product'] ?></h4>
                                     <?php if (!empty($cart['color'])) : ?>
                                         <span>Color:
@@ -64,9 +68,8 @@
                                     <span class="fw-bold"><?= $cart['quantity'] ?></span>
                                 </div>
                                 <div>
-                                    <span>Unit price:</span>
                                     <?php $unit = $cart['price'] - ($cart['price'] * $cart['discount'] / 100); ?>
-                                    <span class="fs-3 fw-bold">£<?= number_format($unit, 2, '.', ',') ?></span>
+                                    <span class="fs-3 fw-bold">£<?= number_format($unit, 0, '.', ',') ?></span>
                                 </div>
                             </div>
                         </div>
@@ -76,21 +79,14 @@
         </div>
         <?php if (!empty($carts)) : ?>
             <div class="cart-footer">
-                <div class="d-flex justify-content-between align-items-center py-4">
-                    <h2 class="fs-2">Subtotal:</h2>
-                    <?php
-                    $totalPrice = 0; // Khởi tạo biến tổng giá trị của giỏ hàng
-                    foreach ($carts as $cart) {
-                        // Tính giá tiền của mỗi sản phẩm và cộng vào tổng
-                        $productPrice = ($cart['price'] - ($cart['price'] * $cart['discount'] / 100)) * $cart['quantity'];
-                        $totalPrice += $productPrice;
-                    }
-                    ?>
-                    <h2 class="fs-2">£<?= number_format($totalPrice, 2, '.', ',') ?></h2>
+                <div class="d-flex justify-content-between align-items-center py-4" style="border-top: 2px dashed #333;">
+                    <h2 class="fs-2 font-monospace">Subtotal:</h2>
+                    <?php $totalPrice = calculateTotalPrice($carts); ?>
+                    <h2 class="fs-2 font-monospace">£<?= number_format($totalPrice, 2, '.', ',') ?></h2>
                 </div>
-                <div class="d-flex gap-4">
-                    <a href="?act=review-cart" class="btn btn-outline-success w-100 py-2 fs-4 fw-semibold">Review cart</a>
-                    <a href="" class="btn btn-danger w-100 py-2 fs-4 fw-semibold">Go to Checkout</a>
+                <div class="d-flex flex-column flex-sm-row gap-4">
+                    <a href="?act=review-cart" class="btn btn-outline-success w-100 lh-lg font-monospace fs-4 fw-semibold">Review cart</a>
+                    <a href="?act=checkout" class="btn btn-danger w-100 lh-lg font-monospace fs-4 fw-semibold">Go to Checkout</a>
                 </div>
             </div>
         <?php endif; ?>

@@ -65,5 +65,26 @@ if (!function_exists('middleware_auth_checkClient')) {
                 exit();
             }
         }
+        if ($act == 'checkout') {
+            if (empty($_SESSION['user'])) {
+                header('Location: ' . BASE_URL);
+                exit();
+            }
+        }
     }
+}
+
+function calculateTotalPrice($carts) {
+    $totalPrice = 0;
+    foreach ($carts as $cart) {
+        $productPrice = ($cart['price'] - ($cart['price'] * $cart['discount'] / 100)) * $cart['quantity'];
+        $totalPrice += $productPrice;
+    }
+    return $totalPrice;
+}
+
+function calculateProductPrice($price, $discount, $quantity) {
+    // Tính giá tiền của sản phẩm với số lượng và chiết khấu cho trước
+    $productPrice = ($price - ($price * $discount / 100)) * $quantity;
+    return $productPrice;
 }

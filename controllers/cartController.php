@@ -10,7 +10,7 @@ function addToCart($id) {
             $quantity = $_POST["quantity"] ?? null;
             $color    = $_POST["color"] ?? null;
     
-            if (!isset($color)) {
+            if (empty($color)) {
                 $_SESSION["missing-color"] = '🎨 Please select a color!';
                 header('Location: ?act=product-detail&id=' . $id);
                 exit();
@@ -73,4 +73,11 @@ function removeCartItem($id) {
     deleteOne('tbl_carts', $id);
     
     require_once PATH_VIEW . 'layouts/master.php';
+}
+
+function checkout() {
+    $titleBar = 'Checkout';
+    $view     = 'cart/checkout';
+
+    require_once PATH_VIEW . 'layouts/blank.php';
 }

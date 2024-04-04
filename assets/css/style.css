@@ -364,6 +364,25 @@ section {
   justify-content: center;
 }
 
+.big-img img {
+  transition: all ease 0.5s;
+}
+
+.slide-img {
+  animation: slide 0.5s ease;
+}
+
+@keyframes slide {
+  from {
+    transform: translateX(10%);
+    opacity: 0;
+  }
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
 .small-imgs {
   display: flex;
   align-items: center;

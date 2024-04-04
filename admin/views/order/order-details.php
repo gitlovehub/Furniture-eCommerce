@@ -54,19 +54,19 @@
                                             </div>
                                         </td>
                                         <td>
-                                            <?= $basePrice ?>
+                                            <?= number_format($basePrice, 0, '.', ',') ?>
                                         </td>
                                         <td class="text-center">
                                             <?= $discount ?>%
                                         </td>
                                         <td>
-                                            <?= $sales ?>
+                                            <?= number_format($sales, 0, '.', ',') ?>
                                         </td>
                                         <td class="text-center">
                                             <?= $qty ?>
                                         </td>
                                         <td class="text-end">
-                                            <?= $sales * $qty ?>
+                                            <?= number_format($sales * $qty, 0, '.', ',') ?>
                                         </td>
                                     </tr>
                                     <?php $payment += $sales * $qty; ?>
@@ -79,7 +79,7 @@
                         <div class="d-flex float-end">
                             <h5 class="w-px-100">Payment:</h5>
                             <h5>
-                                <?= $payment; ?>
+                                £<?= number_format($payment, 0, '.', ',') ?>
                             </h5>
                         </div>
                     </div>

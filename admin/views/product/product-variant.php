@@ -12,11 +12,9 @@
 
         <div class="row">
             <div class="col-sm-12 col-lg-2">
-                <img class="shadow-sm" src="<?= PATH_UPLOAD . $show['thumbnail'] ?>" width="100%" alt="">
-                <a href="?act=add-gallery&id=<?= $show['id'] ?>" class="btn btn-dark w-100 mt-3" type="button">
-                    <i class="bx bx-image-add me-1"></i>
-                    Gallery
-                </a>
+                <?php foreach ($colors as $color) : ?>
+                    <img class="shadow-sm mb-2" src="<?= PATH_UPLOAD . $color['color_thumbnail'] ?>" width="100%" alt="">
+                <?php endforeach; ?>
             </div>
             <div class="col-sm-12 col-lg-6">
                 <div class="card">
@@ -58,7 +56,7 @@
             </div>
 
             <div class="col-sm-12 col-lg-4">
-                <form action="" method="post">
+                <form action="" method="post" enctype="multipart/form-data">
                     <div class="card mb-4">
                         <div class="card-header">
                             <h5 class="card-title mb-0">Variants</h5>
@@ -67,8 +65,7 @@
                         <div class="card-body">
                             <div class="mb-3">
                                 <label class="form-label" for="name">Color Name</label>
-                                <input type="text" name="colorName" class="form-control" id="name" placeholder="Color name"
-                                value="<?= isset($_SESSION["data"]) ? $_SESSION["data"]["name"] : null ?>">
+                                <input type="text" name="colorName" class="form-control" id="name" placeholder="Color name" value="<?= isset($_SESSION["data"]) ? $_SESSION["data"]["name"] : null ?>">
                                 <!-- Show errors -->
                                 <?php if (isset($_SESSION["errors"]["colorName"])) : ?>
                                     <span class="bg-label-danger">
@@ -80,8 +77,7 @@
                                 <label class="form-label" for="hex">Hex</label>
                                 <div class="input-group">
                                     <span class="input-group-text">#</span>
-                                    <input type="text" name="colorHex" class="form-control" id="hex"
-                                    value="<?= isset($_SESSION["data"]) ? $_SESSION["data"]["hex"] : null ?>">
+                                    <input type="text" name="colorHex" class="form-control" id="hex" value="<?= isset($_SESSION["data"]) ? $_SESSION["data"]["hex"] : null ?>">
                                 </div>
                                 <!-- Show errors -->
                                 <?php if (isset($_SESSION["errors"]["colorHex"])) : ?>
@@ -89,8 +85,17 @@
                                         <?= $_SESSION["errors"]["colorHex"] ?>
                                     </span>
                                 <?php endif; ?>
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label" for="color-thumbnail">Color thumbnail</label>
+                                <input type="file" name="colorThumbnail" class="form-control" id="color-thumbnail">
+                                <!-- Show errors -->
+                                <?php if (isset($_SESSION["errors"]["colorThumbnail"])) : ?>
+                                    <span class="bg-label-danger">
+                                        <?= $_SESSION["errors"]["colorThumbnail"] ?>
+                                    </span>
+                                <?php endif; ?>
                                 <?php unset($_SESSION["errors"]); ?>
-                                <?php unset($_SESSION["data"]); ?>
                             </div>
                         </div>
                     </div>

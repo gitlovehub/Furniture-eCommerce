@@ -48,10 +48,10 @@ if (empty($listProducts) || empty($kw)) {
                         </h4>
                         <p class="product__item-price fs-3">
                             <?php if ($price == $basePrice) : ?>
-                                <span>£<?= number_format($basePrice, 2, '.', ',') ?></span>
+                                <span>£<?= number_format($basePrice, 0, '.', ',') ?></span>
                             <?php else : ?>
-                                <span class="text-secondary fw-light text-decoration-line-through">£<?= number_format($basePrice, 2, '.', ',') ?></span>
-                                <span>£<?= number_format($price, 2, '.', ',') ?></span>
+                                <span class="text-secondary fw-light text-decoration-line-through">£<?= number_format($basePrice, 0, '.', ',') ?></span>
+                                <span>£<?= number_format($price, 0, '.', ',') ?></span>
                             <?php endif; ?>
                         </p>
                     </div>
