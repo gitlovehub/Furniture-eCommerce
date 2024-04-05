@@ -279,11 +279,12 @@ h2 {
 }
 
 .header {
-  background-color: var(--white-clr);
   position: fixed;
   top: 0;
   width: 100%;
   z-index: 99;
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
 }
 
 .header__navbar {

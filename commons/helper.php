@@ -36,6 +36,15 @@ if (!function_exists('upload_file')) {
     }
 }
 
+if (!function_exists('upload_avatar')) {
+    function upload_avatar($file, $pathFolderUpload) {
+        $uploadFile = $pathFolderUpload . time() . '-' . basename($file['name']);
+        if (move_uploaded_file($file['tmp_name'], $uploadFile)) {
+            return $uploadFile;
+        }
+    }
+}
+
 if (!function_exists('middleware_auth_check')) {
     function middleware_auth_check($act) {
         if ($act == 'login') {
@@ -66,6 +75,18 @@ if (!function_exists('middleware_auth_checkClient')) {
             }
         }
         if ($act == 'checkout') {
+            if (empty($_SESSION['user'])) {
+                header('Location: ' . BASE_URL);
+                exit();
+            }
+        }
+        if ($act == 'settings') {
+            if (empty($_SESSION['user'])) {
+                header('Location: ' . BASE_URL);
+                exit();
+            }
+        }
+        if ($act == 'setting-info') {
             if (empty($_SESSION['user'])) {
                 header('Location: ' . BASE_URL);
                 exit();

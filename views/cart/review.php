@@ -93,7 +93,7 @@
                                     <span class="fs-3 fw-bold">₤<?= number_format($totalPrice, 2, '.', ',') ?></span>
                                 </div>
                             </div>
-                            <a href="?act=checkout" class="btn btn-danger fs-4 lh-lg fw-semibold w-100">CHECK OUT</a>
+                            <a href="?act=checkout&user=<?= $_SESSION["user"]['id'] ?>" class="btn btn-danger fs-4 lh-lg fw-semibold w-100">CHECK OUT</a>
                             <p class="text-center">Shipping, taxes, and discount codes calculated at checkout.</p>
                             <p class="text-center fw-semibold">PAYMENT METHODS</p>
                             <div class="d-flex justify-content-between align-items-center">

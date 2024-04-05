@@ -101,7 +101,7 @@
                 <div class="my-5">
                     <h3 class="fs-2 fw-bold">Account</h3>
                     <div class="d-flex flex-wrap justify-content-between align-items-center lh-base pt-2">
-                        <p>hungtdps25636@fpt.edu.vn</p>
+                        <p><i class="fa-regular fa-envelope me-3"></i><?= $customer['email'] ?></p>
                         <div id="span">
                             <a href="?act=logout" class="link-hover-100 fs-3">Logout</a>
                         </div>
@@ -109,26 +109,15 @@
                 </div>
 
                 <div class="mb-5 fs-4">
-                    <h3 class="fs-2 fw-bold pb-4">Delivery</h3>
-                    <div class="form__group">
-                        <input type="email" id="email" name="fieldEmail" placeholder="Email" autocomplete="email">
-                        <label class="text-secondary" for="email">Email</label>
-                    </div>
-                    <div class="form__group">
-                        <input type="text" id="username" name="fieldUsername" placeholder="Username" autocomplete="username">
-                        <label class="text-secondary" for="username">Username</label>
-                    </div>
-                    <div class="form__group">
-                        <input type="number" id="phone" name="fieldPhone" placeholder="Phone" autocomplete="phone">
-                        <label class="text-secondary" for="phone">Phone</label>
-                    </div>
-                    <div class="form__group">
-                        <input type="text" id="address" name="fieldAddress" placeholder="Address" autocomplete="address">
-                        <label class="text-secondary" for="address">Address</label>
-                    </div>
-                    <div class="form-group">
-                        <label for="note" class="form-label">Add Order Note</label>
-                        <textarea id="note" name="fieldNote" class="form-control fs-4" rows="4" cols="50" placeholder="How can we help you?"></textarea>
+                    <h3 class="fs-2 fw-bold">Customer
+                        <a href="?act=setting-info&id=<?= $customer['id'] ?>"><i class="fa-regular fa-pen-to-square"></i></a>
+                    </h3>
+                    <p class="fs-3 lh-base"><?= $customer['name'] ?></p>
+                    <p class="fs-3 lh-base"><?= $customer['phone'] ?></p>
+                    <p class="fs-3 lh-base"><?= $customer['address'] ?></p>
+                    <div class="pt-4">
+                        <label for="note" class="form-label fs-3 fw-semibold">Add Order Note</label>
+                        <textarea id="note" name="note" class="form-control fs-3" rows="4" cols="50" placeholder="How can we help you?"></textarea>
                     </div>
                 </div>
 
@@ -161,69 +150,125 @@
                 </div>
             </div>
 
-            <div class="col-12 col-sm-6 checkout-summary border-start">
-                <div class="p-5 position-sticky top-0">
-                    <?php $carts = getCartByCustomer('tbl_carts', $_SESSION["user"]['id'] ?? ''); ?>
-                    <?php foreach ($carts as $cart) : ?>
+            <?php $carts = getCartByCustomer('tbl_carts', $_SESSION["user"]['id'] ?? ''); ?>
+
+            <?php if (empty($_SESSION["buy-now"])) : ?>
+                <div class="col-12 col-sm-6 checkout-summary border-start">
+                    <div class="p-5 position-sticky top-0">
+                        <?php foreach ($carts as $cart) : ?>
+                            <div class="cart-item mb-4 border-0" style="height: 80px;">
+                                <div onclick="redirectToProductDetail(<?= $cart['id_product'] ?>)" class="cart-item-start m-0 border" style="width: 120px; border-radius: 10px;">
+                                    <span class="checkout-qty" cart-qty="<?= $cart['quantity'] ?>"></span>
+                                    <?php if (!empty($cart['color_thumbnail'])) : ?>
+                                        <img src="<?= BASE_URL . $cart['color_thumbnail'] ?>" alt="product img" class="cart-item-img" style="width: 80px;">
+                                    <?php else : ?>
+                                        <img src="<?= BASE_URL . $cart['thumbnail'] ?>" alt="product img" class="cart-item-img" style="width: 80px;">
+                                    <?php endif; ?>
+                                </div>
+                                <div class="w-100 p-3 d-flex flex-wrap align-items-center justify-content-between">
+                                    <div class="d-flex flex-column lh-base">
+                                        <h4 class="fs-3 fw-bold"><?= $cart['product'] ?></h4>
+                                        <?php if (!empty($cart['color'])) : ?>
+                                            <span>Color:
+                                                <span class="fs-4 fw-bold"><?= $cart['color'] ?></span>
+                                            </span>
+                                        <?php endif; ?>
+                                    </div>
+                                    <div class="d-flex flex-column align-items-end lh-base">
+                                        <?php $productPrice = calculateProductPrice($cart['price'], $cart['discount'], $cart['quantity']); ?>
+                                        <?php $unit = $cart['price'] - ($cart['price'] * $cart['discount'] / 100); ?>
+                                        <span class="fs-3 fw-semibold">£<?= number_format($productPrice, 0, '.', ',') ?></span>
+                                        <span class="fs-4 text-secondary">£<?= number_format($unit, 0, '.', ',') ?> each</span>
+                                    </div>
+                                </div>
+                            </div>
+                        <?php endforeach; ?>
+                        <div class="form__group d-flex gap-4 mt-5">
+                            <input type="text" id="discountCode" name="fieldDiscountCode" placeholder="Discount code or gift card">
+                            <button type="submit" class="btn btn-outline-dark fs-4 fw-bold px-4">APPLY</button>
+                        </div>
+                        <div class="mt-4 lh-lg">
+                            <?php $totalPrice = calculateTotalPrice($carts); ?>
+                            <div class="fs-3 d-flex justify-content-between">
+                                <span>Subtotal</span>
+                                <span>₤<?= number_format($totalPrice, 2, '.', ',') ?></span>
+                            </div>
+                            <div class="fs-3 d-flex justify-content-between">
+                                <span>Shipping</span>
+                                <span>₤<?= number_format($shipping ?? 0, 2, '.', ',') ?></span>
+                            </div>
+                            <div class="fs-2 fw-bold d-flex justify-content-between">
+                                <span>Total</span>
+                                <span>₤<?= number_format($totalPrice, 2, '.', ',') ?></span>
+                            </div>
+                        </div>
+
+
+                        <div class="mt-5 hide-on-pc hide-on-tablet">
+                            <button style="letter-spacing: 1px;" class="btn btn-danger fs-3 fw-bold py-3 w-100 mb-5">ORDER</button>
+                            <ul class="d-flex flex-wrap gap-3 justify-content-between mb-5">
+                                <a href="" class="text-danger fs-5 text-decoration-underline">TERMS OF SERVICE</a>
+                                <a href="" class="text-danger fs-5 text-decoration-underline">PRIVACY POLICY</a>
+                                <a href="" class="text-danger fs-5 text-decoration-underline">RETURNS & EXCHANGES</a>
+                                <a href="" class="text-danger fs-5 text-decoration-underline">CONTACT</a>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            <?php else : ?>
+                <?php $data = $_SESSION["buy-now"] ?>
+                <div class="col-12 col-sm-6 checkout-summary border-start">
+                    <div class="p-5 position-sticky top-0">
                         <div class="cart-item mb-4 border-0" style="height: 80px;">
-                            <div onclick="redirectToProductDetail(<?= $cart['id_product'] ?>)" class="cart-item-start m-0 border" style="width: 120px; border-radius: 10px;">
-                                <span class="checkout-qty" cart-qty="<?= $cart['quantity'] ?>"></span>
-                                <?php if (!empty($cart['color_thumbnail'])) : ?>
-                                    <img src="<?= BASE_URL . $cart['color_thumbnail'] ?>" alt="product img" class="cart-item-img" style="width: 80px;">
-                                <?php else : ?>
-                                    <img src="<?= BASE_URL . $cart['thumbnail'] ?>" alt="product img" class="cart-item-img" style="width: 80px;">
-                                <?php endif; ?>
+                            <div onclick="redirectToProductDetail(<?= $data['id'] ?>)" class="cart-item-start m-0 border" style="width: 120px; border-radius: 10px;">
+                                <span class="checkout-qty" cart-qty="<?= $data['quantity'] ?>"></span>
+                                <img src="<?= BASE_URL . $data['thumbnail'] ?>" alt="product img" class="cart-item-img" style="width: 80px;">
                             </div>
                             <div class="w-100 p-3 d-flex flex-wrap align-items-center justify-content-between">
                                 <div class="d-flex flex-column lh-base">
-                                    <h4 class="fs-3 fw-bold"><?= $cart['product'] ?></h4>
-                                    <?php if (!empty($cart['color'])) : ?>
-                                        <span>Color:
-                                            <span class="fs-4 fw-bold"><?= $cart['color'] ?></span>
-                                        </span>
-                                    <?php endif; ?>
+                                    <h4 class="fs-3 fw-bold"><?= $data['name'] ?></h4>
+                                    <?php $color = getColorName('tbl_colors', $data['id']); ?>
+                                    <span>Color:
+                                        <span class="fs-4 fw-bold"><?= $color[0]['color_name'] ?></span>
+                                    </span>
                                 </div>
                                 <div class="d-flex flex-column align-items-end lh-base">
-                                    <?php $productPrice = calculateProductPrice($cart['price'], $cart['discount'], $cart['quantity']); ?>
-                                    <?php $unit = $cart['price'] - ($cart['price'] * $cart['discount'] / 100); ?>
+                                    <?php $productPrice = $data['price'] * $data['quantity'] ?>
+                                    <?php $unit = $data['price'] - ($data['price'] * $data['discount'] / 100); ?>
                                     <span class="fs-3 fw-semibold">£<?= number_format($productPrice, 0, '.', ',') ?></span>
-                                    <span class="fs-4 text-secondary">£<?= number_format($unit, 0, '.', ',') ?> each</span>
+                                    <span class="fs-4 text-secondary">£<?= number_format($data['price'], 0, '.', ',') ?> each</span>
                                 </div>
                             </div>
                         </div>
-                    <?php endforeach; ?>
-                    <div class="form__group d-flex gap-4 mt-5">
-                        <input type="text" id="discountCode" name="fieldDiscountCode" placeholder="Discount code or gift card">
-                        <button type="submit" class="btn btn-outline-dark fs-4 fw-bold px-4">APPLY</button>
-                    </div>
-                    <div class="mt-4 lh-lg">
-                        <?php $totalPrice = calculateTotalPrice($carts); ?>
-                        <div class="fs-3 d-flex justify-content-between">
-                            <span>Subtotal</span>
-                            <span>₤<?= number_format($totalPrice, 2, '.', ',') ?></span>
+                        <div class="form__group d-flex gap-4 mt-5">
+                            <input type="text" id="discountCode" name="fieldDiscountCode" placeholder="Discount code or gift card">
+                            <button type="submit" class="btn btn-outline-dark fs-4 fw-bold px-4">APPLY</button>
                         </div>
-                        <div class="fs-3 d-flex justify-content-between">
-                            <span>Shipping</span>
-                            <span>₤<?= number_format($shipping ?? 0, 2, '.', ',') ?></span>
+                        <div class="mt-4 lh-lg">
+                            <div class="fs-3 d-flex justify-content-between">
+                                <span>Shipping</span>
+                                <span>₤<?= number_format($shipping ?? 0, 2, '.', ',') ?></span>
+                            </div>
+                            <div class="fs-2 fw-bold d-flex justify-content-between">
+                                <span>Total</span>
+                                <span>₤<?= number_format($productPrice, 2, '.', ',') ?></span>
+                            </div>
                         </div>
-                        <div class="fs-2 fw-bold d-flex justify-content-between">
-                            <span>Total</span>
-                            <span>₤<?= number_format($totalPrice, 2, '.', ',') ?></span>
-                        </div>
-                    </div>
 
 
-                    <div class="mt-5 hide-on-pc hide-on-tablet">
-                        <button style="letter-spacing: 1px;" class="btn btn-danger fs-3 fw-bold py-3 w-100 mb-5">ORDER</button>
-                        <ul class="d-flex flex-wrap gap-3 justify-content-between mb-5">
-                            <a href="" class="text-danger fs-5 text-decoration-underline">TERMS OF SERVICE</a>
-                            <a href="" class="text-danger fs-5 text-decoration-underline">PRIVACY POLICY</a>
-                            <a href="" class="text-danger fs-5 text-decoration-underline">RETURNS & EXCHANGES</a>
-                            <a href="" class="text-danger fs-5 text-decoration-underline">CONTACT</a>
-                        </ul>
+                        <div class="mt-5 hide-on-pc hide-on-tablet">
+                            <button style="letter-spacing: 1px;" class="btn btn-danger fs-3 fw-bold py-3 w-100 mb-5">ORDER</button>
+                            <ul class="d-flex flex-wrap gap-3 justify-content-between mb-5">
+                                <a href="" class="text-danger fs-5 text-decoration-underline">TERMS OF SERVICE</a>
+                                <a href="" class="text-danger fs-5 text-decoration-underline">PRIVACY POLICY</a>
+                                <a href="" class="text-danger fs-5 text-decoration-underline">RETURNS & EXCHANGES</a>
+                                <a href="" class="text-danger fs-5 text-decoration-underline">CONTACT</a>
+                            </ul>
+                        </div>
                     </div>
                 </div>
-            </div>
+                <?php unset($_SESSION["buy-now"]); ?>
+            <?php endif; ?>
         </div>
     </div>
 </div>

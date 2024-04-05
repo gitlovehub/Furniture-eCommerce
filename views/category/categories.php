@@ -96,7 +96,7 @@
                     <div class="product__item-btn-overlay">
                         <button onclick="redirectToProductDetail(<?= $product['id'] ?>)" class="btn btn-outline-danger px-4 fs-3">View</button>
                     </div>
-                    <div class="product__item-details">
+                    <div class="product__item-details w-100">
                         <h4 class="product__item-name fs-3">
                             <?= $product['name'] ?>
                         </h4>
@@ -107,6 +107,7 @@
                                 <span class="text-secondary fw-light text-decoration-line-through">£<?= number_format($basePrice, 2, '.', ',') ?></span>
                                 <span>£<?= number_format($price, 2, '.', ',') ?></span>
                             <?php endif; ?>
+                            <span class="float-end fs-5 text-secondary"><i class="fa-regular fa-eye me-2"></i><?= $product['view'] ?></span>
                         </p>
                     </div>
                 </div>

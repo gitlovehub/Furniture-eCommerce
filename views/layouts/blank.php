@@ -25,6 +25,8 @@
     <!-- CSS link here-->
     <link rel="stylesheet" href="<?= BASE_URL ?>assets/css/base.css">
     <link rel="stylesheet" href="<?= BASE_URL ?>assets/css/form.css">
+    <link rel="stylesheet" href="<?= BASE_URL ?>assets/css/firework.css">
+    <link rel="stylesheet" href="<?= $css ?? null ?>">
     <link rel="stylesheet" href="<?= BASE_URL ?>assets/css/responsive.css">
 
     <!-- Title bar here-->

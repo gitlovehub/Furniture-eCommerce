@@ -33,6 +33,9 @@
                     <?= $item['description'] ?>
                 </p>
                 <form action="?act=add-to-cart&id=<?= $item['id'] ?>" method="post">
+                    <input type="hidden" name="name" value="<?= $item['name'] ?>">
+                    <input type="hidden" name="thumbnail" value="<?= $item['thumbnail'] ?>">
+                    <input type="hidden" name="discount" value="<?= $item['discount'] ?>">
                     <h2>Color:</h2>
                     <div class="product__clr">
                         <?php $i = 1 ?>
@@ -59,11 +62,17 @@
                                 <span class="text-secondary fw-light text-decoration-line-through">£<?= number_format($cost, 0, '.', ',') ?></span>
                                 <span id="price" class="fs-1">£<?= number_format($sale, 0, '.', ',') ?></span>
                             <?php endif; ?>
+                            <input type="hidden" name="price" value="<?= $sale ?>">
                         </div>
                     </div>
+                    <?php if ($item['instock'] > 10) : ?>
+                        <p class="py-4">In stock, ready to ship 🚀</p>
+                    <?php else : ?>
+                        <p class="py-4">😭 Low stock - only <?= $item['instock'] ?> items left!</p>
+                    <?php endif; ?>
                     <div class="product__act">
-                        <button type="submit" name="btnAddToCart" class="product-outline-btn fs-3">add to cart</button>
-                        <button type="submit" name="btnBuyNow" class="product__item-btn fs-3">buy now</button>
+                        <button type="submit" name="btnAddToCart" class="product-outline-btn fs-3">Add to cart</button>
+                        <button type="submit" name="btnBuyNow" class="product__item-btn fs-3">Buy now</button>
                     </div>
                 </form>
             </div>
@@ -192,9 +201,9 @@
                             <img src="<?= BASE_URL . $product['thumbnail'] ?>" alt="" class="product__item-img">
                         </div>
                         <div class="product__item-btn-overlay">
-                            <button class="product__item-btn">ADD TO CART</button>
+                            <button onclick="redirectToProductDetail(<?= $product['id'] ?>)" class="btn btn-outline-danger px-4 fs-4">View</button>
                         </div>
-                        <div class="product__item-details">
+                        <div class="product__item-details w-100">
                             <h4 class="product__item-name fs-4"><?= $product['name'] ?></h4>
                             <p class="product__item-price fs-3">
                                 <?php if ($price == $basePrice) : ?>
@@ -203,6 +212,7 @@
                                     <span class="text-secondary fw-light text-decoration-line-through">£<?= $basePrice ?></span>
                                     <span>£<?= $price ?></span>
                                 <?php endif; ?>
+                                <span class="float-end fs-5 text-secondary"><i class="fa-regular fa-eye me-2"></i><?= $product['view'] ?></span>
                             </p>
                         </div>
                     </div>

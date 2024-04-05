@@ -30,35 +30,73 @@
                     <span>Log Out</span>
                 </a>
             </aside>
+
             <form action="" class="row w-100 d-flex flex-sm-row flex-column-reverse pt-4" method="post" enctype="multipart/form-data">
                 <div class="col-12 col-sm-8">
                     <div class="form__group">
                         <label class="fw-semibold" for="username">Username</label>
-                        <input type="username" id="username" name="username">
+                        <input type="username" id="username" name="username" autocomplete="username" value="<?= isset($customer['name']) ? $customer['name'] : ''; ?>">
+                        <!-- Show errors -->
+                        <?php if (isset($_SESSION["errors"]["username"])) : ?>
+                            <p class="fw-semibold text-danger pt-1">
+                                <?= $_SESSION["errors"]["username"] ?>
+                            </p>
+                        <?php endif; ?>
                     </div>
                     <div class="form__group">
                         <label class="fw-semibold" for="email">Email</label>
-                        <input type="email" id="email" name="email">
+                        <input type="email" id="email" name="email" autocomplete="email" value="<?= isset($customer['email']) ? $customer['email'] : ''; ?>">
+                        <!-- Show errors -->
+                        <?php if (isset($_SESSION["errors"]["email"])) : ?>
+                            <p class="fw-semibold text-danger pt-1">
+                                <?= $_SESSION["errors"]["email"] ?>
+                            </p>
+                        <?php endif; ?>
                     </div>
                     <div class="form__group">
                         <label class="fw-semibold" for="phone">Phone</label>
-                        <input type="tel" id="phone" name="phone">
+                        <input type="tel" id="phone" name="phone" autocomplete="phone" value="<?= isset($customer['phone']) ? $customer['phone'] : ''; ?>">
+                        <!-- Show errors -->
+                        <?php if (isset($_SESSION["errors"]["phone"])) : ?>
+                            <p class="fw-semibold text-danger pt-1">
+                                <?= $_SESSION["errors"]["phone"] ?>
+                            </p>
+                        <?php endif; ?>
                     </div>
                     <div class="form__group">
                         <label class="fw-semibold" for="address">Address</label>
-                        <input type="text" id="address" name="address">
+                        <input type="text" id="address" name="address" autocomplete="address" value="<?= isset($customer['address']) ? $customer['address'] : ''; ?>">
+                        <!-- Show errors -->
+                        <?php if (isset($_SESSION["errors"]["address"])) : ?>
+                            <p class="fw-semibold text-danger pt-1">
+                                <?= $_SESSION["errors"]["address"] ?>
+                            </p>
+                        <?php endif; ?>
                     </div>
                     <div class="form__group">
                         <h4 class="fw-semibold">Registration Date:
-                            <span class="fw-bold">30/02/2024</span>
+                            <span class="fw-bold"><?= isset($customer['registration_date']) ? $customer['registration_date'] : ''; ?></span>
                         </h4>
                     </div>
                     <div class="form__group">
                         <h4 class="fw-semibold">Status:
-                            <span class="fw-semibold rounded px-2 py-1 text-bg-success">Active</span>
+                            <?php
+                            $statuses = [
+                                0 => ['Blocked', 'text-bg-danger'],
+                                1 => ['Active', 'text-bg-success'],
+                                2 => ['Unverified', 'text-bg-secondary'],
+                            ];
+
+                            $status     = isset($customer['status']) ? $customer['status'] : '';
+                            $statusText = isset($statuses[$status]) ? $statuses[$status][0] : '';
+                            $className  = isset($statuses[$status]) ? $statuses[$status][1] : 'text-bg-dark';
+                            ?>
+                            <span class="fs-4 fw-semibold rounded px-2 py-1 <?= $className ?>">
+                                <?= $statusText ?>
+                            </span>
                         </h4>
                     </div>
-                    <button type="button" name="btnSaveInfo" class="btn btn-danger fs-3 fw-semibold w-100 mt-5">
+                    <button type="submit" name="btnSaveInfo" class="btn btn-danger fs-3 fw-semibold w-100 mt-5">
                         <i class="fa-regular fa-floppy-disk me-2"></i>
                         Save
                     </button>
@@ -67,13 +105,39 @@
                 <div class="col-12 col-sm-4 mb-5">
                     <div class="col-12 m-auto mb-5 text-center">
                         <div class="avt m-auto" style="width: 150px; height: 150px;">
-                            <img src="https://images.unsplash.com/placeholder-avatars/extra-large.jpg?bg=fff&crop=faces&dpr=1&h=150&w=150&auto=format&fit=crop&q=60&ixlib=rb-4.0.3" class="avt-img rounded-circle h-100" style="object-fit: cover;" alt="default">
+                            <?php 
+                            $default = 'https://images.unsplash.com/photo-1589254066213-a0c9dc853511?q=80&w=1887&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D'; 
+                            $avatar = !empty($customer['avatar']) ? BASE_URL . $customer['avatar'] : $default;
+                            ?>
+                            <img id="avatarPreview" src="<?= $avatar ?>" class="avt-img rounded-circle h-100" style="object-fit: cover;" alt="avatar">
                         </div>
+                        <!-- Show errors -->
+                        <?php if (isset($_SESSION["errors"]["avatar"])) : ?>
+                            <p class="fw-semibold text-danger  pt-3">
+                                <?= $_SESSION["errors"]["avatar"] ?>
+                            </p>
+                        <?php endif; ?>
+                        <?php unset($_SESSION["errors"]); ?>
+                        <?php unset($_SESSION["data"]); ?>
                         <label for="upload" class="btn btn-outline-secondary fs-4 mt-4"><i class="fa-regular fa-image me-2"></i>Choose image</label>
-                        <input type="file" id="upload" hidden>
+                        <input type="file" id="upload" name="avatar" hidden>
+                        <input type="hidden" name="img-current" value="<?= $customer['avatar'] ?>">
                     </div>
                 </div>
             </form>
         </div>
     </div>
 </section>
+
+<script>
+    document.getElementById('upload').addEventListener('change', function() {
+        var file = this.files[0];
+        if (file && file.type.startsWith('image/')) {
+            var reader = new FileReader();
+            reader.onload = function(e) {
+                document.getElementById('avatarPreview').src = e.target.result;
+            };
+            reader.readAsDataURL(file);
+        }
+    });
+</script>

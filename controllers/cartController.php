@@ -1,7 +1,6 @@
 <?php 
 
 function addToCart($id) {
-
     if (isset($_POST['btnAddToCart'])) {
         // kiểm tra xem đăng nhập chưa
         if (isset($_SESSION["user"])) {
@@ -14,8 +13,7 @@ function addToCart($id) {
                 $_SESSION["missing-color"] = '🎨 Please select a color!';
                 header('Location: ?act=product-detail&id=' . $id);
                 exit();
-            } elseif ($color == 0) {}
-        
+            }
             // Thêm sản phẩm vào giỏ hàng và kiểm tra kết quả
             if (insertToCart($customer, $product, $quantity, $color)) {
                 // Xử lý thông báo thành công
@@ -28,9 +26,38 @@ function addToCart($id) {
         } else {
             $_SESSION["login-first"] = 'Please Log in First! 😊';
         }
+        header('Location: ?act=product-detail&id=' . $id);
+        exit();
     }
-    header('Location: ?act=product-detail&id=' . $id);
-    exit();
+
+    if (isset($_POST['btnBuyNow'])) {
+        // kiểm tra xem đăng nhập chưa
+        if (isset($_SESSION["user"])) {
+            $data = [
+                'id'        => $id ?? null,
+                'customer'  => $_SESSION["user"]['id'] ?? null,
+                'thumbnail' => $_POST["thumbnail"] ?? null,
+                'name'      => $_POST["name"] ?? null,
+                'price'     => $_POST["price"] ?? null,
+                'discount'  => $_POST["discount"] ?? null,
+                'quantity'  => $_POST["quantity"] ?? null,
+                'color'     => $_POST["color"] ?? null
+            ];
+
+            if (empty($data['color'])) {
+                $_SESSION["missing-color"] = '🎨 Please select a color!';
+                header('Location: ?act=product-detail&id=' . $id);
+                exit();
+            }
+
+            $_SESSION["buy-now"] = $data;
+            header('Location: ?act=checkout&user=' . $_SESSION["user"]['id']);
+            exit();
+
+        } else {
+            $_SESSION["login-first"] = 'Please Log in First! 😊';
+        }
+    }
 }
 
 function deleteQuickCartItem($id) {
@@ -42,15 +69,11 @@ function deleteQuickCartItem($id) {
 function reviewCart() {
     $titleBar = 'Review Cart';
     $view     = 'cart/review';
-
     require_once PATH_VIEW . 'layouts/master.php';
 }
 
 function updateCart($id) {
-    $titleBar = 'Review Cart';
-    $view     = 'cart/review';
     $success  = true;
-
     if(isset($_POST['btnUpdateCart'])) {
         // Lặp qua các sản phẩm trong giỏ hàng
         foreach($_POST['productQty'] as $id => $newQuantity) {
@@ -62,9 +85,10 @@ function updateCart($id) {
         }
         if($success) {
             $_SESSION["updatecart-success"] = 'Your cart got a stylish upgrade! 🛒✨';
+            header('Location: ?act=review-cart');
+            exit();
         }
     }
-    require_once PATH_VIEW . 'layouts/master.php';
 }
 
 function removeCartItem($id) {
@@ -75,9 +99,10 @@ function removeCartItem($id) {
     require_once PATH_VIEW . 'layouts/master.php';
 }
 
-function checkout() {
+function checkout($id) {
     $titleBar = 'Checkout';
     $view     = 'cart/checkout';
+    $customer = selectOne('tbl_accounts', $id);
 
     require_once PATH_VIEW . 'layouts/blank.php';
 }

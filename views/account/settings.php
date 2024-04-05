@@ -5,9 +5,13 @@
             <span onclick="goBack()" class="header__navbar-menu-link fs-3">Back</span>
         </div>
 
+        <?php if (isset($_SESSION["user"])) {
+            $user = $_SESSION["user"];
+        } ?>
+
         <div class="account-container">
             <aside class="account__navigation">
-                <a href="?act=setting-info" class="account__navigation-link">
+                <a href="?act=setting-info&id=<?= $user['id'] ?>" class="account__navigation-link">
                     <i class="fa-solid fa-address-card"></i>
                     <span>Account Details</span>
                 </a>
@@ -31,7 +35,7 @@
                 <h1 class="account__header-title">
                     Hi,
                     <label>
-                        <?= $_SESSION["user"]['name'] ?>
+                        <?= $user['name'] ?>
                     </label>
                 </h1>
                 <p class="account__header-text">

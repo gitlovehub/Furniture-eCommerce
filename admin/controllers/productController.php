@@ -321,5 +321,6 @@ function validateAddGallery($data) {
     if ($_FILES['productGallery']['size'] == 0) {
         $errors['productGallery'] = 'Please upload an image.';
     }
+    
     return $errors;
 }

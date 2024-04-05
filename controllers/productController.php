@@ -42,6 +42,9 @@ function productDetail($id) {
     $gallery  = getVariants('tbl_gallery', $id);
     $colors   = getVariants('tbl_colors', $id);
 
+    // Tăng lượt view cho sản phẩm
+    updateProductView($id);
+
     $cost      = $item['price'];
     $discount  = $item['discount'];
     // Tính toán giá sau khi được giảm giá

@@ -5,21 +5,35 @@ $toastSessions = [
     "addtocart-success"  => "Success",
     "updatecart-success" => "Success",
     "deleteitem-success" => "Success",
+    "save-info"          => "Success",
     "login-blocked"      => "Error",
     "login-unverified"   => "Error",
     "send-failed"        => "Error",
     "missing-color"      => "Error",
-    "login-first"     => "Error",
+    "login-first"        => "Error",
 ];
 
 // Duyệt qua mảng session và hiển thị toast nếu session tồn tại
 foreach ($toastSessions as $sessionKey => $toastType) {
     if (!empty($_SESSION[$sessionKey])) {
-        echo '<script>
-                  document.addEventListener("DOMContentLoaded", function() {
-                    showToast("' . $toastType . '", "' . $_SESSION[$sessionKey] . '");
-                  });
-              </script>';
+        // Kiểm tra nếu session là "login-success"
+        if ($sessionKey === "login-success") {
+            echo '<script>
+                    document.addEventListener("DOMContentLoaded", function() {
+                        showToast("' . $toastType . '", "' . $_SESSION[$sessionKey] . '");
+                        setTimeout(function() {
+                            document.querySelector(".firework").remove();
+                        }, 3200);
+                    });
+                  </script>';
+            echo '<div class="firework"></div>';
+        } else {
+            echo '<script>
+                    document.addEventListener("DOMContentLoaded", function() {
+                        showToast("' . $toastType . '", "' . $_SESSION[$sessionKey] . '");
+                    });
+                </script>';
+        }
         unset($_SESSION[$sessionKey]); // Xóa session sau khi hiển thị
     }
 }

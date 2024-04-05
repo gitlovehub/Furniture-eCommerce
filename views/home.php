@@ -21,6 +21,7 @@
     <div class="grid wide">
         <h2 class="page-title fs-1">Products we are proud of</h2>
         <div class="grid-products">
+            <marquee scrollamount="10">Big sale</marquee>
 
             <?php foreach ($topDiscounts as $product) : ?>
                 <?php
@@ -41,7 +42,7 @@
                     <div class="product__item-btn-overlay">
                         <button onclick="redirectToProductDetail(<?= $product['id'] ?>)" class="btn btn-outline-danger px-4 fs-3">View</button>
                     </div>
-                    <div class="product__item-details">
+                    <div class="product__item-details w-100">
                         <h4 class="product__item-name fs-3">
                             <?= $product['name'] ?>
                         </h4>
@@ -52,6 +53,7 @@
                                 <span class="text-secondary fw-light text-decoration-line-through">£<?= number_format($basePrice, 0, '.', ',') ?></span>
                                 <span>£<?= number_format($price, 0, '.', ',') ?></span>
                             <?php endif; ?>
+                            <span class="float-end fs-5 text-secondary"><i class="fa-regular fa-eye me-2"></i><?= $product['view'] ?></span>
                         </p>
                     </div>
                 </div>
@@ -107,7 +109,7 @@
                         <div class="product__item-btn-overlay">
                             <button onclick="redirectToProductDetail(<?= $product['id'] ?>)" class="btn btn-outline-danger px-4 fs-4">View</button>
                         </div>
-                        <div class="product__item-details">
+                        <div class="product__item-details w-100">
                             <h4 class="product__item-name fs-4"><?= $product['name'] ?></h4>
                             <p class="product__item-price fs-3">
                                 <?php if ($price == $basePrice) : ?>
@@ -116,6 +118,7 @@
                                     <span class="text-secondary fw-light text-decoration-line-through">£<?= number_format($basePrice, 0, '.', ',') ?></span>
                                     <span>£<?= number_format($price, 0, '.', ',') ?></span>
                                 <?php endif; ?>
+                                <span class="float-end fs-5 text-secondary"><i class="fa-regular fa-eye me-2"></i><?= $product['view'] ?></span>
                             </p>
                         </div>
                     </div>

@@ -57,6 +57,24 @@ if (!function_exists('getCartByCustomer')) {
     }
 }
 
+if (!function_exists('getColorName')) {
+    function getColorName($tableName, $id) {
+        try {
+            $sql = "SELECT c.name AS color_name
+            FROM tbl_colors AS c
+            JOIN tbl_products AS p ON c.id_product = p.id
+            WHERE p.id = :product_id";
+
+            $stmt = $GLOBALS['conn']->prepare($sql);
+            $stmt->bindParam(':product_id', $id);
+            $stmt->execute();
+            return $stmt->fetchAll();
+        } catch (\Exception $e) {
+            debug($e);
+        }
+    }
+}
+
 function insertToCart($customerId, $productId, $quantity, $colorId) {
     try {
         // Kiểm tra xem $colorId có giá trị khác 0 không
@@ -121,6 +139,18 @@ function updateCartItemQuantity($id, $newQuantity) {
         $stmt->bindParam(':id', $id);
         $stmt->execute();
         return true; // Trả về true nếu cập nhật số lượng thành công
+    } catch (\Exception $e) {
+        debug($e);
+    }
+}
+
+function updateProductView($productId) {
+    try {
+        $sql  = "UPDATE tbl_products SET `view` = `view` + 1 WHERE id = :productId";
+        $stmt = $GLOBALS['conn']->prepare($sql);
+        $stmt->bindParam(':productId', $productId);
+        $stmt->execute();
+        return true;
     } catch (\Exception $e) {
         debug($e);
     }

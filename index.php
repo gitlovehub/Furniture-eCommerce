@@ -29,9 +29,9 @@ match ($act) {
     'forgot-password'  => forgotPassword(),
     'reset-password'   => resetPassword(),
 
-    // Acc
+    // Account
     'settings'         => settings(),
-    'setting-info'     => settingInfo(),
+    'setting-info'     => settingInfo($_GET["id"]),
     'setting-address'  => settingAddress(),
 
 
@@ -50,8 +50,10 @@ match ($act) {
     'review-cart'      => reviewCart(),
     'update-cart'      => updateCart($_POST["productQty"]),
     'remove-cart'      => removeCartItem($_GET["id"]),
-    'checkout'         => checkout(),
+    'checkout'         => checkout($_GET["user"]),
 
+    // Order
+    'order-success'    => orderSuccess(),
 
 };
 

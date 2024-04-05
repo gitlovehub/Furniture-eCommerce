@@ -6,6 +6,17 @@ section {
   padding-top: 120px;
 }
 
+marquee {
+  position: absolute;
+  font-family: Roboto Condensed, sans-serif;
+  font-size: 300px;
+  color: white;
+  -webkit-text-stroke: 1px rgba(180, 180, 180, 0.7);
+  text-transform: uppercase;
+  top: 85%;
+  z-index: -1;
+}
+
 .grid-home {
   grid-gap: 1.3rem;
   display: grid;
@@ -112,7 +123,7 @@ section {
 .product__item-details {
   position: absolute;
   bottom: 0;
-  padding-left: 1rem;
+  padding: 0 1rem;
 }
 
 .product__item-name {
@@ -407,7 +418,7 @@ section {
 .product__right {
   width: 50%;
   background-color: var(--platinum-clr);
-  padding: 16rem 5rem 8rem;
+  padding: 15rem 5rem 8rem;
 }
 
 .product__desc {
@@ -493,7 +504,7 @@ section {
 }
 
 .product__act {
-  margin-top: 5rem;
+  margin-top: 2rem;
   display: flex;
   gap: 2rem;
   width: 100%;

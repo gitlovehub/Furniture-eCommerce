@@ -54,6 +54,12 @@
                             <label class="form-label" for="product-thumbnail">thumbnail</label>
                             <input type="file" name="productThumbnail" class="form-control" id="product-thumbnail">
                             <input type="hidden" name="img-current" value="<?= $show['thumbnail'] ?>">
+                            <!-- Show errors -->
+                            <?php if (isset($_SESSION["errors"]["productThumbnail"])) : ?>
+                            <span class="bg-label-danger">
+                                <?= $_SESSION["errors"]["productThumbnail"] ?>
+                            </span>
+                            <?php endif; ?>
                         </div>
                     </div>
                 </div>

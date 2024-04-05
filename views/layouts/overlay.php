@@ -86,7 +86,7 @@
                 </div>
                 <div class="d-flex flex-column flex-sm-row gap-4">
                     <a href="?act=review-cart" class="btn btn-outline-success w-100 lh-lg font-monospace fs-4 fw-semibold">Review cart</a>
-                    <a href="?act=checkout" class="btn btn-danger w-100 lh-lg font-monospace fs-4 fw-semibold">Go to Checkout</a>
+                    <a href="?act=checkout&user=<?= $_SESSION["user"]['id'] ?>" class="btn btn-danger w-100 lh-lg font-monospace fs-4 fw-semibold">Go to Checkout</a>
                 </div>
             </div>
         <?php endif; ?>
