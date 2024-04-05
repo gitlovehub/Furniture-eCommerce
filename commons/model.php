@@ -101,14 +101,16 @@ if (!function_exists('insert')) {
         try {
             $strKeys = get_str_keys($data);
             $virtualParams = get_virtual_params($data);
-            $sql = "INSERT INTO $tableName($strKeys) VALUE ($virtualParams)";
+            $sql = "INSERT INTO $tableName ($strKeys) VALUES ($virtualParams)";
             $stmt = $GLOBALS['conn']->prepare($sql);
             foreach ($data as $columnName => &$value) {
                 $stmt->bindParam(":$columnName", $value);
             }
             $stmt->execute();
+            return true;
         } catch (\Exception $e) {
             debug($e);
+            return false;
         }
     }
 }

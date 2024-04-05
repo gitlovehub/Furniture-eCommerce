@@ -106,7 +106,7 @@ function settingAddress() {
     $css      = BASE_URL.'assets/css/form.css';
     $titleBar = 'Addresses';
 
-    if (isset($_SESSION["user"])) {
+    if (!empty($_SESSION["user"])) {
         $view = 'account/address';
     } else {
         header('Location: ?act=login');

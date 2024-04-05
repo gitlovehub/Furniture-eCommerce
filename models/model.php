@@ -61,7 +61,7 @@ if (!function_exists('getColorName')) {
     function getColorName($tableName, $id) {
         try {
             $sql = "SELECT c.name AS color_name
-            FROM tbl_colors AS c
+            FROM $tableName AS c
             JOIN tbl_products AS p ON c.id_product = p.id
             WHERE p.id = :product_id";
 
@@ -147,6 +147,19 @@ function updateCartItemQuantity($id, $newQuantity) {
 function updateProductView($productId) {
     try {
         $sql  = "UPDATE tbl_products SET `view` = `view` + 1 WHERE id = :productId";
+        $stmt = $GLOBALS['conn']->prepare($sql);
+        $stmt->bindParam(':productId', $productId);
+        $stmt->execute();
+        return true;
+    } catch (\Exception $e) {
+        debug($e);
+    }
+}
+
+// Hàm để xóa sản phẩm trong giỏ hàng dựa trên id_product
+function deleteCartItemsByProductId($productId) {
+    try {
+        $sql = "DELETE FROM tbl_carts WHERE id_product = :productId";
         $stmt = $GLOBALS['conn']->prepare($sql);
         $stmt->bindParam(':productId', $productId);
         $stmt->execute();

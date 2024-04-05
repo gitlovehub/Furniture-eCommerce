@@ -127,11 +127,6 @@ input[type="checkbox"] {
   animation: slideIn 1s both;
 }
 
-.payment-box input:checked + .payment-box {
-  border: 1px solid #4482fd !important;
-  background-color: rgba(0, 17, 255, 0.1);
-}
-
 .payment-box.choose {
   border: 1px solid #4482fd !important;
   background-color: rgba(0, 17, 255, 0.1);

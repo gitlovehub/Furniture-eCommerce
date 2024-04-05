@@ -10,7 +10,7 @@
         </h1>
         <div class="account-container">
             <aside class="account__navigation">
-                <a href="?act=setting-info" class="account__navigation-link active">
+                <a href="?act=setting-info&id=<?= $customer['id'] ?>" class="account__navigation-link active">
                     <i class="fa-solid fa-address-card"></i>
                     <span>Account Details</span>
                 </a>

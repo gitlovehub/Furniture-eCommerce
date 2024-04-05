@@ -53,6 +53,7 @@ match ($act) {
     'checkout'         => checkout($_GET["user"]),
 
     // Order
+    'place-order'      => placeOrder($_GET["id"]),
     'order-success'    => orderSuccess(),
 
 };

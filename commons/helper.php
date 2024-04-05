@@ -80,6 +80,12 @@ if (!function_exists('middleware_auth_checkClient')) {
                 exit();
             }
         }
+        if ($act == 'order-success') {
+            if (empty($_SESSION['user'])) {
+                header('Location: ' . BASE_URL);
+                exit();
+            }
+        }
         if ($act == 'settings') {
             if (empty($_SESSION['user'])) {
                 header('Location: ' . BASE_URL);

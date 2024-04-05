@@ -180,6 +180,30 @@ a {
   text-decoration: underline;
 }
 
+.bg-label-primary {
+  line-height: .75;
+  padding: 3px 7px;
+  background-color: #e2e2ff !important;
+  color: #5256ff;
+  border-radius: 0.4rem;
+}
+
+.bg-label-danger {
+  line-height: .75;
+  padding: 3px 7px;
+  background-color: #ffe0db !important;
+  color: #ff3e1d;
+  border-radius: 0.4rem;
+}
+
+.bg-label-success {
+  line-height: .75;
+  padding: 3px 7px;
+  background-color: #71dd37 !important;
+  color: #59b428;
+  border-radius: 0.4rem;
+}
+
 .link-hover-0,
 .link-hover-100 {
   position: relative;

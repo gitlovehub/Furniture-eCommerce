@@ -3,7 +3,7 @@
 function addToCart($id) {
     if (isset($_POST['btnAddToCart'])) {
         // kiểm tra xem đăng nhập chưa
-        if (isset($_SESSION["user"])) {
+        if (!empty($_SESSION["user"])) {
             $product  = $id ?? null;
             $customer = $_SESSION["user"]['id'] ?? null;
             $quantity = $_POST["quantity"] ?? null;
@@ -32,7 +32,7 @@ function addToCart($id) {
 
     if (isset($_POST['btnBuyNow'])) {
         // kiểm tra xem đăng nhập chưa
-        if (isset($_SESSION["user"])) {
+        if (!empty($_SESSION["user"])) {
             $data = [
                 'id'        => $id ?? null,
                 'customer'  => $_SESSION["user"]['id'] ?? null,
