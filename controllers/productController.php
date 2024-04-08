@@ -39,16 +39,19 @@ function productDetail($id) {
     $titleBar = 'Product Page';
     $view     = 'product/detail';
     $item     = selectOne('tbl_products', $id);
-    $gallery  = getVariants('tbl_gallery', $id);
-    $colors   = getVariants('tbl_colors', $id);
+    $gallery  = getEntitiesProduct('tbl_gallery', $id);
+    $colors   = getEntitiesProduct('tbl_colors', $id);
+    $reviews  = getReviewsByProductId('tbl_reviews', $id);
+    
+    $limitedReviews = array_slice($reviews, 0, 3);
 
     // Tăng lượt view cho sản phẩm
     updateProductView($id);
 
-    $cost      = $item['price'];
+    $basePrice      = $item['price'];
     $discount  = $item['discount'];
     // Tính toán giá sau khi được giảm giá
-    $sale = $cost - ($cost * $discount / 100);
+    $sale = $basePrice - ($basePrice * $discount / 100);
     $cate = $item['id_category'];
     $sameCate = getProductsByCategoryId($cate);
 
@@ -63,5 +66,74 @@ function productDetail($id) {
         return $b['discount'] - $a['discount'];
     });
 
+    sendReview($id);
+
     require_once PATH_VIEW . 'layouts/master.php';
+}
+
+function sendReview($id) {
+    if(isset($_POST['btnSendReview'])) {
+        // kiểm tra xem đăng nhập chưa
+        if (isset($_SESSION["user"])) {
+            $data = [
+                'id_product'  => $id ?? null,
+                'id_customer' => $_SESSION["user"]['id'] ?? null,
+                'rating'      => $_POST['rating'] ?? null,
+                'review_text' => $_POST['textarea'] ?? null,
+                'review_date' => date('Y-m-d'),
+            ];
+
+            // Validate
+            $errors = validateReview($data);
+            if (!empty($errors)) {
+                $_SESSION["review-error"] = 'Error processing request!';
+                header('Location: ?act=product-detail&id=' . $id);
+                exit();
+            } else {
+                // Kiểm tra xem khách hàng đã mua sản phẩm chưa
+                if (checkCustomerHasPurchased($data['id_customer'])) {
+                    insert('tbl_reviews', $data);
+                    $_SESSION["review-success"]='Your feedback has been received! Thanks a bunch! ❤️️';
+                } else {
+                    $_SESSION["review-error"] = 'You must purchase this product before.';
+                    header('Location: ?act=product-detail&id=' . $id);
+                    exit();
+                }
+            }
+        } else {
+            $_SESSION["login-first"] = 'Please Log in First! 😊';
+        }
+    }
+}
+
+function calculateAverageRating($reviews) {
+    $totalStars = 0;
+    $totalReviews = count($reviews);
+    // Tính tổng số sao của tất cả các đánh giá
+    foreach ($reviews as $review) {
+        $totalStars += $review['rating'];
+    }
+    // Tránh chia cho 0
+    if ($totalReviews > 0) {
+        // Tính trung bình số sao
+        $averageRating = $totalStars / $totalReviews;
+        return round($averageRating, 1); // làm tròn đến một chữ số thập phân
+    } else {
+        return 0; // Nếu không có đánh giá, trả về 0
+    }
+}
+
+function validateReview($data) {
+    $errors = [];
+
+    // Validate text
+    if (empty($data['review_text']) || strlen($data['review_text']) < 2 || strlen($data['review_text']) > 50) {
+        $errors['text'] = 'Text must be between 2 and 50 characters.';
+    }
+
+    // Validate rating
+    if (!isset($data['rating'])) {
+        $errors['rating'] = 'Please select a rating.';
+    }
+    return $errors;
 }

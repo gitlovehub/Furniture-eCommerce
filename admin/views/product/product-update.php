@@ -2,13 +2,13 @@
     <!-- Content -->
 
     <div class="container-xxl flex-grow-1 container-p-y">
-        <h4 class="py-3 mb-4">
-            Update a Product
-            <a href="?act=product-list" class="btn btn-secondary float-end" type="button">
+        <div class="py-3 mb-4 d-flex flex-wrap justify-content-between align-items-center">
+            <span class="fs-3 fw-bold">Update a Product</span>
+            <a href="?act=product-list" class="btn btn-secondary" type="button">
                 <i class="bx bx-arrow-back me-1"></i>
                 Back to list
             </a>
-        </h4>
+        </div>
 
         <form action="" method="post" class="row" enctype="multipart/form-data">
             <div class="col-sm-12 col-lg-8">
@@ -56,9 +56,9 @@
                             <input type="hidden" name="img-current" value="<?= $show['thumbnail'] ?>">
                             <!-- Show errors -->
                             <?php if (isset($_SESSION["errors"]["productThumbnail"])) : ?>
-                            <span class="bg-label-danger">
-                                <?= $_SESSION["errors"]["productThumbnail"] ?>
-                            </span>
+                                <span class="bg-label-danger">
+                                    <?= $_SESSION["errors"]["productThumbnail"] ?>
+                                </span>
                             <?php endif; ?>
                         </div>
                     </div>

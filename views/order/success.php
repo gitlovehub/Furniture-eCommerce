@@ -39,7 +39,7 @@
     }
 </style>
 
-<div class="d-flex text-center pt-5">
+<div class="d-flex text-center p-5">
     <div class="m-auto d-flex flex-column gap-5" style="width: 500px;">
         <img src="<?= BASE_URL ?>assets/images/thankyou.png" alt="" class="thankyou-img">
         <p style="font-size: 5rem;">Thank you !</p>

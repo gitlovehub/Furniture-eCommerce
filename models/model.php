@@ -57,12 +57,12 @@ if (!function_exists('getCartByCustomer')) {
     }
 }
 
-if (!function_exists('getColorName')) {
-    function getColorName($tableName, $id) {
+if (!function_exists('getColors')) {
+    function getColors($tableName, $id) {
         try {
-            $sql = "SELECT c.name AS color_name
-            FROM $tableName AS c
-            JOIN tbl_products AS p ON c.id_product = p.id
+            $sql = "SELECT clr.id, clr.name AS color_name, clr.color_thumbnail AS color_thumbnail
+            FROM $tableName AS clr
+            JOIN tbl_products AS p ON clr.id_product = p.id
             WHERE p.id = :product_id";
 
             $stmt = $GLOBALS['conn']->prepare($sql);
@@ -72,6 +72,28 @@ if (!function_exists('getColorName')) {
         } catch (\Exception $e) {
             debug($e);
         }
+    }
+}
+
+function checkInstock($productId, $quantity) {
+    try {
+        // Lấy thông tin số lượng tồn kho của sản phẩm
+        $sql = "SELECT instock FROM tbl_products WHERE id = :productId";
+        $stmt = $GLOBALS['conn']->prepare($sql);
+        $stmt->bindParam(':productId', $productId);
+        $stmt->execute();
+        $result = $stmt->fetch(PDO::FETCH_ASSOC);
+
+        // Kiểm tra số lượng tồn kho và xử lý
+        if ($result && isset($result['instock'])) {
+            $instock = $result['instock'];
+            if ($quantity > $instock || $instock == 0) {
+                // Nếu số lượng mua vượt quá số lượng tồn kho hoặc số lượng tồn kho bằng 0
+                return true;
+            }
+        }
+    } catch (\Exception $e) {
+        debug($e);
     }
 }
 
@@ -166,5 +188,66 @@ function deleteCartItemsByProductId($productId) {
         return true;
     } catch (\Exception $e) {
         debug($e);
+    }
+}
+
+function decreaseInstock($productId, $quantity) {
+    try {
+        $sql  = "UPDATE tbl_products SET instock = instock - :quantity WHERE id = :productId";
+        $stmt = $GLOBALS['conn']->prepare($sql);
+        $stmt->bindParam(':quantity', $quantity, PDO::PARAM_INT);
+        $stmt->bindParam(':productId', $productId, PDO::PARAM_INT);
+        $stmt->execute();
+        return true;
+    } catch (\Exception $e) {
+        debug($e);
+    }
+}
+
+function updatePaymentStatus($orderId, $paid) {
+    try {
+        $sql  = "UPDATE tbl_orders SET payment_status = :paymentStatus WHERE id = :orderId";
+        $stmt = $GLOBALS['conn']->prepare($sql);
+        $stmt->bindParam(':paymentStatus', $paid, PDO::PARAM_INT);
+        $stmt->bindParam(':orderId', $orderId, PDO::PARAM_INT);
+        $stmt->execute();
+        return true;
+    } catch (\Exception $e) {
+        debug($e);
+    }
+}
+
+if (!function_exists('getReviewsByProductId')) {
+    function getReviewsByProductId($tableName, $productId) {
+        try {
+            $sql = "SELECT r.id, r.rating, r.review_text, r.review_date, p.name AS product_name, acc.name AS customer_name, acc.avatar AS customer_avatar
+                    FROM $tableName AS r
+                    JOIN tbl_products AS p ON r.id_product = p.id
+                    JOIN tbl_accounts AS acc ON r.id_customer = acc.id
+                    WHERE r.id_product = :product_id AND r.status = 1";
+
+            $stmt = $GLOBALS['conn']->prepare($sql);
+            $stmt->bindParam(":product_id", $productId);
+            $stmt->execute();
+            return $stmt->fetchAll();
+        } catch (\Exception $e) {
+            debug($e);
+        }
+    }
+}
+
+if (!function_exists('checkCustomerHasPurchased')) {
+    function checkCustomerHasPurchased($customerId) {
+        try {
+            $sql = "SELECT COUNT(*) AS total FROM tbl_orders WHERE id_customer = :customer_id AND delivery_status = 2 AND payment_status = 2";
+            $stmt = $GLOBALS['conn']->prepare($sql);
+            $stmt->bindParam(":customer_id", $customerId);
+            $stmt->execute();
+            $result = $stmt->fetch(PDO::FETCH_ASSOC);
+            return $result['total'] > 0;
+        } catch (\Exception $e) {
+            debug($e);
+            return false;
+        }
     }
 }

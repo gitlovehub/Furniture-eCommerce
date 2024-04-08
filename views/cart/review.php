@@ -67,10 +67,10 @@
                                 </div>
                                 <div class="col-12 col-sm-2 d-flex">
                                     <?php
-                                    $totalPrice = 0;
-                                    $productPrice = ($cart['price'] - ($cart['price'] * $cart['discount'] / 100)) * $cart['quantity'];
+                                    $subtotal = 0;
+                                    $totalPrice = calculateTotalPrice($cart['price'], $cart['discount'], $cart['quantity']);
                                     ?>
-                                    <span class="my-auto ms-auto me-0 fw-bold">₤<?= number_format($productPrice, 0, '.', ',') ?></span>
+                                    <span class="my-auto ms-auto me-0 fw-bold">₤<?= number_format($totalPrice, 0, '.', ',') ?></span>
                                 </div>
                             </div>
                         <?php endforeach; ?>
@@ -85,12 +85,12 @@
                             <div class="lh-lg">
                                 <div class="d-flex justify-content-between">
                                     <span class="fs-3 fw-semibold">Discount:</span>
-                                    <span class="fs-3 fw-bold">₤<?= number_format($discountPrice ?? 0, 2, '.', ',') ?></span>
+                                    <span class="fs-3 fw-bold">₤0</span>
                                 </div>
                                 <div class="d-flex justify-content-between">
                                     <span class="fs-3 fw-semibold">Subtotal:</span>
-                                    <?php $totalPrice = calculateTotalPrice($carts); ?>
-                                    <span class="fs-3 fw-bold">₤<?= number_format($totalPrice, 2, '.', ',') ?></span>
+                                    <?php $subtotal = calculateSubtotalCart($carts); ?>
+                                    <span class="fs-3 fw-bold">₤<?= number_format($subtotal, 2, '.', ',') ?></span>
                                 </div>
                             </div>
                             <a href="?act=checkout&user=<?= $_SESSION["user"]['id'] ?>" class="btn btn-danger fs-4 lh-lg fw-semibold w-100">CHECK OUT</a>

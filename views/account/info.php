@@ -64,7 +64,29 @@
                         <?php endif; ?>
                     </div>
                     <div class="form__group">
-                        <label class="fw-semibold" for="address">Address</label>
+                        <div class="d-flex flex-column flex-lg-row gap-4">
+                            <select id="city">
+                                <option value="" selected>Province / City</option>
+                            </select>
+                            <input type="hidden" id="selectedCityValue" name="city" value="">
+                            <select id="district">
+                                <option value="" selected>District</option>
+                            </select>
+                            <input type="hidden" id="selectedDistrictValue" name="district" value="">
+                            <select id="ward">
+                                <option value="" selected>Ward</option>
+                            </select>
+                            <input type="hidden" id="selectedWardValue" name="ward" value="">
+                        </div>
+                        <!-- Show errors -->
+                        <?php if (isset($_SESSION["errors"]["city"])) : ?>
+                            <p class="fw-semibold text-danger pt-1">
+                                <?= $_SESSION["errors"]["city"] ?>
+                            </p>
+                        <?php endif; ?>
+                    </div>
+                    <div class="form__group">
+                        <label class="fw-semibold" for="address">Address details</label>
                         <input type="text" id="address" name="address" autocomplete="address" value="<?= isset($customer['address']) ? $customer['address'] : ''; ?>">
                         <!-- Show errors -->
                         <?php if (isset($_SESSION["errors"]["address"])) : ?>
@@ -105,9 +127,9 @@
                 <div class="col-12 col-sm-4 mb-5">
                     <div class="col-12 m-auto mb-5 text-center">
                         <div class="avt m-auto" style="width: 150px; height: 150px;">
-                            <?php 
-                            $default = 'https://images.unsplash.com/photo-1589254066213-a0c9dc853511?q=80&w=1887&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D'; 
-                            $avatar = !empty($customer['avatar']) ? BASE_URL . $customer['avatar'] : $default;
+                            <?php
+                            $defaultAvatar = 'https://www.gravatar.com/avatar/0?d=mp&f=y';
+                            $avatar = !empty($customer['avatar']) ? BASE_URL . $customer['avatar'] : $defaultAvatar;
                             ?>
                             <img id="avatarPreview" src="<?= $avatar ?>" class="avt-img rounded-circle h-100" style="object-fit: cover;" alt="avatar">
                         </div>
@@ -140,4 +162,73 @@
             reader.readAsDataURL(file);
         }
     });
+</script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.21.1/axios.min.js"></script>
+<script>
+    var citis = document.getElementById("city");
+    var districts = document.getElementById("district");
+    var wards = document.getElementById("ward");
+    var Parameter = {
+        url: "https://raw.githubusercontent.com/kenzouno1/DiaGioiHanhChinhVN/master/data.json",
+        method: "GET",
+        responseType: "json",
+    };
+    var promise = axios(Parameter);
+    promise.then(function(result) {
+        renderCity(result.data);
+    });
+
+    function renderCity(data) {
+        for (const x of data) {
+            citis.options[citis.options.length] = new Option(x.Name, x.Id);
+        }
+        citis.onchange = function() {
+            district.length = 1;
+            ward.length = 1;
+            if (this.value != "") {
+                const result = data.filter(n => n.Id === this.value);
+
+                for (const k of result[0].Districts) {
+                    district.options[district.options.length] = new Option(k.Name, k.Id);
+                }
+            }
+        };
+        district.onchange = function() {
+            ward.length = 1;
+            const dataCity = data.filter((n) => n.Id === citis.value);
+            if (this.value != "") {
+                const dataWards = dataCity[0].Districts.filter(n => n.Id === this.value)[0].Wards;
+
+                for (const w of dataWards) {
+                    wards.options[wards.options.length] = new Option(w.Name, w.Id);
+                }
+            }
+        };
+    }
+
+    function bindSelectChangeEvent(selectElement, hiddenInputElement) {
+        selectElement.addEventListener("change", function() {
+            var selectedOption = selectElement.options[selectElement.selectedIndex];
+            hiddenInputElement.value = selectedOption.innerText;
+        });
+    }
+
+    citis.addEventListener("change", function() {
+        updateSelectedValue(citis, selectedCityValue);
+    });
+
+    districts.addEventListener("change", function() {
+        updateSelectedValue(districts, selectedDistrictValue);
+    });
+
+    wards.addEventListener("change", function() {
+        updateSelectedValue(wards, selectedWardValue);
+    });
+
+    function updateSelectedValue(selectElement, hiddenInput) {
+        var selectedOption = selectElement.options[selectElement.selectedIndex];
+        var selectedOptionText = selectedOption.innerText;
+        hiddenInput.value = selectedOptionText;
+    }
 </script>

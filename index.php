@@ -34,7 +34,6 @@ match ($act) {
     'setting-info'     => settingInfo($_GET["id"]),
     'setting-address'  => settingAddress(),
 
-
     // Cate
     'categories'       => categories(),
     'category-menu'    => categoryMenu($_GET["id"]),

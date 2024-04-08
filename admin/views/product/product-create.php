@@ -1,14 +1,14 @@
 <div class="content-wrapper">
-    
+
     <!-- Content -->
     <div class="container-xxl flex-grow-1 container-p-y">
-        <h4 class="py-3 mb-4">
-            Add a new Product
-            <a href="?act=product-list" class="btn btn-secondary float-end" type="button">
+        <div class="py-3 mb-4 d-flex flex-wrap justify-content-between align-items-center">
+            <span class="fs-3 fw-bold">Add a new Product</span>
+            <a href="?act=product-list" class="btn btn-secondary" type="button">
                 <i class="bx bx-arrow-back me-1"></i>
                 Back to list
             </a>
-        </h4>
+        </div>
 
         <form action="" method="post" class="row" enctype="multipart/form-data">
             <div class="col-sm-12 col-lg-8">
@@ -20,8 +20,7 @@
                     <div class="card-body">
                         <div class="mb-3">
                             <label class="form-label" for="product-name">Name</label>
-                            <input type="text" name="productName" class="form-control" id="product-name" placeholder="Product title"
-                            value="<?= isset($_SESSION["data"]) ? $_SESSION["data"]["name"] : null ?>">
+                            <input type="text" name="productName" class="form-control" id="product-name" placeholder="Product title" value="<?= isset($_SESSION["data"]) ? $_SESSION["data"]["name"] : null ?>">
                             <!-- Show errors -->
                             <?php if (isset($_SESSION["errors"]["productName"])) : ?>
                                 <span class="bg-label-danger">
@@ -99,8 +98,7 @@
                     <div class="card-body">
                         <div class="mb-3">
                             <label class="form-label" for="product-instock">Add to stock</label>
-                            <input type="number" min="0" name="productInstock" class="form-control" id="product-instock" placeholder="Quantity"
-                            value="<?= isset($_SESSION["data"]) ? $_SESSION["data"]["instock"] : null ?>">
+                            <input type="number" min="0" name="productInstock" class="form-control" id="product-instock" placeholder="Quantity" value="<?= isset($_SESSION["data"]) ? $_SESSION["data"]["instock"] : null ?>">
                             <!-- Show errors -->
                             <?php if (isset($_SESSION["errors"]["productInstock"])) : ?>
                                 <span class="bg-label-danger">
@@ -121,8 +119,7 @@
                             <label class="form-label" for="product-price">Base price</label>
                             <div class="input-group">
                                 <span class="input-group-text">£</span>
-                                <input type="number" min="0" name="productPrice" class="form-control" id="product-price" placeholder="Product price"
-                                value="<?= isset($_SESSION["data"]) ? $_SESSION["data"]["price"] : null ?>">
+                                <input type="number" min="0" name="productPrice" class="form-control" id="product-price" placeholder="Product price" value="<?= isset($_SESSION["data"]) ? $_SESSION["data"]["price"] : null ?>">
                             </div>
                             <!-- Show errors -->
                             <?php if (isset($_SESSION["errors"]["productPrice"])) : ?>
@@ -134,8 +131,7 @@
                         <div class="mb-3">
                             <label class="form-label" for="product-discount">Discount percent</label>
                             <div class="input-group">
-                                <input type="number" min="0" max="99" name="productDiscount" class="form-control" id="product-discount" placeholder="0 to 99"
-                                value="<?= isset($_SESSION["data"]) ? $_SESSION["data"]["discount"] : null ?>">
+                                <input type="number" min="0" max="99" name="productDiscount" class="form-control" id="product-discount" placeholder="0 to 99" value="<?= isset($_SESSION["data"]) ? $_SESSION["data"]["discount"] : null ?>">
                                 <span class="input-group-text">%</span>
                             </div>
                             <!-- Show errors -->

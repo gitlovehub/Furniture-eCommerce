@@ -21,12 +21,12 @@ function createProduct() {
     
     if (isset($_POST['btnPublish'])) {
         $data = [
-            "id_category" => $_POST["productCategory"] ?? null,
             "name"        => $_POST["productName"] ?? null,
             "description" => $_POST["productDescription"] ?? null,
             "price"       => $_POST["productPrice"] ?? null,
             "discount"    => $_POST["productDiscount"] ?? null,
             "instock"     => $_POST["productInstock"] ?? null,
+            "id_category" => $_POST["productCategory"] ?? null,
         ];
 
         // Xử lý file
@@ -114,8 +114,8 @@ function updateStatusProduct($id, $value) {
 function addGallery($id) {
     $titleBar = 'Products';
     $view     = 'product/product-gallery';
-    $show     = selectOne('tbl_products', $id);
-    $gallery  = getVariants('tbl_gallery', $id);
+    $product  = selectOne('tbl_products', $id);
+    $gallery  = getEntitiesProduct('tbl_gallery', $id);
 
     if (isset($_POST['btnAddGallery'])) {
         $data = [
@@ -152,8 +152,8 @@ function deleteImage($id, $product) {
 function addColor($id) {
     $titleBar = 'Products';
     $view     = 'product/product-variant';
-    $show     = selectOne('tbl_products', $id);
-    $colors   = getVariants('tbl_colors', $id);
+    $product  = selectOne('tbl_products', $id);
+    $colors   = getEntitiesProduct('tbl_colors', $id);
     
     if (isset($_POST['btnPublishColor'])) {
         $data = [
@@ -168,29 +168,7 @@ function addColor($id) {
         }
 
         // Validate
-        $errors = [];
-
-        // Validate name
-        if (empty($data['name'])) {
-            $errors['colorName'] = 'This field is required.';
-        } elseif (strlen($data['name']) > 50) {
-            $errors['colorName'] = 'Please enter between 1 and 50 characters.';
-        }
-    
-        // Validate hex
-        if (empty($data['hex'])) {
-            $errors['colorHex'] = 'This field is required.';
-        } elseif (strlen($data['hex']) > 50) {
-            $errors['colorHex'] = 'Please enter between 1 and 50 characters.';
-        } elseif (!preg_match('/^[0-9a-fA-F]+$/', $data['hex'])) {
-            $errors['colorHex'] = 'Hex value can only contain numbers and letters.';
-        }
-
-        // Validate color thumbnail
-        if ($_FILES['colorThumbnail']['size'] == 0) {
-            $errors['colorThumbnail'] = 'Please upload an image.';
-        }
-
+        $errors = validateAddColor($data);
         if (!empty($errors)) {
             $_SESSION["errors"] = $errors;
             header('Location: ?act=add-color-product&id=' . $id);
@@ -320,6 +298,33 @@ function validateAddGallery($data) {
     // Check if product gallery is not uploaded
     if ($_FILES['productGallery']['size'] == 0) {
         $errors['productGallery'] = 'Please upload an image.';
+    }
+    
+    return $errors;
+}
+
+function validateAddColor($data) {
+    $errors = [];
+
+    // Validate name
+    if (empty($data['name'])) {
+        $errors['colorName'] = 'This field is required.';
+    } elseif (strlen($data['name']) > 50) {
+        $errors['colorName'] = 'Please enter between 1 and 50 characters.';
+    }
+
+    // Validate hex
+    if (empty($data['hex'])) {
+        $errors['colorHex'] = 'This field is required.';
+    } elseif (strlen($data['hex']) > 50) {
+        $errors['colorHex'] = 'Please enter between 1 and 50 characters.';
+    } elseif (!preg_match('/^[0-9a-fA-F]+$/', $data['hex'])) {
+        $errors['colorHex'] = 'Hex value can only contain numbers and letters.';
+    }
+
+    // Validate color thumbnail
+    if ($_FILES['colorThumbnail']['size'] == 0) {
+        $errors['colorThumbnail'] = 'Please upload an image.';
     }
     
     return $errors;

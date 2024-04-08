@@ -138,7 +138,7 @@ function waitingPage() {
 
 function verifyEmail($token) {
     getLastByToken('tbl_accounts', $token);
-    if (updateOptions('tbl_accounts', $token, 'status', 1)) {
+    if (updateTokenOptions('tbl_accounts', $token, 'status', 1)) {
         header('Location: ?act=verified');
         exit();
     } else {

@@ -18,10 +18,13 @@ function settingInfo($id) {
 
     if(isset($_POST['btnSaveInfo'])) {
         $data = [
-            'name'    => $_POST["username"]?? null,
-            'email'   => $_POST["email"]?? null,
-            'address' => $_POST["address"]?? null,
-            'phone'   => $_POST["phone"]?? null,
+            'name'     => $_POST["username"]?? null,
+            'email'    => $_POST["email"]?? null,
+            'city'     => $_POST["city"]?? null,
+            'district' => $_POST["district"]?? null,
+            'ward'     => $_POST["ward"]?? null,
+            'address'  => $_POST["address"]?? null,
+            'phone'    => $_POST["phone"]?? null,
         ];
 
         // Xử lý file
@@ -51,7 +54,7 @@ function settingInfo($id) {
         header('Location: ?act=setting-info&id=' . $id);
         exit();
     }
-    // debug($customer);
+    
     require_once PATH_VIEW . 'layouts/master.php';
 }
 
@@ -60,28 +63,33 @@ function validateUpdateInfo($data) {
 
     // Validate name
     if (empty($data['name'])) {
-        $errors['username'] = 'This field is required.';
+        $errors['username'] = 'Looks like you forgot to enter your username.';
     } elseif (strlen($data['name']) > 50) {
         $errors['username'] = 'Please enter between 1 and 50 characters.';
     }
 
     // Validate email
     if (empty($data['email'])) {
-        $errors['email'] = 'Email is required.';
+        $errors['email'] = 'Please enter your email address.';
     } elseif (!filter_var($data['email'], FILTER_VALIDATE_EMAIL)) {
         $errors['email'] = 'Invalid email format.';
     }
 
     // Validate phone
     if (!isset($data['phone']) || $data['phone'] === '') {
-        $errors['phone'] = 'This field is required.';
+        $errors['phone'] = 'We need to contact you about your order.';
     } elseif (!is_numeric($data['phone']) || strlen($data['phone']) != 10) {
         $errors['phone'] = 'Phone must be a 10-digit numeric value.';
     }
 
+    // Validate select boxes
+    if (empty($data['city']) || empty($data['district']) || empty($data['ward'])) {
+        $errors['city'] = 'Please select city, district, and ward.';
+    }
+
     // Validate address
     if (empty($data['address'])) {
-        $errors['address'] = 'This field is required.';
+        $errors['address'] = 'Looks like you forgot to enter your address details.';
     } elseif (strlen($data['address']) > 255) {
         $errors['address'] = 'Please enter between 1 and 255 characters.';
     }
@@ -105,13 +113,6 @@ function settingAddress() {
     $js       = BASE_URL.'assets/js/form.js';
     $css      = BASE_URL.'assets/css/form.css';
     $titleBar = 'Addresses';
-
-    if (!empty($_SESSION["user"])) {
-        $view = 'account/address';
-    } else {
-        header('Location: ?act=login');
-        exit();
-    }
     
     require_once PATH_VIEW . 'layouts/master.php';
 }

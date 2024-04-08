@@ -61,6 +61,7 @@ match ($act) {
     // Order
     'order-list'             => orderList(),
     'order-details'          => orderDetails($_GET["id"]),
+    'update-order'           => updateOrder($_GET["id"]),
 
 };
 

@@ -2,13 +2,13 @@
 
     <!-- Content -->
     <div class="container-xxl flex-grow-1 container-p-y">
-        <h4 class="py-3 mb-4">
-            Add color variant for Product
-            <a href="?act=product-list" class="btn btn-secondary float-end" type="button">
+        <div class="py-3 mb-4 d-flex flex-wrap justify-content-between align-items-center">
+            <span class="fs-3 fw-bold">Add color variant for Product – <span><?= $product["name"] ?></span></span>
+            <a href="?act=product-list" class="btn btn-secondary" type="button">
                 <i class="bx bx-arrow-back me-1"></i>
                 Back to list
             </a>
-        </h4>
+        </div>
 
         <div class="row">
             <div class="col-sm-12 col-lg-2">
@@ -18,6 +18,9 @@
             </div>
             <div class="col-sm-12 col-lg-6">
                 <div class="card">
+                    <div class="card-header">
+                        <input type="search" class="form-control" id="searchInput" placeholder="Search Color Name">
+                    </div>
                     <div class="table-responsive">
                         <table class="table table-hover">
                             <thead>
@@ -42,7 +45,7 @@
                                         </td>
                                         <td>
                                             <div class="float-end">
-                                                <a href="?act=delete-color&id=<?= $color['id'] ?>&product=<?= $show["id"] ?>" class="btn btn-danger p-2">
+                                                <a href="?act=delete-color&id=<?= $color['id'] ?>&product=<?= $product["id"] ?>" class="btn btn-danger p-2">
                                                     <i class="bx bx-trash"></i>
                                                 </a>
                                             </div>
@@ -59,7 +62,10 @@
                 <form action="" method="post" enctype="multipart/form-data">
                     <div class="card mb-4">
                         <div class="card-header">
-                            <h5 class="card-title mb-0">Variants</h5>
+                            <div class="card-title mb-0">
+                                <label for="exampleColorInput" class="form-label">Color picker</label>
+                                <input type="color" class="form-control form-control-color" id="exampleColorInput" value="#563d7c" title="Choose your color">
+                            </div>
                         </div>
 
                         <div class="card-body">
@@ -115,3 +121,34 @@
 
     <div class="content-backdrop fade"></div>
 </div>
+
+<script>
+    var style = document.createElement('style');
+    style.textContent = `
+                        .highlight {
+                            background-color: yellow;
+                            font-weight: bold;
+                        }
+                    `;
+    document.head.appendChild(style);
+
+    // Lắng nghe sự kiện input trên ô tìm kiếm
+    document.getElementById("searchInput").addEventListener("input", function() {
+        var searchTerm = this.value.trim().toLowerCase(); // Lấy giá trị từ ô tìm kiếm và chuyển về chữ thường, loại bỏ các khoảng trắng thừa
+        var tableRows = document.querySelectorAll(".table tbody tr");
+
+        tableRows.forEach(function(row) {
+            var productName = row.querySelector("td:nth-child(1)").textContent.toLowerCase(); // Lấy tên sản phẩm và chuyển về chữ thường
+            var matchIndex = productName.indexOf(searchTerm); // Tìm vị trí của từ khóa tìm kiếm trong tên sản phẩm
+
+            if (matchIndex !== -1) {
+                var textContent = row.querySelector("td:nth-child(1)").textContent;
+                var highlightedText = textContent.substring(0, matchIndex) + "<span class='highlight'>" + textContent.substring(matchIndex, matchIndex + searchTerm.length) + "</span>" + textContent.substring(matchIndex + searchTerm.length);
+                row.querySelector("td:nth-child(1)").innerHTML = highlightedText;
+                row.style.display = ""; // Hiển thị hàng nếu có từ khóa tìm kiếm
+            } else {
+                row.style.display = "none"; // Ẩn hàng nếu không có từ khóa tìm kiếm
+            }
+        });
+    });
+</script>

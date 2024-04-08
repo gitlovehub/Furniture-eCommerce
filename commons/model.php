@@ -145,8 +145,8 @@ if (!function_exists('deleteOne')) {
     }
 }
 
-if (!function_exists('getVariants')) {
-    function getVariants($tableName, $id) {
+if (!function_exists('getEntitiesProduct')) {
+    function getEntitiesProduct($tableName, $id) {
         try {
             $sql = "SELECT * FROM $tableName WHERE id_product = :id_product";
             $stmt = $GLOBALS['conn']->prepare($sql);
@@ -200,8 +200,8 @@ if (!function_exists('checkLogin')) {
     }
 }
 
-if (!function_exists('updateOptions')) {
-    function updateOptions($tableName, $token, $col, $value) {
+if (!function_exists('updateTokenOptions')) {
+    function updateTokenOptions($tableName, $token, $col, $value) {
         try {
             $sql = "UPDATE $tableName SET $col = :value WHERE token = :token";
             $stmt = $GLOBALS['conn']->prepare($sql);
@@ -238,6 +238,19 @@ if (!function_exists('getEmailByToken')) {
             $stmt->execute();
             $result = $stmt->fetch();
             return $result['email']; // Trả về email
+        } catch (\Exception $e) {
+            debug($e);
+        }
+    }
+}
+
+if (!function_exists('getLastId')) {
+    function getLastId($tableName) {
+        try {
+            $sql = "SELECT id FROM $tableName ORDER BY id DESC LIMIT 1";
+            $stmt = $GLOBALS['conn']->prepare($sql);
+            $stmt->execute();
+            return $stmt->fetchColumn();
         } catch (\Exception $e) {
             debug($e);
         }

@@ -3,7 +3,7 @@
 function addToCart($id) {
     if (isset($_POST['btnAddToCart'])) {
         // kiểm tra xem đăng nhập chưa
-        if (!empty($_SESSION["user"])) {
+        if (isset($_SESSION["user"])) {
             $product  = $id ?? null;
             $customer = $_SESSION["user"]['id'] ?? null;
             $quantity = $_POST["quantity"] ?? null;
@@ -14,6 +14,13 @@ function addToCart($id) {
                 header('Location: ?act=product-detail&id=' . $id);
                 exit();
             }
+
+            if (checkInstock($id, $quantity)) {
+                $_SESSION["limited"] = 'Maximum stock reached! Please adjust quantity.';
+                header('Location: ?act=product-detail&id=' . $id);
+                exit();
+            }
+
             // Thêm sản phẩm vào giỏ hàng và kiểm tra kết quả
             if (insertToCart($customer, $product, $quantity, $color)) {
                 // Xử lý thông báo thành công
@@ -32,30 +39,55 @@ function addToCart($id) {
 
     if (isset($_POST['btnBuyNow'])) {
         // kiểm tra xem đăng nhập chưa
-        if (!empty($_SESSION["user"])) {
+        if (isset($_SESSION["user"])) {
+            $colors = getColors('tbl_colors', $id);
+            $thumbnail = null;
+            $colorName = null; // Khởi tạo $thumbnail
+            if (isset($colors)) {
+                foreach ($colors as $color) {
+                    $colorId = $color['id'];
+                    if ($_POST["color"] == $colorId) {
+                        $thumbnail = $color['color_thumbnail'];
+                        $colorName = $color['color_name']; // Gán thumbnail tương ứng
+                        break; // Thoát vòng lặp sau khi đã tìm thấy thumbnail
+                    }
+                }
+            }
+
             $data = [
-                'id'        => $id ?? null,
+                'productId' => $id ?? null,
                 'customer'  => $_SESSION["user"]['id'] ?? null,
-                'thumbnail' => $_POST["thumbnail"] ?? null,
                 'name'      => $_POST["name"] ?? null,
                 'price'     => $_POST["price"] ?? null,
                 'discount'  => $_POST["discount"] ?? null,
                 'quantity'  => $_POST["quantity"] ?? null,
-                'color'     => $_POST["color"] ?? null
+                'colorId'   => $_POST["color"] ?? null,
+                'color'     => $colorName,
+                'thumbnail' => $thumbnail, // Thêm thumbnail vào mảng data
             ];
 
             if (empty($data['color'])) {
                 $_SESSION["missing-color"] = '🎨 Please select a color!';
                 header('Location: ?act=product-detail&id=' . $id);
                 exit();
-            }
+            } else {
+                
+                if (checkInstock($id, $data['quantity'])) {
+                    $_SESSION["limited"] = 'Maximum stock reached! Please adjust quantity.';
+                    header('Location: ?act=product-detail&id=' . $id);
+                    exit();
+                }
 
-            $_SESSION["buy-now"] = $data;
-            header('Location: ?act=checkout&user=' . $_SESSION["user"]['id']);
-            exit();
+                $_SESSION["buy-now"] = $data;
+                $_SESSION["product-buy-now"] = $data;
+                header('Location: ?act=checkout&user=' . $_SESSION["user"]['id']);
+                exit();
+            }
 
         } else {
             $_SESSION["login-first"] = 'Please Log in First! 😊';
+            header('Location: ?act=product-detail&id=' . $id);
+            exit();
         }
     }
 }

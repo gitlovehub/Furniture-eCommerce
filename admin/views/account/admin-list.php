@@ -2,7 +2,7 @@
 
     <!-- Content -->
     <div class="container-xxl flex-grow-1 container-p-y">
-        <h4 class="py-3 mb-4">
+        <h4 class="py-3 mb-4 fs-3 fw-bold">
             Administrator
         </h4>
 
@@ -10,7 +10,7 @@
         <div class="card">
             <div class="card-header row gy-3">
                 <div class="col-12 col-sm-3">
-                    <input type="search" class="form-control" name="search" placeholder="Search Admin">
+                    <input type="search" class="form-control" id="searchInput" placeholder="Search Admin">
                 </div>
             </div>
             <div class="table-responsive text-nowrap">

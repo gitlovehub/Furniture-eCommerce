@@ -34,7 +34,6 @@
                 </p>
                 <form action="?act=add-to-cart&id=<?= $item['id'] ?>" method="post">
                     <input type="hidden" name="name" value="<?= $item['name'] ?>">
-                    <input type="hidden" name="thumbnail" value="<?= $item['thumbnail'] ?>">
                     <input type="hidden" name="discount" value="<?= $item['discount'] ?>">
                     <h2>Color:</h2>
                     <div class="product__clr">
@@ -56,19 +55,22 @@
                             <button type="button" onclick="updateQuantity(+1)">+</button>
                         </div>
                         <div class="product__price">
-                            <?php if ($sale == $cost) : ?>
+                            <?php if ($sale == $basePrice) : ?>
                                 <span id="price">£<?= number_format($sale, 0, '.', ',') ?></span>
                             <?php else : ?>
-                                <span class="text-secondary fw-light text-decoration-line-through">£<?= number_format($cost, 0, '.', ',') ?></span>
+                                <span class="text-secondary fw-light text-decoration-line-through">£<?= number_format($basePrice, 0, '.', ',') ?></span>
                                 <span id="price" class="fs-1">£<?= number_format($sale, 0, '.', ',') ?></span>
                             <?php endif; ?>
                             <input type="hidden" name="price" value="<?= $sale ?>">
                         </div>
                     </div>
+                    <input type="hidden" id="instockValue" value="<?= $item['instock'] ?>">
                     <?php if ($item['instock'] > 10) : ?>
                         <p class="py-4">In stock, ready to ship 🚀</p>
+                    <?php elseif ($item['instock'] == 0) : ?>
+                        <p class="py-4 text-danger fw-bold">😭 Sold out.</p>
                     <?php else : ?>
-                        <p class="py-4">😭 Low stock - only <?= $item['instock'] ?> items left!</p>
+                        <p class="py-4">☹️ Low stock - only <?= $item['instock'] ?> items left!</p>
                     <?php endif; ?>
                     <div class="product__act">
                         <button type="submit" name="btnAddToCart" class="product-outline-btn fs-3">Add to cart</button>
@@ -80,101 +82,203 @@
     </div>
 </section>
 
-<!-- Comments here -->
-<section class="comments">
+<!-- Reviews -->
+<section>
     <div class="grid wide">
-        <h2 class="page-title fs-1">Comments</h2>
-        <div class="col-12 col-xl-6">
-            <!-- comment box -->
-            <div style="height: 300px;">
-                <div class="card mb-4 shadow">
-                    <div class="card-body">
-                        <div class="d-flex justify-content-between">
-                            <div class="d-flex flex-row align-items-center">
-                                <img src="" alt="avatar" width="40" height="40">
-                                <p class="ms-3 fs-3 fw-bold">Johny</p>
+        <h2 class="page-title fs-1">Reviews</h2>
+        <div class="card border-0 p-2 col-12 col-xl-6">
+            <?php $totalReviews = count($reviews); ?>
+            <?php if (($totalReviews ?? 0) > 0) : ?>
+                <div class="card border mb-4 h-100">
+                    <div class="card-body row p-4">
+                        <div class="col-sm-5 border-shift">
+                            <h2 class="text-warning fs-1">
+                                <?php $averageRating = calculateAverageRating($reviews); ?>
+                                <?= $averageRating ?>
+                                <?php for ($i = 1; $i <= 5; $i++) {
+                                    if ($i <= $averageRating) {
+                                        echo '<i class="fa-solid fa-star"></i>';
+                                    } elseif ($i - 0.5 <= $averageRating) {
+                                        echo '<i class="fa-regular fa-star-half-stroke"></i>';
+                                    } else {
+                                        echo '<i class="fa-regular fa-star"></i>';
+                                    }
+                                }
+                                ?>
+                            </h2>
+                            <div class="pt-3">
+                                <p class="fw-medium">Total <?= $totalReviews ?> reviews</p>
+                                <p class="text-muted pt-2">All reviews are from genuine customers</p>
                             </div>
-                            <span>28/02/2024</span>
+                            <hr class="d-sm-none">
                         </div>
-                        <p class="pt-3">Type your note, and hit enter to add it</p>
-                    </div>
-                </div>
 
-                <div class="card mb-4 shadow">
-                    <div class="card-body">
-                        <div class="d-flex justify-content-between">
-                            <div class="d-flex flex-row align-items-center">
-                                <img src="" alt="avatar" width="40" height="40">
-                                <p class="ms-3 fs-3 fw-bold">Johny</p>
-                            </div>
-                            <span>29/02/2024</span>
+                        <div class="col-sm-7 gy-1 text-nowrap d-flex flex-column justify-content-between ps-4 gap-2 pe-3">
+                            <?php
+                            // Khởi tạo mảng chứa số lượt đánh giá cho mỗi số sao
+                            $starRatings = array(
+                                5 => 0,
+                                4 => 0,
+                                3 => 0,
+                                2 => 0,
+                                1 => 0
+                            );
+                            // Đếm số lượt đánh giá cho mỗi số sao
+                            foreach ($reviews as $review) {
+                                $rating = $review['rating'];
+                                $starRatings[$rating]++;
+                            }
+                            ?>
+                            <?php foreach ($starRatings as $star => $count) : ?>
+                                <?php $percentage = !empty($reviews) ? ($count / count($reviews)) * 100 : 0; ?>
+                                <div class="d-flex align-items-center gap-3">
+                                    <small><?= $star ?> Star</small>
+                                    <div class="progress w-100" style="height:10px;">
+                                        <div class="progress-bar bg-warning" role="progressbar" style="width: <?= $percentage ?>%" aria-valuenow="<?= $percentage ?>" aria-valuemin="0" aria-valuemax="100"></div>
+                                    </div>
+                                    <p style="width: 50px;" class="text-end"><?= round($percentage) ?>%</p>
+                                </div>
+                            <?php endforeach; ?>
                         </div>
-                        <p class="pt-3">Type your note, and hit enter to add it</p>
                     </div>
                 </div>
-
-                <div class="card mb-4 shadow">
-                    <div class="card-body">
-                        <div class="d-flex justify-content-between">
-                            <div class="d-flex flex-row align-items-center">
-                                <img src="" alt="avatar" width="40" height="40">
-                                <p class="ms-3 fs-3 fw-bold">Johny</p>
+            <?php else : ?>
+                <h3 class="text-center fs-2 py-4">Your feedback can guide others! Please take a moment to rate your purchase.</h3>
+            <?php endif; ?>
+            <div style="max-height: 370px; overflow: hidden;">
+                <?php foreach ($limitedReviews as $review) : ?>
+                    <div class="card border-0 pb-3 border-bottom mb-4">
+                        <div class="card-body">
+                            <div class="d-flex flex-wrap gap-4 justify-content-between">
+                                <div class="d-flex flex-row align-items-center">
+                                    <div class="reviewer-avatar rounded-circle" style="width: 40px;">
+                                        <?php
+                                        $defaultAvatar = 'https://www.gravatar.com/avatar/0?d=mp&f=y';
+                                        $avatar = !empty($review['customer_avatar']) ? BASE_URL . $review['customer_avatar'] : $defaultAvatar;
+                                        ?>
+                                        <img src="<?= $avatar ?>" alt="" height="40px" class="rounded-circle">
+                                    </div>
+                                    <div class="ms-3 lh-base">
+                                        <p class="fs-3 fw-bold">
+                                            <span><?= $review['customer_name'] ?></span>
+                                            <span class="fs-5 bg-label-success"><i class="fa-regular fa-circle-check me-2"></i>Purchased</span>
+                                        </p>
+                                        <span class="text-warning">
+                                            <?php
+                                            $rating = $review['rating'];
+                                            for ($i = 1; $i <= 5; $i++) {
+                                                if ($i <= $rating) {
+                                                    echo '<i class="fa-solid fa-star"></i>';
+                                                } else {
+                                                    echo '<i class="fa-regular fa-star"></i>';
+                                                }
+                                            }
+                                            ?>
+                                        </span>
+                                    </div>
+                                </div>
+                                <span><?= date('d/m/Y', strtotime($review['review_date'])) ?></span>
                             </div>
-                            <span>30/02/2024</span>
+                            <p class="pt-3"><?= $review['review_text'] ?></p>
                         </div>
-                        <p class="pt-3">Type your note, and hit enter to add it</p>
                     </div>
-                </div>
+                <?php endforeach; ?>
             </div>
 
-            <div class="mt-3 mb-5">
-                <span class="fs-2 text-decoration: none; transition: all ease 0.3s;" onmouseover="this.style.textDecoration='underline'" onmouseout="this.style.textDecoration='none'" style="cursor: pointer;">
-                    <span><svg class="me-2" xmlns="http://www.w3.org/2000/svg" width="25px" height="25px" viewBox="0 0 24 24" fill="none" transform="rotate(0)matrix(-1, 0, 0, 1, 0, 0)">
-
-                            <g id="SVGRepo_bgCarrier" stroke-width="0" />
-
-                            <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round" />
-
-                            <g id="SVGRepo_iconCarrier">
-                                <path d="M9.2773 7.77888C9.57 7.48578 9.56967 7.01091 9.27658 6.71822C8.98349 6.42552 8.50861 6.42585 8.21592 6.71894L3.21931 11.7224C2.92678 12.0153 2.92692 12.4899 3.21962 12.7826L8.21623 17.7803C8.50909 18.0732 8.98396 18.0732 9.27689 17.7804C9.56981 17.4875 9.56986 17.0126 9.277 16.7197L5.557 13H13.3988C14.9936 13 16.2099 12.758 17.2878 12.2355L17.5342 12.11C18.6427 11.5171 19.5171 10.6427 20.11 9.53424C20.7194 8.39473 21 7.11626 21 5.39877C21 4.98456 20.6642 4.64877 20.25 4.64877C19.8358 4.64877 19.5 4.98456 19.5 5.39877C19.5 6.88263 19.2723 7.91977 18.7872 8.82684C18.3342 9.67391 17.6739 10.3342 16.8268 10.7872C15.9895 11.235 15.0414 11.4635 13.7334 11.4959L13.3988 11.5H5.562L9.2773 7.77888Z" fill="#212121" />
-                            </g>
-                        </svg></span>View more comments
-                </span>
-            </div>
-
-            <!-- Button trigger modal -->
-            <p type="button" class="btn-trigger p-4 fs-3 rounded-pill border-0" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
-                Write a comment...
-            </p>
-        </div>
-    </div>
-    <!-- Modal -->
-    <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h1 class="modal-title fs-1" id="staticBackdropLabel">Write a comment 📝</h1>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <form action="" method="post">
-                    <div class="modal-body">
-                        <div class="form-floating">
-                            <textarea name="inputComment" class="form-control fs-2 pt-5" id="floatingTextarea" placeholder="" style="height: 100px"></textarea>
-                            <label for="floatingTextarea" class="fs-2">Hi
-                                <span class="text-primary">User</span>
-                                ,What's on your mind?
-                            </label>
-                        </div>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="submit" name="btnSubmit" class="btn btn-primary fs-2">Post</button>
-                    </div>
-                    <input type="hidden" name="idsp" value="">
-                </form>
+            <div class="d-flex gap-3 mt-4">
+                <?php if (count($reviews) >= 3) : ?>
+                    <button type="button" class="w-100 fs-3 py-2 btn btn-outline-dark" data-bs-toggle="modal" data-bs-target="#listReviewModal">View more</button>
+                <?php endif; ?>
+                <button type=" button" class="w-100 fs-3 py-2 btn-label-primary effect py-4" data-bs-toggle="modal" data-bs-target="#ratingReviewModal">Write a review</button>
             </div>
         </div>
     </div>
 </section>
+
+<!-- Modal -->
+<div class="modal fade" id="ratingReviewModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <form action="" class="modal-content" method="post">
+            <div class="modal-header border-0 pb-0 pt-4">
+                <h2 class="modal-title w-100 fw-bold text-center">Rate your experience</h2>
+                <button type="button" class="btn-close me-2" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body px-5">
+                <p class="fs-3 lh-sm">
+                    We highly value your feedback! Kindly take a moment to rate your experience and provide us with your valuable feedback.
+                </p>
+                <div class="star-rating text-center my-5">
+                    <label for="rate-1" style="--i:1"><i class="fa-solid fa-star"></i></label>
+                    <input type="radio" name="rating" id="rate-1" value="1">
+                    <label for="rate-2" style="--i:2"><i class="fa-solid fa-star"></i></label>
+                    <input type="radio" name="rating" id="rate-2" value="2" checked>
+                    <label for="rate-3" style="--i:3"><i class="fa-solid fa-star"></i></label>
+                    <input type="radio" name="rating" id="rate-3" value="3">
+                    <label for="rate-4" style="--i:4"><i class="fa-solid fa-star"></i></label>
+                    <input type="radio" name="rating" id="rate-4" value="4">
+                    <label for="rate-5" style="--i:5"><i class="fa-solid fa-star"></i></label>
+                    <input type="radio" name="rating" id="rate-5" value="5">
+                </div>
+
+                <div class="form-floating">
+                    <textarea class="form-control pt-5 fs-3" name="textarea" placeholder="Leave a comment here" id="floatingTextarea" style="height: 100px"></textarea>
+                    <label for="floatingTextarea">Share more feedback</label>
+                </div>
+            </div>
+            <div class="modal-footer px-5 border-0">
+                <button type="submit" name="btnSendReview" class="btn btn-success fs-2 px-5">Send</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<div class="modal fade" id="listReviewModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog bg-light rounded">
+        <div class="modal-header border-0 pb-0 pt-4">
+            <h2 class="modal-title w-100 fw-bold text-center">List Review</h2>
+            <button type="button" class="btn-close me-2" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body px-5">
+            <?php foreach ($reviews as $review) : ?>
+                <div class="card border-0 pb-3 border-bottom mb-5">
+                    <div class="card-body">
+                        <div class="d-flex flex-wrap gap-4 justify-content-between">
+                            <div class="d-flex flex-row align-items-center">
+                                <div class="reviewer-avatar rounded-circle" style="width: 40px;">
+                                    <?php
+                                    $defaultAvatar = 'https://www.gravatar.com/avatar/0?d=mp&f=y';
+                                    $avatar = !empty($review['customer_avatar']) ? BASE_URL . $review['customer_avatar'] : $defaultAvatar;
+                                    ?>
+                                    <img src="<?= $avatar ?>" alt="" height="40px" class="rounded-circle">
+                                </div>
+                                <div class="ms-3 lh-base">
+                                    <p class="fs-3 fw-bold">
+                                        <span><?= $review['customer_name'] ?></span>
+                                        <span class="fs-5 bg-label-success"><i class="fa-regular fa-circle-check me-2"></i>Purchased</span>
+                                    </p>
+                                    <span class="text-warning">
+                                        <?php
+                                        $rating = $review['rating'];
+                                        for ($i = 1; $i <= 5; $i++) {
+                                            if ($i <= $rating) {
+                                                echo '<i class="fa-solid fa-star"></i>';
+                                            } else {
+                                                echo '<i class="fa-regular fa-star"></i>';
+                                            }
+                                        }
+                                        ?>
+                                    </span>
+                                </div>
+                            </div>
+                            <span><?= date('d/m/Y', strtotime($review['review_date'])) ?></span>
+                        </div>
+                        <p class="pt-3"><?= $review['review_text'] ?></p>
+                    </div>
+                </div>
+            <?php endforeach; ?>
+        </div>
+    </div>
+</div>
 
 <!-- More like this -->
 <section class="carousel">
@@ -189,7 +293,7 @@
                     $basePrice = $product['price'];
                     $discount  = $product['discount'];
                     // Tính toán giá sau khi được giảm giá
-                    $price = $basePrice - ($basePrice * $discount / 100);
+                    $salte = $basePrice - ($basePrice * $discount / 100);
                     ?>
                     <div class="product__item">
                         <div onclick="redirectToProductDetail(<?= $product['id'] ?>)" class="product__item-wrapper-img" style="min-height: 220px;">
@@ -206,11 +310,11 @@
                         <div class="product__item-details w-100">
                             <h4 class="product__item-name fs-4"><?= $product['name'] ?></h4>
                             <p class="product__item-price fs-3">
-                                <?php if ($price == $basePrice) : ?>
+                                <?php if ($sale == $basePrice) : ?>
                                     <span>£<?= $basePrice ?></span>
                                 <?php else : ?>
                                     <span class="text-secondary fw-light text-decoration-line-through">£<?= $basePrice ?></span>
-                                    <span>£<?= $price ?></span>
+                                    <span>£<?= $sale ?></span>
                                 <?php endif; ?>
                                 <span class="float-end fs-5 text-secondary"><i class="fa-regular fa-eye me-2"></i><?= $product['view'] ?></span>
                             </p>
@@ -239,7 +343,6 @@
         });
     }
 
-
     function updateQuantity(change) {
         var quantityHidden = document.getElementById('qty-hidden');
         var currentQuantity = parseInt(quantityHidden.value);
@@ -260,7 +363,11 @@
         var priceElement = document.getElementById('price');
         var price = parseFloat('<?= $sale ?>');
         var totalPrice = price * quantity;
-        priceElement.textContent = '£' + totalPrice;
+
+        // Tạo một đối tượng Intl.NumberFormat
+        var formatter = new Intl.NumberFormat('en-UK');
+        var formattedTotalPrice = formatter.format(totalPrice);
+        priceElement.textContent = '£' + formattedTotalPrice;
     }
 
     document.addEventListener('DOMContentLoaded', function() {
@@ -283,5 +390,22 @@
                 focusedInput.focus();
             }
         });
+    });
+
+    document.addEventListener('DOMContentLoaded', function() {
+        // Lấy giá trị tồn kho từ thẻ input ẩn
+        var instock = document.getElementById('instockValue').value;
+
+        // Lấy các nút "Add to cart" và "Buy now"
+        var addToCartBtn = document.querySelector('[name="btnAddToCart"]');
+        var buyNowBtn = document.querySelector('[name="btnBuyNow"]');
+
+        // Kiểm tra nếu số lượng tồn kho bằng 0, thì vô hiệu hóa cả hai nút
+        if (instock == 0) {
+            addToCartBtn.disabled = true;
+            buyNowBtn.disabled = true;
+            addToCartBtn.classList.add('pointer-none');
+            buyNowBtn.classList.add('pointer-none');
+        }
     });
 </script>

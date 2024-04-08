@@ -25,51 +25,51 @@
                         </tr>
                     </thead>
                     <tbody class="table-border-bottom-0">
-
-                        <tr>
-                            <!-- Product -->
-                            <td>
-                                <div class="d-flex justify-content-start align-items-center customer-name">
-                                    <div class="avatar-wrapper">
-                                        <div class="avatar me-2 rounded-2 bg-label-secondary">
-                                            <img src="assets/img/ecommerce-images/product-1.png" class="rounded-2">
+                        <?php foreach ($list as $item) : ?>
+                            <tr>
+                                <!-- Product -->
+                                <td>
+                                    <div class="d-flex justify-content-start align-items-center customer-name">
+                                        <div class="avatar-wrapper">
+                                            <div class="avatar me-2 rounded-2 bg-label-secondary">
+                                                <img src="assets/img/ecommerce-images/product-1.png" class="rounded-2">
+                                            </div>
+                                        </div>
+                                        <div class="d-flex flex-column">
+                                            <span class="fw-medium text-nowrap">iPhone 14 Pro</span>
+                                            <small class="text-muted">Super Retina XDR display footnote Pro Motion technology</small>
                                         </div>
                                     </div>
-                                    <div class="d-flex flex-column">
-                                        <span class="fw-medium text-nowrap">iPhone 14 Pro</span>
-                                        <small class="text-muted">Super Retina XDR display footnote Pro Motion technology</small>
-                                    </div>
-                                </div>
-                            </td>
+                                </td>
 
-                            <!-- Reviewer -->
-                            <td>
-                                <div class="d-flex justify-content-start align-items-center customer-name">
-                                    <div class="avatar-wrapper">
-                                        <div class="avatar me-2">
-                                            <img src="assets/img/avatars/1.png" alt="Avatar" class="rounded-circle">
+                                <!-- Reviewer -->
+                                <td>
+                                    <div class="d-flex justify-content-start align-items-center customer-name">
+                                        <div class="avatar-wrapper">
+                                            <div class="avatar me-2">
+                                                <img src="assets/img/avatars/1.png" alt="Avatar" class="rounded-circle">
+                                            </div>
+                                        </div>
+                                        <div class="d-flex flex-column">
+                                            <a href="">
+                                                <span class="fw-medium">Zane Scraggs</span>
+                                            </a>
+                                            <small class="text-muted text-nowrap">zscraggs0@flavors.me</small>
                                         </div>
                                     </div>
-                                    <div class="d-flex flex-column">
-                                        <a href="">
-                                            <span class="fw-medium">Zane Scraggs</span>
-                                        </a>
-                                        <small class="text-muted text-nowrap">zscraggs0@flavors.me</small>
-                                    </div>
-                                </div>
-                            </td>
+                                </td>
 
-                            <!-- Review -->
-                            <td>
-                                <span>
-                                    Lorem ipsum dolor, sit amet consectetur adipisicing elit. Perspiciatis velit ipsam odit dolorem ipsa quod vero. Rerum dignissimos accusantium nesciunt, commodi vitae laboriosam a velit impedit sapiente, ullam reprehenderit earum.
-                                </span>
-                            </td>
+                                <!-- Review -->
+                                <td>
+                                    <span>
+                                        Lorem ipsum dolor, sit amet consectetur adipisicing elit. Perspiciatis velit ipsam odit dolorem ipsa quod vero. Rerum dignissimos accusantium nesciunt, commodi vitae laboriosam a velit impedit sapiente, ullam reprehenderit earum.
+                                    </span>
+                                </td>
 
-                            <!-- Date -->
-                            <td>Mar 17, 2021</td>
-                        </tr>
-
+                                <!-- Date -->
+                                <td>Mar 17, 2021</td>
+                            </tr>
+                        <?php endforeach ?>
                     </tbody>
                 </table>
             </div>

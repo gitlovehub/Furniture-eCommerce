@@ -6,48 +6,86 @@ function orderSuccess() {
     require_once PATH_VIEW . 'layouts/blank.php';
 }
 
-function placeOrder($id) {
+function insertOrderDetails($orderId, $productId, $colorId, $quantity, $price) {
+    // Kiểm tra dữ liệu đầu vào
+    if (empty($orderId) || empty($productId) || empty($colorId) || empty($quantity) || empty($price)) {
+        return false;
+    } else {
+        $orderId   = intval($orderId);
+        $productId = intval($productId);
+        $colorId   = intval($colorId);
+        $quantity  = intval($quantity);
+    }
+
+    $data = [
+        'id_order'   => $orderId ?? null,
+        'id_product' => $productId ?? null,
+        'id_color'   => $colorId ?? null,
+        'quantity'   => $quantity ?? null,
+        'price'      => $price ?? null,
+    ];
+    // Trả về true nếu thêm thành công, ngược lại trả về false
+    return insert('tbl_order_details', $data) ? true : false;
+}
+
+function placeOrder($customerId) {
     if (isset($_POST['btnOrder'])) {
-        // kiểm tra xem đăng nhập chưa
+        // Kiểm tra xem đã đăng nhập chưa
         if (!empty($_SESSION["user"])) {
             $carts = getCartByCustomer('tbl_carts', $_SESSION["user"]['id']);
             date_default_timezone_set('Asia/Ho_Chi_Minh');
 
-            $data = [
+            $orderData = [
                 'date'            => date('Y-m-d H:i:s'),
-                'payment_status'  => $_POST["payment_status"] ?? 0,
-                'delivery_status' => $_POST["delivery_status"] ?? 0,
                 'method'          => $_POST["method"] ?? null,
                 'total'           => $_POST["total"] ?? null,
                 'note'            => $_POST["note"] ?? null,
-                'id_customer'     => $id ?? null,
+                'id_customer'     => $customerId ?? null,
             ];
 
             // Validate
-            $errors = validateCheckout($data);
+            $errors = validateCheckout($orderData);
             if (!empty($errors)) {
                 $_SESSION["errors"] = $errors;
-                $_SESSION["data"]   = $data;
-                header('Location: ?act=checkout&user=' . $id);
+                $_SESSION["data"]   = $orderData;
+                header('Location: ?act=checkout&user=' . $customerId);
                 exit();
             }
             
-            if (insert('tbl_orders', $data)) {
+            if (insert('tbl_orders', $orderData)) {
+                $orderId = getLastId('tbl_orders'); // Lấy ID của đơn hàng mới thêm vào
+                updatePaymentStatus($orderId, $orderData['method']);
+                // Chèn thông tin sản phẩm vào bảng tbl_order_details cho mỗi sản phẩm trong giỏ hàng
                 foreach ($carts as $cart) {
-                    $productId = $cart['id_product'];
-                    deleteCartItemsByProductId($productId);
+                    // Xử lý sản phảm mua ngay
+                    $itemBuyNow = $_SESSION["product-buy-now"];
+                    if (isset($_SESSION["product-buy-now"]) && $_SESSION["product-buy-now"]['productId'] == $cart['id_product']) {
+                        $unitPrice = $itemBuyNow['price'] - ($itemBuyNow['price'] * $itemBuyNow['discount'] / 100);
+                        insertOrderDetails($orderId, $itemBuyNow['productId'], $itemBuyNow['colorId'], $itemBuyNow['quantity'], $unitPrice);
+                        decreaseInstock($itemBuyNow['productId'], $itemBuyNow['quantity']); // Giảm số lượng hàng tồn kho
+                        unset($_SESSION["product-buy-now"]);
+                    } else {
+                        $unitPrice = $cart['price'] - ($cart['price'] * $cart['discount'] / 100);
+                        insertOrderDetails($orderId, $cart['id_product'], $cart['id_color'], $cart['quantity'], $unitPrice);
+                        // Kiểm tra xem có session sản phẩm mua ngay không
+                        if (!isset($_SESSION["product-buy-now"])) {
+                            decreaseInstock($cart['id_product'], $cart['quantity']); // Giảm số lượng hàng tồn kho
+                            deleteCartItemsByProductId($cart['id_product']); // Xóa sản phẩm trong giỏ hàng sau khi đặt hàng
+                        }
+                    }
                 }
                 header('Location: ?act=order-success');
                 exit();
             } else {
-                debug($data);
+                debug($orderData);
             }
-
         } else {
             $_SESSION["login-first"] = 'Please Log in First! 😊';
         }
     }
 }
+
+
 
 function validateCheckout($data) {
     $errors = [];
@@ -65,6 +103,14 @@ function validateCheckout($data) {
 
     // Validate address
     if (empty($_POST["address"])) {
+        $errors['missingInfo'] = $message;
+    }
+
+    // Chuỗi cần kiểm tra
+    $city = $_POST["city"];$pattern = '/[a-zA-Z]/';
+
+    // Validate city
+    if (!preg_match($pattern, $city)) {
         $errors['missingInfo'] = $message;
     }
 

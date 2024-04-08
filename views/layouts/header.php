@@ -6,16 +6,19 @@ $toastSessions = [
     "updatecart-success" => "Success",
     "deleteitem-success" => "Success",
     "save-info"          => "Success",
+    "review-success"     => "Success",
+    "review-error"       => "error",
     "login-blocked"      => "Error",
     "login-unverified"   => "Error",
     "send-failed"        => "Error",
     "missing-color"      => "Error",
     "login-first"        => "Error",
+    "limited"            => "Error",
 ];
 
 // Duyệt qua mảng session và hiển thị toast nếu session tồn tại
 foreach ($toastSessions as $sessionKey => $toastType) {
-    if (!empty($_SESSION[$sessionKey])) {
+    if (isset($_SESSION[$sessionKey])) {
         // Kiểm tra nếu session là "login-success"
         if ($sessionKey === "login-success") {
             echo '<script>
@@ -171,15 +174,27 @@ if (isset($_SESSION["cart-overlay"])) {
                     </svg>
                 </button>
 
-                <button class="header__navbar-menu-link header__navbar-icon-btn cart-icon" data-item-count="7">
-                    <svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 24 24" height="1.6em" width="1.6em" xmlns="http://www.w3.org/2000/svg">
-                        <g>
-                            <path fill="none" d="M0 0h24v24H0z"></path>
-                            <path d="M4 16V4H2V2h3a1 1 0 0 1 1 1v12h12.438l2-8H8V5h13.72a1 1 0 0 1 .97 1.243l-2.5 10a1 1 0 0 1-.97.757H5a1 1 0 0 1-1-1zm2 7a2 2 0 1 1 0-4 2 2 0 0 1 0 4zm12 0a2 2 0 1 1 0-4 2 2 0 0 1 0 4z">
-                            </path>
-                        </g>
-                    </svg>
-                </button>
+                <?php if ($current_path == $cart_path) : ?>
+                    <a href="?act=review-cart" class="header__navbar-menu-link header__navbar-icon-btn cart-icon <?= $hasCart ?>" data-item-count="<?= $dataItemCount ?>">
+                        <svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 24 24" height="1.6em" width="1.6em" xmlns="http://www.w3.org/2000/svg">
+                            <g>
+                                <path fill="none" d="M0 0h24v24H0z"></path>
+                                <path d="M4 16V4H2V2h3a1 1 0 0 1 1 1v12h12.438l2-8H8V5h13.72a1 1 0 0 1 .97 1.243l-2.5 10a1 1 0 0 1-.97.757H5a1 1 0 0 1-1-1zm2 7a2 2 0 1 1 0-4 2 2 0 0 1 0 4zm12 0a2 2 0 1 1 0-4 2 2 0 0 1 0 4z">
+                                </path>
+                            </g>
+                        </svg>
+                    </a>
+                <?php else : ?>
+                    <button class="header__navbar-menu-link header__navbar-icon-btn cart-icon <?= $hasCart ?>" data-item-count="<?= $dataItemCount ?>">
+                        <svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 24 24" height="1.6em" width="1.6em" xmlns="http://www.w3.org/2000/svg">
+                            <g>
+                                <path fill="none" d="M0 0h24v24H0z"></path>
+                                <path d="M4 16V4H2V2h3a1 1 0 0 1 1 1v12h12.438l2-8H8V5h13.72a1 1 0 0 1 .97 1.243l-2.5 10a1 1 0 0 1-.97.757H5a1 1 0 0 1-1-1zm2 7a2 2 0 1 1 0-4 2 2 0 0 1 0 4zm12 0a2 2 0 1 1 0-4 2 2 0 0 1 0 4z">
+                                </path>
+                            </g>
+                        </svg>
+                    </button>
+                <?php endif; ?>
 
                 <nav class="navbar__mobile">
                     <div class="navbar__mobile-close-btn">

@@ -28,7 +28,7 @@
                 $basePrice = $product['price'];
                 $discount  = $product['discount'];
                 // Tính toán giá sau khi được giảm giá
-                $price = $basePrice - ($basePrice * $discount / 100);
+                $sale = $basePrice - ($basePrice * $discount / 100);
                 ?>
                 <div class="product__item">
                     <div onclick="redirectToProductDetail(<?= $product['id'] ?>)" class="product__item-wrapper-img" style="min-height: 300px;">
@@ -47,11 +47,11 @@
                             <?= $product['name'] ?>
                         </h4>
                         <p class="product__item-price fs-3">
-                            <?php if ($price == $basePrice) : ?>
+                            <?php if ($sale == $basePrice) : ?>
                                 <span>£<?= number_format($basePrice, 0, '.', ',') ?></span>
                             <?php else : ?>
                                 <span class="text-secondary fw-light text-decoration-line-through">£<?= number_format($basePrice, 0, '.', ',') ?></span>
-                                <span>£<?= number_format($price, 0, '.', ',') ?></span>
+                                <span>£<?= number_format($sale, 0, '.', ',') ?></span>
                             <?php endif; ?>
                             <span class="float-end fs-5 text-secondary"><i class="fa-regular fa-eye me-2"></i><?= $product['view'] ?></span>
                         </p>
@@ -95,7 +95,7 @@
                     $basePrice = $product['price'];
                     $discount  = $product['discount'];
                     // Tính toán giá sau khi được giảm giá
-                    $price = $basePrice - ($basePrice * $discount / 100);
+                    $sale = $basePrice - ($basePrice * $discount / 100);
                     ?>
                     <div class="product__item">
                         <div onclick="redirectToProductDetail(<?= $product['id'] ?>)" class="product__item-wrapper-img" style="min-height: 220px;">
@@ -112,11 +112,11 @@
                         <div class="product__item-details w-100">
                             <h4 class="product__item-name fs-4"><?= $product['name'] ?></h4>
                             <p class="product__item-price fs-3">
-                                <?php if ($price == $basePrice) : ?>
+                                <?php if ($sale == $basePrice) : ?>
                                     <span>£<?= number_format($basePrice, 0, '.', ',') ?></span>
                                 <?php else : ?>
                                     <span class="text-secondary fw-light text-decoration-line-through">£<?= number_format($basePrice, 0, '.', ',') ?></span>
-                                    <span>£<?= number_format($price, 0, '.', ',') ?></span>
+                                    <span>£<?= number_format($sale, 0, '.', ',') ?></span>
                                 <?php endif; ?>
                                 <span class="float-end fs-5 text-secondary"><i class="fa-regular fa-eye me-2"></i><?= $product['view'] ?></span>
                             </p>

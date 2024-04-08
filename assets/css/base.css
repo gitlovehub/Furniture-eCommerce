@@ -176,6 +176,11 @@ a {
   text-decoration: none;
 }
 
+.pointer-none {
+  pointer-events: none; /* Vô hiệu hóa sự kiện hover */
+  opacity: 0.6;
+}
+
 .breadcrumb li:hover a {
   text-decoration: underline;
 }
@@ -183,8 +188,8 @@ a {
 .bg-label-primary {
   line-height: .75;
   padding: 3px 7px;
-  background-color: #e2e2ff !important;
-  color: #5256ff;
+  background-color: #e7e7ff !important;
+  color: #696cff !important;
   border-radius: 0.4rem;
 }
 
@@ -192,16 +197,73 @@ a {
   line-height: .75;
   padding: 3px 7px;
   background-color: #ffe0db !important;
-  color: #ff3e1d;
+  color: #ff3e1d !important;
   border-radius: 0.4rem;
 }
 
 .bg-label-success {
   line-height: .75;
   padding: 3px 7px;
-  background-color: #71dd37 !important;
-  color: #59b428;
+  background-color: #e8fadf !important;
+  color: #71dd37 !important;
   border-radius: 0.4rem;
+}
+
+.btn-label-primary {
+  outline: none;
+  line-height: .75;
+  padding: 15px 10px;
+  background-color: #e7e7ff;
+  color: #696cff;
+  border-radius: 0.4rem;
+  border: 1px solid transparent;
+  border-color: rgba(0, 0, 0, 0);
+  transition: all .2s ease-in-out;
+  cursor: pointer;
+}
+
+.btn-label-primary.effect:hover {
+  color: #fff;
+  background-color: #696cff;
+  box-shadow: 0 0.125rem 0.25rem 0 rgba(105,108,255,.4);
+}
+
+.btn-label-success {
+  outline: none;
+  line-height: .75;
+  padding: 15px 10px;
+  background-color: #d7fbc5;
+  border-radius: 0.4rem;
+  border: 1px solid transparent;
+  transition: all .2s ease-in-out;
+  color: #2bb638;
+  border-color: rgba(0, 0, 0, 0);
+  cursor: pointer;
+}
+
+.btn-label-success.effect:hover {
+  color: #fff;
+  background-color: #81df4f;
+  box-shadow: 0 0.125rem 0.25rem 0 rgba(113,221,55,.4);
+}
+
+.btn-label-danger {
+  outline: none;
+  line-height: .75;
+  padding: 15px 10px;
+  background-color: #ffe0db;
+  border-radius: 0.4rem;
+  border: 1px solid transparent;
+  transition: all .2s ease-in-out;
+  color: #ff3e1d;
+  border-color: rgba(0, 0, 0, 0);
+  cursor: pointer;
+}
+
+.btn-label-danger.effect:hover {
+  color: #fff;
+  background-color: #e6381a;
+  box-shadow: 0 .125rem .25rem 0 rgba(255,62,29,.4);
 }
 
 .link-hover-0,
@@ -637,6 +699,22 @@ body::-webkit-scrollbar-thumb:hover {
   background-color: #909090;
 }
 
+.scroll-bar::-webkit-scrollbar {
+  width: 0.5rem;
+  border-radius: 0.5rem;
+  background-color: transparent;
+}
+
+.scroll-bar::-webkit-scrollbar-thumb {
+  background-color: #b1b1b1;
+  border-radius: 0.5rem;
+  transition: all ease 0.3s;
+}
+
+.scroll-bar::-webkit-scrollbar-thumb:hover {
+  background-color: #999999;
+}
+
 .product__item-btn-overlay {
   height: 80px;
   position: absolute;
@@ -947,8 +1025,8 @@ body::-webkit-scrollbar-thumb:hover {
   content: '';
   display: block;
   width: 100%;
-  height: 20px;
-  top: -15px;
+  height: 10px;
+  top: -10px;
   cursor: pointer;
 }
 
@@ -984,11 +1062,6 @@ body::-webkit-scrollbar-thumb:hover {
   background-color: #ccc;
   z-index: 0;
 }
-
-.checkout-summary {
-  background-color: #f5f5f5;
-}
-
 
 /* Mobile: width < 740px */
 @media screen and (max-width: 46.1875em) {

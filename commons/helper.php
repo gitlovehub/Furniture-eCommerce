@@ -101,17 +101,45 @@ if (!function_exists('middleware_auth_checkClient')) {
     }
 }
 
-function calculateTotalPrice($carts) {
-    $totalPrice = 0;
+function calculateSubtotalCart($carts) {
+    $subtotal = 0;
     foreach ($carts as $cart) {
-        $productPrice = ($cart['price'] - ($cart['price'] * $cart['discount'] / 100)) * $cart['quantity'];
-        $totalPrice += $productPrice;
+        $basePrice    = $cart['price'];
+        $discount     = $cart['discount'] / 100;
+        $sale         = $basePrice * (1 - $discount);
+        $totalPrice   = $sale * $cart['quantity'];
+        $subtotal    += $totalPrice;
     }
+    return $subtotal;
+}
+
+function calculateTotalPrice($price, $discount, $quantity) {
+    $totalPrice = ($price - ($price * $discount / 100)) * $quantity;
     return $totalPrice;
 }
 
-function calculateProductPrice($price, $discount, $quantity) {
-    // Tính giá tiền của sản phẩm với số lượng và chiết khấu cho trước
-    $productPrice = ($price - ($price * $discount / 100)) * $quantity;
-    return $productPrice;
+function calculateShippingCost($customerCity) {
+    // Hàm chuẩn hóa chuỗi
+    function normalizeString($str) {
+        $str = strtolower($str);
+        $str = preg_replace('/[^a-z0-9]/', '', $str);
+        return $str;
+    }
+
+    // Chuẩn hóa chuỗi từ $customerCity và 'Thành Phố Hà Nội'
+    $normalizedCustomerCity = normalizeString($customerCity);
+    $normalizedTargetCity   = normalizeString('Thành Phố Hà Nội');
+    
+    // Xác định phí vận chuyển
+    $shippingCost = ($normalizedCustomerCity === $normalizedTargetCity) ? 0 : 20;
+
+    return $shippingCost;
+}
+
+function isToday($date) {
+    $orderTime = strtotime($date);
+    $todayStart = strtotime('today'); // 0:00 của hôm nay
+    $todayEnd = strtotime('tomorrow') - 1; // 23:59:59 của hôm nay
+
+    return ($orderTime >= $todayStart && $orderTime <= $todayEnd);
 }

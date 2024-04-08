@@ -2,7 +2,7 @@
 
     <!-- Content -->
     <div class="container-xxl flex-grow-1 container-p-y">
-        <h4 class="py-3 mb-4">
+        <h4 class="py-3 mb-4 fs-3 fw-bold">
             Show Blocked Accounts
         </h4>
 
@@ -10,7 +10,7 @@
         <div class="card">
             <div class="card-header row gy-3">
                 <div class="col-12 col-sm-3">
-                    <input type="search" class="form-control" name="search" placeholder="Search Customer">
+                    <input type="search" class="form-control" id="searchInput" placeholder="Search Customer">
                 </div>
                 <div class="col">
                     <div class="d-flex justify-content-end gap-2">

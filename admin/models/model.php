@@ -104,7 +104,8 @@ if (!function_exists('getOrders')) {
             $sql = "SELECT 
                         o.`id` AS id, 
                         o.`date`, 
-                        a.`name` AS customer_name, 
+                        a.`id` AS customer_id, 
+                        a.`name` AS customer_name,
                         o.`payment_status`, 
                         o.`delivery_status`, 
                         o.`method`
@@ -121,26 +122,31 @@ if (!function_exists('getOrders')) {
 }
 
 if (!function_exists('getOrderDetails')) {
-    function getOrderDetails($id) {
+    function getOrderDetails($orderId) {
         try {
             $sql = "SELECT 
                         p.name AS product_name,
-                        p.price AS product_price,
-                        p.discount AS product_discount,
-                        od.quantity AS product_quantity,
-                        p.thumbnail AS product_thumbnail,
-                        (p.price * od.quantity) AS total_price,
+                        p.price AS price,
+                        p.discount AS discount,
+                        od.quantity AS quantity,
+                        clr.name AS color_name,
+                        clr.color_thumbnail AS color_thumbnail,
+                        p.thumbnail AS thumbnail,
+                        (p.price * od.quantity) AS total,
                         o.id AS order_id,
-                        o.date AS order_date,
+                        o.date AS date,
                         o.payment_status,
                         o.delivery_status,
                         o.method,
-                        a.id AS customer_id,
-                        a.avatar AS customer_avatar,
-                        a.name AS customer_name,
-                        a.email AS customer_email,
-                        a.address AS customer_address,
-                        a.phone AS customer_phone
+                        acc.id AS customer_id,
+                        acc.avatar AS avatar,
+                        acc.name AS customer_name,
+                        acc.email AS email,
+                        acc.city AS city,
+                        acc.district AS district,
+                        acc.ward AS ward,
+                        acc.address AS address,
+                        acc.phone AS phone
                     FROM 
                         tbl_products p
                     INNER JOIN 
@@ -148,11 +154,32 @@ if (!function_exists('getOrderDetails')) {
                     INNER JOIN 
                         tbl_orders o ON od.id_order = o.id
                     INNER JOIN 
-                        tbl_accounts a ON o.id_customer = a.id
+                        tbl_accounts acc ON o.id_customer = acc.id
+                    INNER JOIN 
+                        tbl_colors clr ON od.id_color = clr.id
                     WHERE 
-                        o.id = ? ORDER BY od.quantity DESC";
+                        o.id = ? 
+                    ORDER BY od.quantity DESC";
+
             $stmt = $GLOBALS['conn']->prepare($sql);
-            $stmt->execute([$id]);
+            $stmt->execute([$orderId]);
+            return $stmt->fetchAll(PDO::FETCH_ASSOC);
+        } catch (\Exception $e) {
+            debug($e);
+        }
+    }
+}
+
+if (!function_exists('getCustomerOrders')) {
+    function getCustomerOrders($customerId) {
+        try {
+            $sql = "SELECT od.id_product, od.quantity
+                    FROM tbl_order_details AS od
+                    JOIN tbl_orders AS o ON od.id_order = o.id
+                    WHERE o.id_customer = :id_customer";
+            $stmt = $GLOBALS['conn']->prepare($sql);
+            $stmt->bindParam(':id_customer', $customerId, PDO::PARAM_INT);
+            $stmt->execute();
             return $stmt->fetchAll(PDO::FETCH_ASSOC);
         } catch (\Exception $e) {
             debug($e);

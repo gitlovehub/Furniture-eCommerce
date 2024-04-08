@@ -119,11 +119,17 @@
                         <h3 class="fs-2 pb-2 fw-bold">Customer
                             <a href="?act=setting-info&id=<?= $customer['id'] ?>" class="float-end"><i class="fa-regular fa-pen-to-square"></i></a>
                         </h3>
-                        <p class="fs-3 lh-base"><ion-icon class="fs-3 me-2" name="phone-portrait-outline"></ion-icon><?= $customer['name'] ?? '...' ?> | <?= $customer['phone'] ?? '(+84)' ?></p>
-                        <p class="fs-3 lh-base"><ion-icon class="fs-3 me-2" name="location-outline"></ion-icon><?= $customer['address'] ?? '...' ?></p>
+                        <p class="fs-3 lh-base"><ion-icon class="fs-3 me-2" name="phone-portrait-outline"></ion-icon><?= $customer['name'] ?? 'Who are you?' ?> | <?= $customer['phone'] ?? '(+84)' ?></p>
+                        <?php $city = ', ' . $customer['ward'].', '.$customer['district'].', '.$customer['city'] ?>
+                        <p class="fs-3 lh-base">
+                            <ion-icon class="fs-3 me-2" name="location-outline"></ion-icon>
+                            <?php $city = ($city == ', , , ') ? '' : $city; ?>
+                            <?= $customer['address'].$city ?>
+                        </p>
                         <input type="hidden" name="username" value="<?= $customer['name'] ?>">
                         <input type="hidden" name="phone" value="<?= $customer['phone'] ?>">
                         <input type="hidden" name="address" value="<?= $customer['address'] ?>">
+                        <input type="hidden" name="city" value="<?= $city ?>">
                     </div>
 
                     <div class="mt-5 pb-4 fs-4">
@@ -170,57 +176,92 @@
                 <?php $carts = getCartByCustomer('tbl_carts', $_SESSION["user"]['id'] ?? ''); ?>
 
                 <?php if (empty($_SESSION["buy-now"])) : ?>
-                    <div class="col-12 col-sm-6 checkout-summary border-start">
+                    <div class="col-12 col-sm-6 border-start" style="background-color: #f5f5f5;">
                         <div class="p-5 position-sticky top-0">
-                            <?php foreach ($carts as $cart) : ?>
-                                <div class="cart-item mb-4 border-0" style="height: 80px;">
-                                    <div onclick="redirectToProductDetail(<?= $cart['id_product'] ?>)" class="cart-item-start m-0 border" style="width: 120px; border-radius: 10px;">
-                                        <span class="checkout-qty" cart-qty="<?= $cart['quantity'] ?>"></span>
-                                        <?php if (!empty($cart['color_thumbnail'])) : ?>
-                                            <img src="<?= BASE_URL . $cart['color_thumbnail'] ?>" alt="product img" class="cart-item-img" style="width: 80px;">
-                                        <?php else : ?>
-                                            <img src="<?= BASE_URL . $cart['thumbnail'] ?>" alt="product img" class="cart-item-img" style="width: 80px;">
-                                        <?php endif; ?>
-                                    </div>
-                                    <div class="w-100 p-3 d-flex flex-wrap align-items-center justify-content-between">
-                                        <div class="d-flex flex-column lh-base">
-                                            <h4 class="fs-3 fw-bold"><?= $cart['product'] ?></h4>
-                                            <?php if (!empty($cart['color'])) : ?>
-                                                <span>Color:
-                                                    <span class="fs-4 fw-bold"><?= $cart['color'] ?></span>
-                                                </span>
+                            <div class="overflow-auto pt-4 scroll-bar" style="max-height: 400px;">
+                                <?php foreach ($carts as $cart) : ?>
+                                    <div class="cart-item mb-4 border-0" style="height: 80px;">
+                                        <div onclick="redirectToProductDetail(<?= $cart['id_product'] ?>)" class="cart-item-start m-0 border" style="width: 120px; border-radius: 10px;">
+                                            <span class="checkout-qty" cart-qty="<?= $cart['quantity'] ?>"></span>
+                                            <?php if (!empty($cart['color_thumbnail'])) : ?>
+                                                <img src="<?= BASE_URL . $cart['color_thumbnail'] ?>" alt="product img" class="cart-item-img" style="width: 80px;">
+                                            <?php else : ?>
+                                                <img src="<?= BASE_URL . $cart['thumbnail'] ?>" alt="product img" class="cart-item-img" style="width: 80px;">
                                             <?php endif; ?>
                                         </div>
-                                        <div class="d-flex flex-column align-items-end lh-base">
-                                            <?php $productPrice = calculateProductPrice($cart['price'], $cart['discount'], $cart['quantity']); ?>
-                                            <?php $unit = $cart['price'] - ($cart['price'] * $cart['discount'] / 100); ?>
-                                            <span class="fs-3 fw-semibold">£<?= number_format($productPrice, 0, '.', ',') ?></span>
-                                            <span class="fs-4 text-secondary">£<?= number_format($unit, 0, '.', ',') ?> each</span>
+                                        <div class="w-100 p-3 d-flex flex-wrap align-items-center justify-content-between">
+                                            <div class="d-flex flex-column lh-base">
+                                                <h4 class="fs-3 fw-bold"><?= $cart['product'] ?></h4>
+                                                <?php if (!empty($cart['color'])) : ?>
+                                                    <span>Color:
+                                                        <span class="fs-4 fw-bold"><?= $cart['color'] ?></span>
+                                                    </span>
+                                                <?php endif; ?>
+                                            </div>
+                                            <div class="d-flex flex-column align-items-end lh-base">
+                                                <?php $totalPrice = calculateTotalPrice($cart['price'], $cart['discount'], $cart['quantity']); ?>
+                                                <?php $unitPrice = $cart['price'] - ($cart['price'] * $cart['discount'] / 100); ?>
+                                                <span class="fs-3 fw-semibold">£<?= number_format($totalPrice, 0, '.', ',') ?></span>
+                                                <span class="fs-4 text-secondary">£<?= number_format($unitPrice, 0, '.', ',') ?> each</span>
+                                            </div>
                                         </div>
                                     </div>
+                                <?php endforeach; ?>
+                            </div>
+
+                            <div class="form__group d-flex gap-2 mt-5">
+                                <div class="form__group m-0 w-100">
+                                    <input type="text" id="giftCard" name="giftCard" placeholder="Discount code or gift card" autocomplete="giftCard">
+                                    <label for="giftCard" style="background-color: #f5f5f5;">Discount code or gift card</label>
                                 </div>
-                            <?php endforeach; ?>
-                            <div class="form__group d-flex gap-4 mt-5">
-                                <input type="text" id="discountCode" name="fieldDiscountCode" placeholder="Discount code or gift card">
                                 <button type="submit" class="btn btn-outline-dark fs-4 fw-bold px-4">APPLY</button>
                             </div>
+
                             <div class="mt-4 lh-lg">
-                                <?php $totalPrice = calculateTotalPrice($carts); ?>
+                                <?php $subtotal = calculateSubtotalCart($carts); ?>
                                 <div class="fs-3 d-flex justify-content-between">
                                     <span>Subtotal</span>
-                                    <span>₤<?= number_format($totalPrice, 2, '.', ',') ?></span>
+                                    <span>₤<?= number_format($subtotal, 2, '.', ',') ?></span>
                                 </div>
                                 <div class="fs-3 d-flex justify-content-between">
-                                    <span>Shipping</span>
-                                    <span>₤<?= number_format($shipping ?? 0, 2, '.', ',') ?></span>
+                                    <?php
+                                    function normalizeString($str) {
+                                        $str = strtolower($str);
+                                        $str = preg_replace('/[^a-z0-9]/', '', $str);
+                                        return $str;
+                                    }
+                                    // Chuyển đổi chuỗi từ $customer và 'Thành Phố Hà Nội' sang dạng chuỗi đã được chuẩn hóa
+                                    $normalizedCustomerCity = normalizeString($customer['city'] ?? '');
+                                    $normalizedTargetCity = normalizeString('Thành Phố Hà Nội');
+                                    ?>
+                                    <span>
+                                        <span>Shipping<i class="fa-regular fa-circle-question fs-4 ms-2" data-bs-toggle="modal" data-bs-target="#exampleModal" style="cursor: pointer;"></i></span>
+                                        <span class="text-secondary">
+                                            <?php 
+                                            if (!empty($normalizedCustomerCity)) {
+                                                $nonurban = ($normalizedCustomerCity === $normalizedTargetCity) ? '' : 'non-urban';
+                                            } 
+                                            ?>
+                                            <?= $nonurban ?? '' ?>
+                                        </span>
+                                    </span>
+                                    <?php 
+                                    $shipping = 0;
+                                    if (empty($normalizedCustomerCity)) {
+                                        echo '<span>Calculating...</span>';
+                                    } else {
+                                        $shipping = ($normalizedCustomerCity === $normalizedTargetCity) ? 0 : 20;
+                                        echo '<span>₤' . number_format($shipping, 2, '.', ',') . '</span>';
+                                    }
+                                    ?>
                                 </div>
                                 <div class="fs-2 fw-bold d-flex justify-content-between">
                                     <span>Total</span>
-                                    <span>₤<?= number_format($totalPrice, 2, '.', ',') ?></span>
-                                    <input type="hidden" name="total" value="<?= $totalPrice ?>">
+                                    <?php $total = (empty($normalizedCustomerCity)) ? 0 : ($subtotal + $shipping); ?>
+                                    <span>₤<?= number_format($total, 2, '.', ',') ?></span>
+                                    <input type="hidden" name="total" value="<?= $total ?>">
                                 </div>
                             </div>
-
 
                             <div class="mt-5 hide-on-pc hide-on-tablet">
                                 <button type="submit" name="btnOrder" style="letter-spacing: 1px;" class="btn btn-danger fs-3 fw-bold py-3 w-100 mb-5">ORDER</button>
@@ -238,22 +279,22 @@
                     <div class="col-12 col-sm-6 checkout-summary border-start">
                         <div class="p-5 position-sticky top-0">
                             <div class="cart-item mb-4 border-0" style="height: 80px;">
-                                <div onclick="redirectToProductDetail(<?= $data['id'] ?>)" class="cart-item-start m-0 border" style="width: 120px; border-radius: 10px;">
+                                <div onclick="redirectToProductDetail(<?= $data['productId'] ?>)" class="cart-item-start m-0 border" style="width: 120px; border-radius: 10px;">
                                     <span class="checkout-qty" cart-qty="<?= $data['quantity'] ?>"></span>
+
                                     <img src="<?= BASE_URL . $data['thumbnail'] ?>" alt="product img" class="cart-item-img" style="width: 80px;">
                                 </div>
                                 <div class="w-100 p-3 d-flex flex-wrap align-items-center justify-content-between">
                                     <div class="d-flex flex-column lh-base">
                                         <h4 class="fs-3 fw-bold"><?= $data['name'] ?></h4>
-                                        <?php $color = getColorName('tbl_colors', $data['id']); ?>
                                         <span>Color:
-                                            <span class="fs-4 fw-bold"><?= $color[0]['color_name'] ?></span>
+                                            <span class="fs-4 fw-bold"><?= $data['color'] ?></span>
                                         </span>
                                     </div>
                                     <div class="d-flex flex-column align-items-end lh-base">
-                                        <?php $productPrice = $data['price'] * $data['quantity'] ?>
+                                        <?php $totalPrice = $data['price'] * $data['quantity'] ?>
                                         <?php $unit = $data['price'] - ($data['price'] * $data['discount'] / 100); ?>
-                                        <span class="fs-3 fw-semibold">£<?= number_format($productPrice, 0, '.', ',') ?></span>
+                                        <span class="fs-3 fw-semibold">£<?= number_format($totalPrice, 0, '.', ',') ?></span>
                                         <span class="fs-4 text-secondary">£<?= number_format($data['price'], 0, '.', ',') ?> each</span>
                                     </div>
                                 </div>
@@ -265,12 +306,13 @@
                             <div class="mt-4 lh-lg">
                                 <div class="fs-3 d-flex justify-content-between">
                                     <span>Shipping</span>
-                                    <span>₤<?= number_format($shipping ?? 0, 2, '.', ',') ?></span>
+                                    <?php $shipping = 0 ?>
+                                    <span>₤<?= number_format($shipping, 2, '.', ',') ?></span>
                                 </div>
                                 <div class="fs-2 fw-bold d-flex justify-content-between">
                                     <span>Total</span>
-                                    <span>₤<?= number_format($productPrice, 2, '.', ',') ?></span>
-                                    <input type="hidden" name="total" value="<?= $productPrice ?>">
+                                    <span>₤<?= number_format($totalPrice + $shipping, 2, '.', ',') ?></span>
+                                    <input type="hidden" name="total" value="<?= $totalPrice ?>">
                                 </div>
                             </div>
 
@@ -289,5 +331,28 @@
                 <?php endif; ?>
             </div>
         </form>
+    </div>
+</div>
+
+<!-- Modal Shipping Policy -->
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header border-0">
+                <h2 class="modal-title fw-bold" id="exampleModalLabel">Shipping policy</h2>
+                <button type="button" class="btn-close me-2" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body pt-0 pb-5">
+                <p align="justify" class="lh-sm">
+                    We are delighted to inform you that any orders dispatched to Hanoi will no longer incur local taxes
+                    and
+                    shipping fees. This will help you save costs when making purchases. Please note that these
+                    regulations
+                    only apply to domestic orders within Vietnam and do not apply to international shipping.
+                </p>
+                <h5 class="py-4">Do you accept returns and/or exchanges?</h5>
+                <span>Yes, please view the <a href="" class="text-danger fs-5 text-decoration-underline">RETURNS & EXCHANGES POLICY</a> link.</span>
+            </div>
+        </div>
     </div>
 </div>

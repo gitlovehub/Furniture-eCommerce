@@ -16,9 +16,9 @@
 <div class="cart-overlay">
     <div class="cart-container shadow-sm">
         <div class="cart-header fs-2">
-            <h3 class="fw-bold">
+            <h2 class="fw-bold">
                 Quick View Cart
-            </h3>
+            </h2>
             <div class="cart-close">✖</div>
         </div>
 
@@ -68,8 +68,8 @@
                                     <span class="fw-bold"><?= $cart['quantity'] ?></span>
                                 </div>
                                 <div>
-                                    <?php $unit = $cart['price'] - ($cart['price'] * $cart['discount'] / 100); ?>
-                                    <span class="fs-3 fw-bold">£<?= number_format($unit, 0, '.', ',') ?></span>
+                                    <?php $unitPrice = $cart['price'] - ($cart['price'] * $cart['discount'] / 100); ?>
+                                    <span class="fs-3 fw-bold">£<?= number_format($unitPrice, 0, '.', ',') ?></span>
                                 </div>
                             </div>
                         </div>
@@ -79,11 +79,12 @@
         </div>
         <?php if (!empty($carts)) : ?>
             <div class="cart-footer">
-                <div class="d-flex justify-content-between align-items-center py-4" style="border-top: 2px dashed #333;">
+                <div class="d-flex justify-content-between align-items-center pt-4" style="border-top: 2px dashed #333;">
                     <h2 class="fs-2 font-monospace">Subtotal:</h2>
-                    <?php $totalPrice = calculateTotalPrice($carts); ?>
-                    <h2 class="fs-2 font-monospace">£<?= number_format($totalPrice, 2, '.', ',') ?></h2>
+                    <?php $subtotal = calculateSubtotalCart($carts); ?>
+                    <h2 class="fs-2 font-monospace">£<?= number_format($subtotal, 2, '.', ',') ?></h2>
                 </div>
+                <p class="fs-4 py-4 text-center">Shipping & taxes calculated at checkout</p>
                 <div class="d-flex flex-column flex-sm-row gap-4">
                     <a href="?act=review-cart" class="btn btn-outline-success w-100 lh-lg font-monospace fs-4 fw-semibold">Review cart</a>
                     <a href="?act=checkout&user=<?= $_SESSION["user"]['id'] ?>" class="btn btn-danger w-100 lh-lg font-monospace fs-4 fw-semibold">Go to Checkout</a>
