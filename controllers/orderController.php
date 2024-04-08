@@ -34,7 +34,7 @@ function placeOrder($customerId) {
         if (!empty($_SESSION["user"])) {
             $carts = getCartByCustomer('tbl_carts', $_SESSION["user"]['id']);
             date_default_timezone_set('Asia/Ho_Chi_Minh');
-
+            
             $orderData = [
                 'date'            => date('Y-m-d H:i:s'),
                 'method'          => $_POST["method"] ?? null,
@@ -55,26 +55,24 @@ function placeOrder($customerId) {
             if (insert('tbl_orders', $orderData)) {
                 $orderId = getLastId('tbl_orders'); // Lấy ID của đơn hàng mới thêm vào
                 updatePaymentStatus($orderId, $orderData['method']);
-                // Chèn thông tin sản phẩm vào bảng tbl_order_details cho mỗi sản phẩm trong giỏ hàng
-                foreach ($carts as $cart) {
-                    // Xử lý sản phảm mua ngay
+
+                if (isset($_SESSION["product-buy-now"])) {
+                    // Xử lý sản phẩm mua ngay
                     $itemBuyNow = $_SESSION["product-buy-now"];
-                    if (isset($_SESSION["product-buy-now"]) && $_SESSION["product-buy-now"]['productId'] == $cart['id_product']) {
-                        $unitPrice = $itemBuyNow['price'] - ($itemBuyNow['price'] * $itemBuyNow['discount'] / 100);
-                        insertOrderDetails($orderId, $itemBuyNow['productId'], $itemBuyNow['colorId'], $itemBuyNow['quantity'], $unitPrice);
-                        decreaseInstock($itemBuyNow['productId'], $itemBuyNow['quantity']); // Giảm số lượng hàng tồn kho
-                        unset($_SESSION["product-buy-now"]);
-                    } else {
+                    $unitPrice = $itemBuyNow['price'] - ($itemBuyNow['price'] * $itemBuyNow['discount'] / 100);
+                    insertOrderDetails($orderId, $itemBuyNow['productId'], $itemBuyNow['colorId'], $itemBuyNow['quantity'], $unitPrice);
+                    decreaseInstock($itemBuyNow['productId'], $itemBuyNow['quantity']); // Giảm số lượng hàng tồn kho
+                } else {
+                    // Xử lý từng sản phẩm trong giỏ hàng
+                    foreach ($carts as $cart) {
                         $unitPrice = $cart['price'] - ($cart['price'] * $cart['discount'] / 100);
                         insertOrderDetails($orderId, $cart['id_product'], $cart['id_color'], $cart['quantity'], $unitPrice);
-                        // Kiểm tra xem có session sản phẩm mua ngay không
-                        if (!isset($_SESSION["product-buy-now"])) {
-                            decreaseInstock($cart['id_product'], $cart['quantity']); // Giảm số lượng hàng tồn kho
-                            deleteCartItemsByProductId($cart['id_product']); // Xóa sản phẩm trong giỏ hàng sau khi đặt hàng
-                        }
+                        decreaseInstock($cart['id_product'], $cart['quantity']); // Giảm số lượng hàng tồn kho
+                        deleteCartItemsByProductId($cart['id_product']); // Xóa sản phẩm trong giỏ hàng sau khi đặt hàng
                     }
                 }
                 header('Location: ?act=order-success');
+                unset($_SESSION["product-buy-now"]);
                 exit();
             } else {
                 debug($orderData);

@@ -1,7 +1,6 @@
 <?php
 
-function orderList()
-{
+function orderList() {
     $titleBar = 'Orders';
     $view     = 'order/order-list';
     $list     = getOrders('tbl_orders');
@@ -9,8 +8,7 @@ function orderList()
     require_once PATH_VIEW_ADMIN . 'layouts/master.php';
 }
 
-function orderDetails($orderId)
-{
+function orderDetails($orderId) {
     $titleBar = 'Order Details';
     $view     = 'order/order-details';
     $list     = getOrderDetails($orderId);
@@ -18,8 +16,7 @@ function orderDetails($orderId)
     require_once PATH_VIEW_ADMIN . 'layouts/master.php';
 }
 
-function updateOrder($orderId)
-{
+function updateOrder($orderId) {
     $status   = selectOne('tbl_orders', $orderId);
 
     if (empty($status)) {

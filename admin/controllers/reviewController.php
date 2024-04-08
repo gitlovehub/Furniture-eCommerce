@@ -3,6 +3,10 @@
 function manageReviews() {
     $titleBar = 'Reviews';
     $view     = 'review/review';
-    $list     = selectAll('tbl_reviews');
+
+    $list          = selectAll('tbl_reviews');
+    $reviewDetails = getReviewDetails();
+
+
     require_once PATH_VIEW_ADMIN . 'layouts/master.php';
 }

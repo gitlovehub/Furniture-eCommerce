@@ -14,14 +14,23 @@
                 </div>
                 <div class="col"></div>
             </div>
+            <?php foreach ($reviewDetails as $review) {
+                extract($review);
+            } ?>
             <div class="table-responsive">
                 <table class="table table-hover">
                     <thead>
                         <tr>
-                            <th class="col-3">Product</th>
+                            <th class="col-2">Product</th>
                             <th class="col-2">Reviewer</th>
-                            <th class="col-5">Review</th>
+                            <th class="col-4">Review</th>
+                            <th class="col-1">Status</th>
                             <th class="col-2">Date</th>
+                            <th class="col-1">
+                                <span class="float-end">
+                                    Actions
+                                </span>
+                            </th>
                         </tr>
                     </thead>
                     <tbody class="table-border-bottom-0">
@@ -31,14 +40,11 @@
                                 <td>
                                     <div class="d-flex justify-content-start align-items-center customer-name">
                                         <div class="avatar-wrapper">
-                                            <div class="avatar me-2 rounded-2 bg-label-secondary">
-                                                <img src="assets/img/ecommerce-images/product-1.png" class="rounded-2">
+                                            <div class="me-2 rounded-2 bg-label-secondary">
+                                                <img src="<?= PATH_UPLOAD . $review['product_thumbnail'] ?>" width="100px" class="rounded-2">
                                             </div>
                                         </div>
-                                        <div class="d-flex flex-column">
-                                            <span class="fw-medium text-nowrap">iPhone 14 Pro</span>
-                                            <small class="text-muted">Super Retina XDR display footnote Pro Motion technology</small>
-                                        </div>
+                                        <span class="fw-medium text-nowrap"><?= $review['product_name'] ?></span>
                                     </div>
                                 </td>
 
@@ -47,27 +53,54 @@
                                     <div class="d-flex justify-content-start align-items-center customer-name">
                                         <div class="avatar-wrapper">
                                             <div class="avatar me-2">
-                                                <img src="assets/img/avatars/1.png" alt="Avatar" class="rounded-circle">
+                                                <?php
+                                                $defaultAvatar = 'https://www.gravatar.com/avatar/0?d=mp&f=y';
+                                                $avatar = !empty($review['customer_avatar']) ? PATH_UPLOAD . $review['customer_avatar'] : $defaultAvatar;
+                                                ?>
+                                                <img src="<?= $avatar ?>" alt="Avatar" class="rounded-circle">
                                             </div>
                                         </div>
                                         <div class="d-flex flex-column">
                                             <a href="">
-                                                <span class="fw-medium">Zane Scraggs</span>
+                                                <span class="fw-medium"><?= $review['customer_name'] ?></span>
                                             </a>
-                                            <small class="text-muted text-nowrap">zscraggs0@flavors.me</small>
+                                            <small class="text-muted text-nowrap"><?= $review['customer_email'] ?></small>
                                         </div>
                                     </div>
                                 </td>
 
                                 <!-- Review -->
                                 <td>
-                                    <span>
-                                        Lorem ipsum dolor, sit amet consectetur adipisicing elit. Perspiciatis velit ipsam odit dolorem ipsa quod vero. Rerum dignissimos accusantium nesciunt, commodi vitae laboriosam a velit impedit sapiente, ullam reprehenderit earum.
+                                    <p class="text-warning m-0">
+                                        <?php
+                                        $rating = $item['rating'];
+                                        for ($i = 1; $i <= 5; $i++) {
+                                            if ($i <= $rating) {
+                                                echo '<i class="fa-solid fa-star"></i>';
+                                            } else {
+                                                echo '<i class="fa-regular fa-star"></i>';
+                                            }
+                                        }
+                                        ?>
+                                    </p>
+                                    <span><?= $item['review_text'] ?></span>
+                                </td>
+                                <td>
+                                    <span class="badge <?= ($item['status'] == 0) ? 'bg-label-warning' : (($item['status'] == 1) ? 'bg-label-success' : 'bg-label-danger') ?>">
+                                        <?= ($item['status'] == 0) ? 'Pending' : 'Published' ?>
                                     </span>
                                 </td>
-
-                                <!-- Date -->
-                                <td>Mar 17, 2021</td>
+                                <td><?= $item['review_date'] ?></td>
+                                <td class="text-nowrap">
+                                    <div class="float-end">
+                                        <a href="" class="btn btn-success p-2">
+                                            <i class="bx bx-upload"></i>
+                                        </a>
+                                        <button onclick="openModalUpdateStatus(<?= $item['id'] ?>, 0, 'review', 'Delete review?', 'You can not undo this action.')" class="btn btn-danger p-2">
+                                            <i class="bx bx-trash"></i>
+                                        </button>
+                                    </div>
+                                </td>
                             </tr>
                         <?php endforeach ?>
                     </tbody>

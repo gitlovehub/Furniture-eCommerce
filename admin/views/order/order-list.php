@@ -132,9 +132,6 @@
                             <tr>
                                 <td>
                                     <span class="orderDate"><?= $item['date'] ?></span>
-                                <?php if (isToday($item['date'])) : ?>
-                                    <span class="badge bg-label-primary">Today</span>
-                                <?php endif; ?>
                                 </td>
                                 <td><?= $item['customer_name'] ?></td>
                                 <td>

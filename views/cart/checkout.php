@@ -121,6 +121,7 @@
                         </h3>
                         <p class="fs-3 lh-base"><ion-icon class="fs-3 me-2" name="phone-portrait-outline"></ion-icon><?= $customer['name'] ?? 'Who are you?' ?> | <?= $customer['phone'] ?? '(+84)' ?></p>
                         <?php $city = ', ' . $customer['ward'].', '.$customer['district'].', '.$customer['city'] ?>
+                        <?php $temp = $customer['city'] ?? ''; ?>
                         <p class="fs-3 lh-base">
                             <ion-icon class="fs-3 me-2" name="location-outline"></ion-icon>
                             <?php $city = ($city == ', , , ') ? '' : $city; ?>
@@ -231,8 +232,8 @@
                                         return $str;
                                     }
                                     // Chuyển đổi chuỗi từ $customer và 'Thành Phố Hà Nội' sang dạng chuỗi đã được chuẩn hóa
-                                    $normalizedCustomerCity = normalizeString($customer['city'] ?? '');
-                                    $normalizedTargetCity = normalizeString('Thành Phố Hà Nội');
+                                    $normalizedCustomerCity = !empty($temp) ? normalizeString($temp) : '';
+                                    $normalizedTargetCity   = normalizeString('Thành Phố Hà Nội');
                                     ?>
                                     <span>
                                         <span>Shipping<i class="fa-regular fa-circle-question fs-4 ms-2" data-bs-toggle="modal" data-bs-target="#exampleModal" style="cursor: pointer;"></i></span>
@@ -305,9 +306,36 @@
                             </div>
                             <div class="mt-4 lh-lg">
                                 <div class="fs-3 d-flex justify-content-between">
-                                    <span>Shipping</span>
-                                    <?php $shipping = 0 ?>
-                                    <span>₤<?= number_format($shipping, 2, '.', ',') ?></span>
+                                    <?php
+                                    function normalizeString($str) {
+                                        $str = strtolower($str);
+                                        $str = preg_replace('/[^a-z0-9]/', '', $str);
+                                        return $str;
+                                    }
+                                    // Chuyển đổi chuỗi từ $customer và 'Thành Phố Hà Nội' sang dạng chuỗi đã được chuẩn hóa
+                                    $normalizedCustomerCity = !empty($temp) ? normalizeString($temp) : '';
+                                    $normalizedTargetCity   = normalizeString('Thành Phố Hà Nội');
+                                    ?>
+                                    <span>
+                                        <span>Shipping<i class="fa-regular fa-circle-question fs-4 ms-2" data-bs-toggle="modal" data-bs-target="#exampleModal" style="cursor: pointer;"></i></span>
+                                        <span class="text-secondary">
+                                            <?php 
+                                            if (!empty($normalizedCustomerCity)) {
+                                                $nonurban = ($normalizedCustomerCity === $normalizedTargetCity) ? '' : 'non-urban';
+                                            } 
+                                            ?>
+                                            <?= $nonurban ?? '' ?>
+                                        </span>
+                                    </span>
+                                    <?php 
+                                    $shipping = 0;
+                                    if (empty($normalizedCustomerCity)) {
+                                        echo '<span>Calculating...</span>';
+                                    } else {
+                                        $shipping = ($normalizedCustomerCity === $normalizedTargetCity) ? 0 : 20;
+                                        echo '<span>₤' . number_format($shipping, 2, '.', ',') . '</span>';
+                                    }
+                                    ?>
                                 </div>
                                 <div class="fs-2 fw-bold d-flex justify-content-between">
                                     <span>Total</span>

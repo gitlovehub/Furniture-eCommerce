@@ -135,6 +135,7 @@ if (!function_exists('getOrderDetails')) {
                         (p.price * od.quantity) AS total,
                         o.id AS order_id,
                         o.date AS date,
+                        o.note AS note,
                         o.payment_status,
                         o.delivery_status,
                         o.method,
@@ -179,6 +180,32 @@ if (!function_exists('getCustomerOrders')) {
                     WHERE o.id_customer = :id_customer";
             $stmt = $GLOBALS['conn']->prepare($sql);
             $stmt->bindParam(':id_customer', $customerId, PDO::PARAM_INT);
+            $stmt->execute();
+            return $stmt->fetchAll(PDO::FETCH_ASSOC);
+        } catch (\Exception $e) {
+            debug($e);
+        }
+    }
+}
+
+if (!function_exists('getReviewDetails')) {
+    function getReviewDetails() {
+        try {
+            $sql = "SELECT 
+                        p.thumbnail AS product_thumbnail,
+                        p.name AS product_name,
+                        a.avatar AS customer_avatar,
+                        a.name AS customer_name,
+                        a.email AS customer_email
+                    FROM 
+                        tbl_reviews r
+                    INNER JOIN 
+                        tbl_products p ON r.id_product = p.id
+                    INNER JOIN 
+                        tbl_accounts a ON r.id_customer = a.id
+                    ORDER BY 
+                        r.review_date DESC";
+            $stmt = $GLOBALS['conn']->prepare($sql);
             $stmt->execute();
             return $stmt->fetchAll(PDO::FETCH_ASSOC);
         } catch (\Exception $e) {

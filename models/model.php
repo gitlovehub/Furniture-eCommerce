@@ -237,17 +237,65 @@ if (!function_exists('getReviewsByProductId')) {
 }
 
 if (!function_exists('checkCustomerHasPurchased')) {
-    function checkCustomerHasPurchased($customerId) {
+    function checkCustomerHasPurchased($customerId, $productId) {
         try {
-            $sql = "SELECT COUNT(*) AS total FROM tbl_orders WHERE id_customer = :customer_id AND delivery_status = 2 AND payment_status = 2";
+            $sql = "SELECT COUNT(*) AS total 
+                    FROM tbl_orders o
+                    INNER JOIN tbl_order_details od ON o.id = od.id_order
+                    WHERE o.id_customer = :customer_id 
+                    AND od.id_product = :product_id
+                    AND o.delivery_status = 2 
+                    AND (o.payment_status = 1 OR o.payment_status = 2)";
             $stmt = $GLOBALS['conn']->prepare($sql);
             $stmt->bindParam(":customer_id", $customerId);
+            $stmt->bindParam(":product_id", $productId);
             $stmt->execute();
             $result = $stmt->fetch(PDO::FETCH_ASSOC);
             return $result['total'] > 0;
         } catch (\Exception $e) {
             debug($e);
             return false;
+        }
+    }
+}
+
+if (!function_exists('getOrderDetailsByCustomer')) {
+    function getOrderDetailsByCustomer($customerId) {
+        try {
+            $sql = "SELECT 
+                        p.name AS product_name,
+                        p.price AS price,
+                        p.discount AS discount,
+                        od.quantity AS quantity,
+                        clr.name AS color_name,
+                        clr.color_thumbnail AS color_thumbnail,
+                        p.thumbnail AS thumbnail,
+                        (p.price * od.quantity) AS total,
+                        o.id AS order_id,
+                        o.date AS date,
+                        o.payment_status,
+                        o.delivery_status,
+                        o.method,
+                        acc.id AS customer_id
+                    FROM 
+                        tbl_products p
+                    INNER JOIN 
+                        tbl_order_details od ON p.id = od.id_product
+                    INNER JOIN 
+                        tbl_orders o ON od.id_order = o.id
+                    INNER JOIN 
+                        tbl_accounts acc ON o.id_customer = acc.id
+                    INNER JOIN 
+                        tbl_colors clr ON od.id_color = clr.id
+                    WHERE 
+                        acc.id = ? 
+                    ORDER BY o.date DESC";
+
+            $stmt = $GLOBALS['conn']->prepare($sql);
+            $stmt->execute([$customerId]);
+            return $stmt->fetchAll(PDO::FETCH_ASSOC);
+        } catch (\Exception $e) {
+            debug($e);
         }
     }
 }

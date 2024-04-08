@@ -79,7 +79,7 @@
                             </tbody>
                         </table>
                     </div>
-                    <div class="d-flex justify-content-end align-items-center m-3">
+                    <div class="d-flex justify-content-end align-items-center m-4">
                         <div class="order-calculations">
                             <div class="d-flex justify-content-between mb-2">
                                 <span class="w-px-100">Subtotal:</span>
@@ -97,6 +97,13 @@
                         </div>
                     </div>
                 </div>
+
+                <div class="card mb-4">
+                    <div class="card-header">
+                        <h4 class="card-title">Note:</h4>
+                        <p class="fs-5"><?= $item['note'] ?></p>
+                    </div>
+                </div>
             </div>
 
             <div class="col-12 col-lg-4">
@@ -106,7 +113,11 @@
                     </div>
                     <div class="card-body">
                         <div class="d-flex justify-content-start align-items-center mb-4">
-                            <img src="<?= PATH_UPLOAD . $item['avatar'] ?>" class="rounded-circle me-2" width="50px">
+                            <?php
+                            $defaultAvatar = 'https://www.gravatar.com/avatar/0?d=mp&f=y';
+                            $avatar = !empty($item['avatar']) ? PATH_UPLOAD . $item['avatar'] : $defaultAvatar;
+                            ?>
+                            <img src="<?=  $avatar ?>" class="rounded-circle me-2" width="50px">
                             <div class="d-flex flex-column">
                                 <h4 class="mb-0">
                                     <?= $item['customer_name'] ?>

@@ -1,8 +1,6 @@
 <?php 
 
 function settings() {
-    $js       = BASE_URL.'assets/js/form.js';
-    $css      = BASE_URL.'assets/css/form.css';
     $titleBar = 'Settings';
     $view     = 'account/settings';
     
@@ -14,6 +12,7 @@ function settingInfo($id) {
     $css      = BASE_URL.'assets/css/form.css';
     $titleBar = 'Account Details';
     $view     = 'account/info';
+
     $customer = selectOne('tbl_accounts', $id);
 
     if(isset($_POST['btnSaveInfo'])) {
@@ -55,6 +54,32 @@ function settingInfo($id) {
         exit();
     }
     
+    require_once PATH_VIEW . 'layouts/master.php';
+}
+
+function orderHistory($customerId) {
+    $titleBar = 'Order History';
+    $view     = 'account/history';
+    
+    // Lấy thông tin khách hàng
+    $customer = selectOne('tbl_accounts', $customerId);
+
+    // Lấy danh sách đơn hàng của khách hàng
+    $orders = selectAll('tbl_orders', ['id_customer' => $customerId]);
+
+    // Lặp qua từng đơn hàng để lấy thông tin chi tiết
+    $orderDetails = [];
+    foreach ($orders as $order) {
+        // Lấy thông tin chi tiết của đơn hàng
+        $orderDetail = getOrderDetailsByCustomer($order['id']);
+        // Thêm thông tin chi tiết vào mảng $orderDetails
+        $orderDetails[] = [
+            'order' => $order,
+            'orderDetail' => $orderDetail
+        ];
+    }
+
+
     require_once PATH_VIEW . 'layouts/master.php';
 }
 
@@ -107,12 +132,4 @@ function validateUpdateInfo($data) {
     }
 
     return $errors;
-}
-
-function settingAddress() {
-    $js       = BASE_URL.'assets/js/form.js';
-    $css      = BASE_URL.'assets/css/form.css';
-    $titleBar = 'Addresses';
-    
-    require_once PATH_VIEW . 'layouts/master.php';
 }

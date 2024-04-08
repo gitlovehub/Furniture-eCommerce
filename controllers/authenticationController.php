@@ -73,6 +73,8 @@ function register() {
     if ($_SERVER["REQUEST_METHOD"] == "POST") {
         // Check if the submit button is pressed
         if (isset($_POST['btnRegister'])) {
+            date_default_timezone_set('Asia/Ho_Chi_Minh');
+
             $data = [
                 'registration_date' => date('Y-m-d'),
                 'name'              => $_POST["fieldName"] ?? null,

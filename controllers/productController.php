@@ -75,6 +75,8 @@ function sendReview($id) {
     if(isset($_POST['btnSendReview'])) {
         // kiểm tra xem đăng nhập chưa
         if (isset($_SESSION["user"])) {
+            date_default_timezone_set('Asia/Ho_Chi_Minh');
+
             $data = [
                 'id_product'  => $id ?? null,
                 'id_customer' => $_SESSION["user"]['id'] ?? null,
@@ -91,7 +93,7 @@ function sendReview($id) {
                 exit();
             } else {
                 // Kiểm tra xem khách hàng đã mua sản phẩm chưa
-                if (checkCustomerHasPurchased($data['id_customer'])) {
+                if (checkCustomerHasPurchased($data['id_customer'], $id)) {
                     insert('tbl_reviews', $data);
                     $_SESSION["review-success"]='Your feedback has been received! Thanks a bunch! ❤️️';
                 } else {

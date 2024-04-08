@@ -80,7 +80,7 @@ function addToCart($id) {
 
                 $_SESSION["buy-now"] = $data;
                 $_SESSION["product-buy-now"] = $data;
-                header('Location: ?act=checkout&user=' . $_SESSION["user"]['id']);
+                header('Location: ?act=checkout&user=' . $data['customer']);
                 exit();
             }
 

@@ -5,7 +5,7 @@
             <span onclick="goHome()" class="header__navbar-menu-link fs-3">Home</span>
         </div>
 
-        <h1 class="text-uppercase text-center mt-3 pt-5">
+        <h1 class="text-center mt-3 pt-5">
             Account Details
         </h1>
         <div class="account-container">
@@ -14,7 +14,7 @@
                     <i class="fa-solid fa-address-card"></i>
                     <span>Account Details</span>
                 </a>
-                <a href="" class="account__navigation-link">
+                <a href="?act=order-history&id=<?= $customer['id'] ?>" class="account__navigation-link">
                     <i class="fa-solid fa-dolly"></i>
                     <span>Order History</span>
                 </a>

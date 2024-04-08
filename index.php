@@ -32,7 +32,6 @@ match ($act) {
     // Account
     'settings'         => settings(),
     'setting-info'     => settingInfo($_GET["id"]),
-    'setting-address'  => settingAddress(),
 
     // Cate
     'categories'       => categories(),
@@ -53,6 +52,7 @@ match ($act) {
 
     // Order
     'place-order'      => placeOrder($_GET["id"]),
+    'order-history'    => orderHistory($_GET["id"]),
     'order-success'    => orderSuccess(),
 
 };

@@ -43,8 +43,8 @@
                             <tr>
                                 <td><?= $item['name'] ?></td>
                                 <td><?= $item['email'] ?></td>
-                                <td><?= $item['address'] ?></td>
-                                <td><?= $item['phone'] ?></td>
+                                <td><?= $item['city'] ?? 'Empty' ?></td>
+                                <td><?= $item['phone'] ?? 'Empty' ?></td>
                                 <td>
                                     <span class="badge bg-label-secondary">
                                         <?php

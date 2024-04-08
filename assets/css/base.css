@@ -209,6 +209,14 @@ a {
   border-radius: 0.4rem;
 }
 
+.bg-label-warning {
+  line-height: .75;
+  padding: 3px 7px;
+  background-color: #fff2d6 !important;
+  color: #ffab00 !important;
+  border-radius: 0.4rem;
+}
+
 .btn-label-primary {
   outline: none;
   line-height: .75;

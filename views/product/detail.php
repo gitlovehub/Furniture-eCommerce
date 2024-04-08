@@ -136,7 +136,7 @@
                                     <div class="progress w-100" style="height:10px;">
                                         <div class="progress-bar bg-warning" role="progressbar" style="width: <?= $percentage ?>%" aria-valuenow="<?= $percentage ?>" aria-valuemin="0" aria-valuemax="100"></div>
                                     </div>
-                                    <p style="width: 50px;" class="text-end"><?= round($percentage) ?>%</p>
+                                    <p style="width: 65px;" class="text-end"><?= round($percentage) ?>%</p>
                                 </div>
                             <?php endforeach; ?>
                         </div>
@@ -196,7 +196,7 @@
 </section>
 
 <!-- Modal -->
-<div class="modal fade" id="ratingReviewModal" tabindex="-1" aria-hidden="true">
+<div class="modal fade" id="ratingReviewModal" tabindex="1" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered">
         <form action="" class="modal-content" method="post">
             <div class="modal-header border-0 pb-0 pt-4">
@@ -232,50 +232,52 @@
     </div>
 </div>
 
-<div class="modal fade" id="listReviewModal" tabindex="-1" aria-hidden="true">
-    <div class="modal-dialog bg-light rounded">
-        <div class="modal-header border-0 pb-0 pt-4">
-            <h2 class="modal-title w-100 fw-bold text-center">List Review</h2>
-            <button type="button" class="btn-close me-2" data-bs-dismiss="modal" aria-label="Close"></button>
-        </div>
-        <div class="modal-body px-5">
-            <?php foreach ($reviews as $review) : ?>
-                <div class="card border-0 pb-3 border-bottom mb-5">
-                    <div class="card-body">
-                        <div class="d-flex flex-wrap gap-4 justify-content-between">
-                            <div class="d-flex flex-row align-items-center">
-                                <div class="reviewer-avatar rounded-circle" style="width: 40px;">
-                                    <?php
-                                    $defaultAvatar = 'https://www.gravatar.com/avatar/0?d=mp&f=y';
-                                    $avatar = !empty($review['customer_avatar']) ? BASE_URL . $review['customer_avatar'] : $defaultAvatar;
-                                    ?>
-                                    <img src="<?= $avatar ?>" alt="" height="40px" class="rounded-circle">
-                                </div>
-                                <div class="ms-3 lh-base">
-                                    <p class="fs-3 fw-bold">
-                                        <span><?= $review['customer_name'] ?></span>
-                                        <span class="fs-5 bg-label-success"><i class="fa-regular fa-circle-check me-2"></i>Purchased</span>
-                                    </p>
-                                    <span class="text-warning">
+<div class="modal fade" id="listReviewModal" tabindex="1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-scrollable">
+        <div class="modal-content">
+            <div class="modal-header border-0 py-4">
+                <h2 class="modal-title w-100 fw-bold text-center">List Review</h2>
+                <button type="button" class="btn-close me-2" data-bs-dismiss="modal" style="cursor: pointer;" aria-label="Close"></button>
+            </div>
+            <div class="modal-body px-5 scroll-bar">
+                <?php foreach ($reviews as $review) : ?>
+                    <div class="card border-0 pb-3 border-bottom mb-5">
+                        <div class="card-body">
+                            <div class="d-flex flex-wrap gap-4 justify-content-between">
+                                <div class="d-flex flex-row align-items-center">
+                                    <div class="reviewer-avatar rounded-circle" style="width: 40px;">
                                         <?php
-                                        $rating = $review['rating'];
-                                        for ($i = 1; $i <= 5; $i++) {
-                                            if ($i <= $rating) {
-                                                echo '<i class="fa-solid fa-star"></i>';
-                                            } else {
-                                                echo '<i class="fa-regular fa-star"></i>';
-                                            }
-                                        }
+                                        $defaultAvatar = 'https://www.gravatar.com/avatar/0?d=mp&f=y';
+                                        $avatar = !empty($review['customer_avatar']) ? BASE_URL . $review['customer_avatar'] : $defaultAvatar;
                                         ?>
-                                    </span>
+                                        <img src="<?= $avatar ?>" alt="" height="40px" class="rounded-circle">
+                                    </div>
+                                    <div class="ms-3 lh-base">
+                                        <p class="fs-3 fw-bold">
+                                            <span><?= $review['customer_name'] ?></span>
+                                            <span class="fs-5 bg-label-success"><i class="fa-regular fa-circle-check me-2"></i>Purchased</span>
+                                        </p>
+                                        <span class="text-warning">
+                                            <?php
+                                            $rating = $review['rating'];
+                                            for ($i = 1; $i <= 5; $i++) {
+                                                if ($i <= $rating) {
+                                                    echo '<i class="fa-solid fa-star"></i>';
+                                                } else {
+                                                    echo '<i class="fa-regular fa-star"></i>';
+                                                }
+                                            }
+                                            ?>
+                                        </span>
+                                    </div>
                                 </div>
+                                <span><?= date('d/m/Y', strtotime($review['review_date'])) ?></span>
                             </div>
-                            <span><?= date('d/m/Y', strtotime($review['review_date'])) ?></span>
+                            <p class="pt-3"><?= $review['review_text'] ?></p>
                         </div>
-                        <p class="pt-3"><?= $review['review_text'] ?></p>
                     </div>
-                </div>
-            <?php endforeach; ?>
+                <?php endforeach; ?>
+            </div>
         </div>
     </div>
 </div>

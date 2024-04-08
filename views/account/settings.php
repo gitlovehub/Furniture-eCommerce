@@ -15,7 +15,7 @@
                     <i class="fa-solid fa-address-card"></i>
                     <span>Account Details</span>
                 </a>
-                <a href="" class="account__navigation-link">
+                <a href="?act=order-history&id=<?= $user['id'] ?>" class="account__navigation-link">
                     <i class="fa-solid fa-dolly"></i>
                     <span>Order History</span>
                 </a>
