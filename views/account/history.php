@@ -54,58 +54,68 @@
                 </ul>
                 <div class="tab-content pt-5">
                     <div class="tab-pane fade active show" id="navs-justified-home" role="tabpanel">
-                        <div class="card">
-                            <div class="d-flex pt-4 px-5 justify-content-between align-items-center">
-                                <h3 class="fs-3 fw-bold py-3">
-                                    ORDER ID: #123
-                                </h3>
-                                <h3><span class="fw-semibold shadow-sm bg-label-warning text-uppercase">Pending Payment</span></h3>
-                            </div>
-                            <div class="card-body p-5 pt-4 d-flex flex-column gap-4">
-                                <?php foreach ($carts as $cart) : ?>
-                                    <div class="cart-item border-0 border-bottom pb-4" style="height: 100px; background-color: #fff;">
-                                        <div onclick="redirectToProductDetail(<?= $cart['id_product'] ?>)" class="cart-item-start border" style="width: 150px;">
-                                            <?php if (!empty($cart['color_thumbnail'])) : ?>
-                                                <img src="<?= BASE_URL . $cart['color_thumbnail'] ?>" alt="product img" class="cart-item-img">
-                                            <?php else : ?>
-                                                <img src="<?= BASE_URL . $cart['thumbnail'] ?>" alt="product img" class="cart-item-img">
-                                            <?php endif; ?>
-                                        </div>
-                                        <div class="w-100 ps-3 pt-2">
-                                            <div class="d-flex justify-content-between align-items-end">
-                                                <div class="d-flex flex-column gap-3">
-                                                    <h4 class="fs-3 fw-bold"><?= $cart['product'] ?></h4>
-                                                    <?php if (!empty($cart['color'])) : ?>
-                                                        <span>Color:
-                                                            <span class="fs-4 fw-bold"><?= $cart['color'] ?></span>
-                                                        </span>
-                                                    <?php endif; ?>
-                                                    <div>
-                                                        <span>Qty:</span>
-                                                        <span class="fw-bold"><?= $cart['quantity'] ?></span>
+                        
+                        <?php foreach ($orders as $order) : ?>
+
+                            <div class="card mb-4">
+                                <div class="d-flex pt-4 px-5 justify-content-between align-items-center">
+                                    <h3 class="fs-3 fw-bold py-3">
+                                        ORDER ID: #<?= $order['id'] ?>
+                                    </h3>
+                                    <h3>
+                                        <span class="fw-semibold shadow-sm text-uppercase <?= ($order['payment_status'] == 0) ? 'bg-label-warning' : (($order['payment_status'] == 1) ? 'bg-label-success' : 'bg-label-danger') ?>">
+                                            <?= ($order['payment_status'] == 0) ? 'Unpaid' : (($order['payment_status'] == 1) ? 'Paid' : 'Refunded') ?>
+                                        </span>
+                                    </h3>
+                                </div>
+                                <?php $products = getProductsByOrder($order['id']); ?>
+                                <?php foreach ($products as $product) : ?>
+                                <div class="card-body p-5 pt-4 d-flex flex-column gap-4">
+                                        <div class="cart-item border-0 border-bottom pb-4" style="height: 100px; background-color: #fff;">
+                                            <div onclick="redirectToProductDetail(<?= $product['product_id'] ?>)" class="cart-item-start border" style="width: 150px;">
+                                                <?php if (!empty($product['color_thumbnail'])) : ?>
+                                                    <img src="<?= BASE_URL . $product['color_thumbnail'] ?>" alt="product img" class="cart-item-img">
+                                                <?php else : ?>
+                                                    <img src="<?= BASE_URL . $product['thumbnail'] ?>" alt="product img" class="cart-item-img">
+                                                <?php endif; ?>
+                                            </div>
+                                            <div class="w-100 ps-3 pt-2">
+                                                <div class="d-flex justify-content-between align-items-end">
+                                                    <div class="d-flex flex-column gap-3">
+                                                        <h4 class="fs-3 fw-bold"><?= $product['product_name'] ?></h4>
+                                                        <?php if (!empty($product['color'])) : ?>
+                                                            <span>Color:
+                                                                <span class="fs-4 fw-bold"><?= $product['color_name'] ?></span>
+                                                            </span>
+                                                        <?php endif; ?>
+                                                        <div>
+                                                            <span>Qty:</span>
+                                                            <span class="fw-bold"><?= $product['quantity'] ?></span>
+                                                        </div>
                                                     </div>
-                                                </div>
-                                                <div class="text-end lh-sm">
-                                                    <p class="fs-3 fw-bold">£123</p>
-                                                    <?php $unitPrice = $cart['price'] - ($cart['price'] * $cart['discount'] / 100); ?>
-                                                    <span class="fs-4 text-secondary">£<?= number_format($unitPrice, 0, '.', ',') ?> each</span>
+                                                    <div class="text-end lh-sm">
+                                                        <p class="fs-3 fw-bold">£<?= calculateTotalPrice($product['price'], $product['discount'], $product['quantity']) ?></p>
+                                                        <?php $unitPrice = $product['price'] - ($product['price'] * $product['discount'] / 100); ?>
+                                                        <span class="fs-4 text-secondary">£<?= number_format($unitPrice, 0, '.', ',') ?> each</span>
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
-                                    </div>
+                                </div>
                                 <?php endforeach; ?>
-                            </div>
-                            <div class="card-footer py-4 px-5 d-flex gap-4 justify-content-end align-items-center">
-                                <div>
-                                    <button type="button" class="btn btn-primary fs-3 px-4 me-2">Pay Now</button>
-                                    <button type="button" class="btn btn-outline-primary fs-3 px-4">Contact</button>
+                                <div class="card-footer py-4 px-5 d-flex gap-4 justify-content-end align-items-center">
+                                    <div>
+                                        <button type="button" class="btn btn-primary fs-3 px-4 me-2">Pay Now</button>
+                                        <button type="button" class="btn btn-outline-primary fs-3 px-4">Contact</button>
+                                    </div>
+                                    <div class="fs-3 fw-bold">
+                                        <span>Total:</span>
+                                        <span>₤0,00</span>
+                                    </div>
                                 </div>
-                                <div class="fs-3 fw-bold">
-                                    <span>Total:</span>
-                                    <span>₤0,00</span>
-                                </div>
                             </div>
-                        </div>
+                        <?php endforeach; ?>
+
                     </div>
                     <div class="tab-pane fade" id="navs-justified-payment" role="tabpanel">
                         <h2>h2</h2>

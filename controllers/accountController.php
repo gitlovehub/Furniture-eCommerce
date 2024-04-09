@@ -64,21 +64,8 @@ function orderHistory($customerId) {
     // Lấy thông tin khách hàng
     $customer = selectOne('tbl_accounts', $customerId);
 
-    // Lấy danh sách đơn hàng của khách hàng
-    $orders = selectAll('tbl_orders', ['id_customer' => $customerId]);
-
-    // Lặp qua từng đơn hàng để lấy thông tin chi tiết
-    $orderDetails = [];
-    foreach ($orders as $order) {
-        // Lấy thông tin chi tiết của đơn hàng
-        $orderDetail = getOrderDetailsByCustomer($order['id']);
-        // Thêm thông tin chi tiết vào mảng $orderDetails
-        $orderDetails[] = [
-            'order' => $order,
-            'orderDetail' => $orderDetail
-        ];
-    }
-
+    // Lấy danh sách đơn hàng của 1 khách hàng
+    $orders = getOrdersByCustomer($customerId);
 
     require_once PATH_VIEW . 'layouts/master.php';
 }

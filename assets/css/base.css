@@ -480,6 +480,7 @@ h2 {
   display: flex;
   justify-content: center;
   align-items: center;
+  background-color: var(--white-clr);
   backdrop-filter: blur(20px);
   -webkit-backdrop-filter: blur(20px);
   transition: all ease-in 0.3s;

@@ -259,10 +259,25 @@ if (!function_exists('checkCustomerHasPurchased')) {
     }
 }
 
-if (!function_exists('getOrderDetailsByCustomer')) {
-    function getOrderDetailsByCustomer($customerId) {
+if (!function_exists('getOrdersByCustomer')) {
+    function getOrdersByCustomer($customerId) {
+        try {
+            $sql = "SELECT * FROM tbl_orders WHERE id_customer = :id_customer ORDER BY date DESC";
+            $stmt = $GLOBALS['conn']->prepare($sql);
+            $stmt->bindParam(':id_customer', $customerId, PDO::PARAM_INT);
+            $stmt->execute();
+            return $stmt->fetchAll(PDO::FETCH_ASSOC);
+        } catch (\Exception $e) {
+            debug($e);
+        }
+    }
+}
+
+if (!function_exists('getProductsByOrder')) {
+    function getProductsByOrder($orderId) {
         try {
             $sql = "SELECT 
+                        p.id AS product_id,
                         p.name AS product_name,
                         p.price AS price,
                         p.discount AS discount,
@@ -287,15 +302,14 @@ if (!function_exists('getOrderDetailsByCustomer')) {
                         tbl_accounts acc ON o.id_customer = acc.id
                     INNER JOIN 
                         tbl_colors clr ON od.id_color = clr.id
-                    WHERE 
-                        acc.id = ? 
-                    ORDER BY o.date DESC";
+                    WHERE o.id = ?";
 
             $stmt = $GLOBALS['conn']->prepare($sql);
-            $stmt->execute([$customerId]);
+            $stmt->execute([$orderId]);
             return $stmt->fetchAll(PDO::FETCH_ASSOC);
         } catch (\Exception $e) {
             debug($e);
         }
     }
 }
+

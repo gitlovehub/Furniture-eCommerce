@@ -171,23 +171,6 @@ if (!function_exists('getOrderDetails')) {
     }
 }
 
-if (!function_exists('getCustomerOrders')) {
-    function getCustomerOrders($customerId) {
-        try {
-            $sql = "SELECT od.id_product, od.quantity
-                    FROM tbl_order_details AS od
-                    JOIN tbl_orders AS o ON od.id_order = o.id
-                    WHERE o.id_customer = :id_customer";
-            $stmt = $GLOBALS['conn']->prepare($sql);
-            $stmt->bindParam(':id_customer', $customerId, PDO::PARAM_INT);
-            $stmt->execute();
-            return $stmt->fetchAll(PDO::FETCH_ASSOC);
-        } catch (\Exception $e) {
-            debug($e);
-        }
-    }
-}
-
 if (!function_exists('getReviewDetails')) {
     function getReviewDetails() {
         try {
