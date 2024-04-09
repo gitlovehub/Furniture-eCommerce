@@ -3,7 +3,7 @@
 function orderList() {
     $titleBar = 'Orders';
     $view     = 'order/order-list';
-    $list     = getOrders('tbl_orders');
+    $orders   = getOrders('tbl_orders');
 
     require_once PATH_VIEW_ADMIN . 'layouts/master.php';
 }
@@ -11,16 +11,21 @@ function orderList() {
 function orderDetails($orderId) {
     $titleBar = 'Order Details';
     $view     = 'order/order-details';
-    $list     = getOrderDetails($orderId);
+    $products = getOrderDetails($orderId);
+
+    foreach ($products as $item) {
+        extract($item);
+    }
 
     require_once PATH_VIEW_ADMIN . 'layouts/master.php';
 }
 
 function updateOrder($orderId) {
     $status   = selectOne('tbl_orders', $orderId);
+    $show     = getOrderDetails($orderId);
 
-    if (empty($status)) {
-        page404();
+    foreach ($show as $item) {
+        extract($item);
     }
 
     $titleBar = 'Update Order';
@@ -46,6 +51,14 @@ function updateOrder($orderId) {
             header('Location: ?act=update-order&id=' . $orderId);
             exit();
         } elseif ($selectedPayment == 2 && $status['delivery_status'] == 1) {
+            $_SESSION["error"] = '';
+            header('Location: ?act=update-order&id=' . $orderId);
+            exit();
+        } elseif ($selectedPayment == 2 && $status['delivery_status'] == 3) {
+            $_SESSION["error"] = '';
+            header('Location: ?act=update-order&id=' . $orderId);
+            exit();
+        } elseif ($selectedPayment == 1 && $status['payment_status'] == 2) {
             $_SESSION["error"] = '';
             header('Location: ?act=update-order&id=' . $orderId);
             exit();
@@ -85,6 +98,22 @@ function updateOrder($orderId) {
             header('Location: ?act=update-order&id=' . $orderId);
             exit();
         } elseif ($selectedDelivery == 1 && $status['delivery_status'] == 2) {
+            $_SESSION["error"] = '';
+            header('Location: ?act=update-order&id=' . $orderId);
+            exit();
+        } elseif ($selectedDelivery == 3 && $status['delivery_status'] == 2) {
+            $_SESSION["error"] = '';
+            header('Location: ?act=update-order&id=' . $orderId);
+            exit();
+        }  elseif ($selectedDelivery == 1 && $status['delivery_status'] == 3) {
+            $_SESSION["error"] = '';
+            header('Location: ?act=update-order&id=' . $orderId);
+            exit();
+        }  elseif ($selectedDelivery == 2 && $status['delivery_status'] == 3) {
+            $_SESSION["error"] = '';
+            header('Location: ?act=update-order&id=' . $orderId);
+            exit();
+        }  elseif ($selectedDelivery == 3 && $status['method'] == 0) {
             $_SESSION["error"] = '';
             header('Location: ?act=update-order&id=' . $orderId);
             exit();

@@ -6,20 +6,20 @@
         </div>
 
         <?php if (isset($_SESSION["user"])) {
-            $user = $_SESSION["user"];
+            $customer = $_SESSION["user"];
         } ?>
 
         <div class="account-container">
             <aside class="account__navigation">
-                <a href="?act=setting-info&id=<?= $user['id'] ?>" class="account__navigation-link">
+                <a href="?act=setting-info&id=<?= $customer['id'] ?>" class="account__navigation-link">
                     <i class="fa-solid fa-address-card"></i>
                     <span>Account Details</span>
                 </a>
-                <a href="?act=order-history&id=<?= $user['id'] ?>" class="account__navigation-link">
+                <a href="?act=order-history&id=<?= $customer['id'] ?>" class="account__navigation-link">
                     <i class="fa-solid fa-dolly"></i>
                     <span>Order History</span>
                 </a>
-                <a href="setting-password" class="account__navigation-link">
+                <a href="?act=reset-password" class="account__navigation-link">
                     <i class="fa-solid fa-key"></i>
                     <span>Password</span>
                 </a>
@@ -32,16 +32,16 @@
                 </a>
             </aside>
             <div class="account__header">
-                <h1 class="account__header-title">
+                <h1 class="account__header-title text-center text-md-start">
                     Hi,
                     <label>
-                        <?= $user['name'] ?>
+                        <?= $customer['name'] ?>
                     </label>
                 </h1>
                 <p class="account__header-text">
                     From your account dashboard you can manage your
-                    <a href="">shipping and billing addresses</a>, and
-                    <a href="">edit your password.</a>
+                    <a href="?act=setting-info&id=<?= $customer['id'] ?>">shipping and billing addresses</a>, and
+                    <a href="?act=reset-password">edit your password.</a>
                 </p>
             </div>
         </div>

@@ -17,9 +17,6 @@
                     <div class="card-header">
                         <span class="badge bg-label-primary">
                             Order ID:
-                            <?php foreach ($list as $item) {
-                                extract($item);
-                            } ?>
                             #<?= $item['order_id'] ?>
                         </span>
                     </div>
@@ -40,7 +37,7 @@
                                 <?php $shipping = 0;
                                 $subtotal = 0;
                                 $total = 0; ?>
-                                <?php foreach ($list as $item) : ?>
+                                <?php foreach ($products as $item) : ?>
                                     <?php
                                     $basePrice  = $item['price'];
                                     $discount   = $item['discount'] / 100;
@@ -101,7 +98,7 @@
                 <div class="card mb-4">
                     <div class="card-header">
                         <h4 class="card-title">Note:</h4>
-                        <p class="fs-5"><?= $item['note'] ?></p>
+                        <p class="fs-5"><?= $item['note']=='' ? 'Empty' : $item['note'] ?></p>
                     </div>
                 </div>
             </div>

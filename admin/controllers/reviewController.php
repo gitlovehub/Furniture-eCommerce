@@ -4,9 +4,21 @@ function manageReviews() {
     $titleBar = 'Reviews';
     $view     = 'review/review';
 
-    $list          = selectAll('tbl_reviews');
-    $reviewDetails = getReviewDetails();
-
+    $reviews = getReviews();
 
     require_once PATH_VIEW_ADMIN . 'layouts/master.php';
+}
+
+function updateStatusReview($id, $value) {
+    updateStatus('tbl_reviews', $id, $value);
+    header('Location: ?act=manage-reviews');
+    $_SESSION["success"]='';
+    exit();
+}
+
+function deleteReview($id) {
+    deleteOne('tbl_reviews', $id);
+    $_SESSION["success"]='';
+    header('Location: ?act=manage-reviews');
+    exit();
 }

@@ -217,6 +217,14 @@ a {
   border-radius: 0.4rem;
 }
 
+.bg-label-dark {
+  line-height: .75;
+  padding: 3px 7px;
+  background-color: #dcdfe1 !important;
+  color: #233446 !important;
+  border-radius: 0.4rem;
+}
+
 .btn-label-primary {
   outline: none;
   line-height: .75;
@@ -377,8 +385,7 @@ h2 {
   top: 0;
   width: 100%;
   z-index: 99;
-  backdrop-filter: blur(20px);
-  -webkit-backdrop-filter: blur(20px);
+  background-color: var(--white-clr);
 }
 
 .header__navbar {
@@ -401,7 +408,7 @@ h2 {
 .header__navbar-menu,
 .header__navbar-mobile {
   display: flex;
-  gap: 2.5rem;
+  gap: 2rem;
   align-items: center;
 }
 

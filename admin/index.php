@@ -51,6 +51,8 @@ match ($act) {
     
     // Review
     'manage-reviews'         => manageReviews(),
+    'delete-review'          => deleteReview($_GET["id"]),
+    'update-status-review'  => updateStatusReview($_GET["id"], $_GET["value"]),
 
     // Account
     'admin-list'             => adminList(),

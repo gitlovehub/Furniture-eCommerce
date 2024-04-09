@@ -143,7 +143,7 @@
                     </div>
                 </div>
             <?php else : ?>
-                <h3 class="text-center fs-2 py-4">Your feedback can guide others! Please take a moment to rate your purchase.</h3>
+                <h3 class="text-center fs-2 py-4">Feel free to leave your feedback here! 🌟</h3>
             <?php endif; ?>
             <div style="max-height: 370px; overflow: hidden;">
                 <?php foreach ($limitedReviews as $review) : ?>

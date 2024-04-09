@@ -14,9 +14,7 @@
                 </div>
                 <div class="col"></div>
             </div>
-            <?php foreach ($reviewDetails as $review) {
-                extract($review);
-            } ?>
+
             <div class="table-responsive">
                 <table class="table table-hover">
                     <thead>
@@ -33,8 +31,11 @@
                             </th>
                         </tr>
                     </thead>
+                    <?php foreach ($reviews as $review) {
+                        extract($review);
+                    } ?>
                     <tbody class="table-border-bottom-0">
-                        <?php foreach ($list as $item) : ?>
+                        <?php foreach ($reviews as $review) : ?>
                             <tr>
                                 <!-- Product -->
                                 <td>
@@ -73,7 +74,7 @@
                                 <td>
                                     <p class="text-warning m-0">
                                         <?php
-                                        $rating = $item['rating'];
+                                        $rating = $review['rating'];
                                         for ($i = 1; $i <= 5; $i++) {
                                             if ($i <= $rating) {
                                                 echo '<i class="fa-solid fa-star"></i>';
@@ -83,20 +84,20 @@
                                         }
                                         ?>
                                     </p>
-                                    <span><?= $item['review_text'] ?></span>
+                                    <span><?= $review['review_text'] ?></span>
                                 </td>
                                 <td>
-                                    <span class="badge <?= ($item['status'] == 0) ? 'bg-label-warning' : (($item['status'] == 1) ? 'bg-label-success' : 'bg-label-danger') ?>">
-                                        <?= ($item['status'] == 0) ? 'Pending' : 'Published' ?>
+                                    <span class="badge <?= ($review['review_status'] == 0) ? 'bg-label-warning' : (($review['review_status'] == 1) ? 'bg-label-success' : 'bg-label-danger') ?>">
+                                        <?= ($review['review_status'] == 0) ? 'Pending' : 'Published' ?>
                                     </span>
                                 </td>
-                                <td><?= $item['review_date'] ?></td>
+                                <td><?= $review['review_date'] ?></td>
                                 <td class="text-nowrap">
                                     <div class="float-end">
-                                        <a href="" class="btn btn-success p-2">
+                                        <button onclick="openModalUpdateStatus(<?= $review['review_id'] ?>, 1, 'review', 'Publish review?', 'This review will be publicly posted.')" class="btn btn-success p-2">
                                             <i class="bx bx-upload"></i>
-                                        </a>
-                                        <button onclick="openModalUpdateStatus(<?= $item['id'] ?>, 0, 'review', 'Delete review?', 'You can not undo this action.')" class="btn btn-danger p-2">
+                                        </button>
+                                        <button onclick="openModalDelete(<?= $review['review_id'] ?>, 'delete-review')" class="btn btn-danger p-2">
                                             <i class="bx bx-trash"></i>
                                         </button>
                                     </div>

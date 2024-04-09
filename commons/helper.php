@@ -68,6 +68,12 @@ if (!function_exists('middleware_auth_checkClient')) {
                 exit();
             }
         }
+        if ($act == 'reset-password') {
+            if (empty($_SESSION['user'])) {
+                header('Location: ' . BASE_URL);
+                exit();
+            }
+        }
         if ($act == 'review-cart') {
             if (empty($_SESSION['user'])) {
                 header('Location: ' . BASE_URL);
@@ -80,12 +86,6 @@ if (!function_exists('middleware_auth_checkClient')) {
                 exit();
             }
         }
-        if ($act == 'order-success') {
-            if (empty($_SESSION['user'])) {
-                header('Location: ' . BASE_URL);
-                exit();
-            }
-        }
         if ($act == 'settings') {
             if (empty($_SESSION['user'])) {
                 header('Location: ' . BASE_URL);
@@ -93,6 +93,18 @@ if (!function_exists('middleware_auth_checkClient')) {
             }
         }
         if ($act == 'setting-info') {
+            if (empty($_SESSION['user'])) {
+                header('Location: ' . BASE_URL);
+                exit();
+            }
+        }
+        if ($act == 'order-history') {
+            if (empty($_SESSION['user'])) {
+                header('Location: ' . BASE_URL);
+                exit();
+            }
+        }
+        if ($act == 'order-success') {
             if (empty($_SESSION['user'])) {
                 header('Location: ' . BASE_URL);
                 exit();

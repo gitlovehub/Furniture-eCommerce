@@ -245,7 +245,8 @@ if (!function_exists('checkCustomerHasPurchased')) {
                     WHERE o.id_customer = :customer_id 
                     AND od.id_product = :product_id
                     AND o.delivery_status = 2 
-                    AND (o.payment_status = 1 OR o.payment_status = 2)";
+                    AND (o.payment_status = 1 OR o.payment_status = 2)
+                    ";
             $stmt = $GLOBALS['conn']->prepare($sql);
             $stmt->bindParam(":customer_id", $customerId);
             $stmt->bindParam(":product_id", $productId);

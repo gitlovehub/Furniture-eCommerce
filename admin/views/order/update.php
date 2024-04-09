@@ -10,6 +10,18 @@
             </a>
         </div>
 
+        <h5 class="mb-3 ms-1">Customer:
+            <span class="fw-semibold"><?= $item['customer_name'] ?></span>
+        </h5>
+        <h5 class="mb-3 ms-1">Order date:
+            <span class="fw-semibold"><?= $status['date'] ?></span>
+        </h3>
+        <h5 class="mb-3 ms-1">Payment method:
+            <span class="badge fw-semibold <?= ($status['method'] == 0) ? 'bg-label-info' : 'bg-label-primary' ?>">
+                <?= ($status['method'] == 0) ? 'Cash on delivery' : 'Online payment' ?>
+            </span>
+        </h5>
+
         <form action="?act=update-order&id=<?= $status['id'] ?>" method="post">
             <div class="row gy-4">
                 <div class="col-12 col-sm-6">

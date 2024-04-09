@@ -64,6 +64,11 @@ if (isset($_SESSION["error"])) {
             </a>
             <ul class="menu-sub">
                 <li class="menu-item">
+                    <a href="?act=banner-list" class="menu-link">
+                        <span>Banner</span>
+                    </a>
+                </li>
+                <li class="menu-item">
                     <a href="?act=create-category" class="menu-link">
                         <span>Add Category</span>
                     </a>
@@ -102,7 +107,7 @@ if (isset($_SESSION["error"])) {
                 <i class="menu-icon tf-icons bx bx-user"></i>
                 <span>Accounts</span>
             </a>
-            <ul class="menu-sub">
+            <ul class="menu-sub">                
                 <li class="menu-item">
                     <a href="?act=admin-list" class="menu-link">
                         <span>Admin</span>
@@ -116,14 +121,7 @@ if (isset($_SESSION["error"])) {
             </ul>
         </li>
 
-        <!-- Reviews -->
-        <li class="menu-item py-1">
-            <a href="?act=manage-reviews" class="menu-link">
-                <i class="menu-icon tf-icons bx bx-message-dots"></i>
-                <span>Reviews</span>
-            </a>
-        </li>
-
+        
         <!-- Order -->
         <li class="menu-item py-1">
             <a href="?act=order-list" class="menu-link">
@@ -131,14 +129,13 @@ if (isset($_SESSION["error"])) {
                 <span>Order</span>
             </a>
         </li>
-
-        <!-- Banner -->
+        
+        <!-- Reviews -->
         <li class="menu-item py-1">
-            <a href="?act=banner-list" class="menu-link">
-                <i class="menu-icon tf-icons bx bx-images"></i>
-                <span>Banner</span>
+            <a href="?act=manage-reviews" class="menu-link">
+                <i class="menu-icon tf-icons bx bx-message-dots"></i>
+                <span>Reviews</span>
             </a>
         </li>
-
     </ul>
 </aside>

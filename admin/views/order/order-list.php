@@ -14,7 +14,7 @@
                         <div class="col-sm-6 col-lg-3">
                             <div class="d-flex justify-content-between align-items-start card-widget-1 border-end pb-3 pb-sm-0">
                                 <div>
-                                    <h3 class="mb-2">56</h3>
+                                    <h3 class="mb-2">26</h3>
                                     <p class="mb-0">Pending Payment</p>
                                 </div>
                                 <div class="avatar me-sm-4">
@@ -28,7 +28,7 @@
                         <div class="col-sm-6 col-lg-3">
                             <div class="d-flex justify-content-between align-items-start card-widget-2 border-end pb-3 pb-sm-0">
                                 <div>
-                                    <h3 class="mb-2">12,689</h3>
+                                    <h3 class="mb-2">12</h3>
                                     <p class="mb-0">Completed</p>
                                 </div>
                                 <div class="avatar me-lg-4">
@@ -42,7 +42,7 @@
                         <div class="col-sm-6 col-lg-3">
                             <div class="d-flex justify-content-between align-items-start border-end pb-3 pb-sm-0 card-widget-3">
                                 <div>
-                                    <h3 class="mb-2">124</h3>
+                                    <h3 class="mb-2">4</h3>
                                     <p class="mb-0">Refunded</p>
                                 </div>
                                 <div class="avatar me-sm-4">
@@ -55,7 +55,7 @@
                         <div class="col-sm-6 col-lg-3">
                             <div class="d-flex justify-content-between align-items-start">
                                 <div>
-                                    <h3 class="mb-2">32</h3>
+                                    <h3 class="mb-2">2</h3>
                                     <p class="mb-0">Failed</p>
                                 </div>
                                 <div class="avatar">
@@ -128,7 +128,7 @@
                     </thead>
                     <tbody class="table-border-bottom-0">
 
-                        <?php foreach ($list as $item) : ?>
+                        <?php foreach ($orders as $item) : ?>
                             <tr>
                                 <td>
                                     <span class="orderDate"><?= $item['date'] ?></span>
@@ -148,7 +148,6 @@
                                     <span class="badge <?= ($item['method'] == 0) ? 'bg-label-info' : 'bg-label-primary' ?>">
                                         <?= ($item['method'] == 0) ? 'Cash on delivery' : 'Online payment' ?>
                                     </span>
-
                                 </td>
                                 <td>
                                     <div class="float-end">

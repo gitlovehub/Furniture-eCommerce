@@ -54,7 +54,7 @@ if (isset($_SESSION["cart-overlay"])) {
     <div class="grid wide">
         <div class="header__navbar header-sticky">
             <div class="header__navbar-mobile hide-on-pc hide-on-tablet">
-                <div class="hamburger">
+                <div class="hamburger" style="cursor: pointer;">
                     <svg xmlns="http://www.w3.org/2000/svg" width="1.6em" height="1.6em" viewBox="0 0 24 24" fill="none">
                         <path d="M4 6H20M4 12H20M4 18H20" stroke="#000000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
                     </svg>
@@ -62,6 +62,14 @@ if (isset($_SESSION["cart-overlay"])) {
 
                 <?php if (isset($_SESSION["user"])) : ?>
                     <a href="?act=settings" class="header__navbar-menu-link header__navbar-icon-btn user-icon">
+                        <svg width="1.6em" height="1.6em" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M21 12C21 16.9706 16.9706 21 12 21C7.02944 21 3 16.9706 3 12C3 7.02944 7.02944 3 12 3C16.9706 3 21 7.02944 21 12Z" stroke="#323232" stroke-width="2" />
+                            <path d="M15 10C15 11.6569 13.6569 13 12 13C10.3431 13 9 11.6569 9 10C9 8.34315 10.3431 7 12 7C13.6569 7 15 8.34315 15 10Z" stroke="#323232" stroke-width="2" />
+                            <path d="M6.16406 18.5C6.90074 16.5912 8.56373 16 12.0001 16C15.4661 16 17.128 16.5578 17.855 18.5" stroke="#323232" stroke-width="2" stroke-linecap="round" />
+                        </svg>
+                    </a>
+                <?php else : ?>
+                    <a href="?act=login" class="header__navbar-menu-link header__navbar-icon-btn user-icon">
                         <svg width="1.6em" height="1.6em" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                             <path d="M21 12C21 16.9706 16.9706 21 12 21C7.02944 21 3 16.9706 3 12C3 7.02944 7.02944 3 12 3C16.9706 3 21 7.02944 21 12Z" stroke="#323232" stroke-width="2" />
                             <path d="M15 10C15 11.6569 13.6569 13 12 13C10.3431 13 9 11.6569 9 10C9 8.34315 10.3431 7 12 7C13.6569 7 15 8.34315 15 10Z" stroke="#323232" stroke-width="2" />
@@ -152,9 +160,9 @@ if (isset($_SESSION["cart-overlay"])) {
                                 <i class="fa-solid fa-gears me-3"></i>
                                 Settings
                             </a>
-                            <a class="list-group-item list-group-item-action ps-5 p-4" href="?act=purchased">
+                            <a class="list-group-item list-group-item-action ps-5 p-4" href="?act=order-history&id=<?= $_SESSION["user"]['id'] ?>">
                                 <i class="fa-regular fa-credit-card me-3"></i>
-                                Purchased
+                                Order History
                             </a>
                             <a class="list-group-item list-group-item-action ps-5 p-4" href="?act=logout">
                                 <i class="fa-solid fa-power-off me-3"></i>
@@ -222,15 +230,7 @@ if (isset($_SESSION["cart-overlay"])) {
                             </li>
                         <?php endforeach; ?>
 
-                        <?php if (empty($_SESSION["user"])) : ?>
-                            <li class="navbar__mobile-item">
-                                <a href="?act=login" class="navbar__mobile-item-link">
-                                    <span>[</span>
-                                    <span>Login</span>
-                                    <span>]</span>
-                                </a>
-                            </li>
-                        <?php else : ?>
+                        <?php if (isset($_SESSION["user"])) : ?>
                             <li class="navbar__mobile-item">
                                 <a href="?act=settings" class="navbar__mobile-item-link">
                                     <span>[</span>

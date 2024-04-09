@@ -171,15 +171,20 @@ if (!function_exists('getOrderDetails')) {
     }
 }
 
-if (!function_exists('getReviewDetails')) {
-    function getReviewDetails() {
+if (!function_exists('getReviews')) {
+    function getReviews() {
         try {
             $sql = "SELECT 
                         p.thumbnail AS product_thumbnail,
                         p.name AS product_name,
                         a.avatar AS customer_avatar,
                         a.name AS customer_name,
-                        a.email AS customer_email
+                        a.email AS customer_email,
+                        r.review_text AS review_text,
+                        r.rating AS rating,
+                        r.status AS review_status,
+                        r.review_date AS review_date,
+                        r.id AS review_id
                     FROM 
                         tbl_reviews r
                     INNER JOIN 

@@ -1,6 +1,7 @@
 <?php 
 
 function addToCart($id) {
+
     if (isset($_POST['btnAddToCart'])) {
         // kiểm tra xem đăng nhập chưa
         if (isset($_SESSION["user"])) {
@@ -100,7 +101,7 @@ function deleteQuickCartItem($id) {
 
 function reviewCart() {
     $titleBar = 'Review Cart';
-    $view     = 'cart/review';
+    $view     = 'cart/review-cart';
     require_once PATH_VIEW . 'layouts/master.php';
 }
 
@@ -125,7 +126,7 @@ function updateCart($id) {
 
 function removeCartItem($id) {
     $titleBar = 'Review Cart';
-    $view     = 'cart/review';
+    $view     = 'cart/review-cart';
     deleteOne('tbl_carts', $id);
     
     require_once PATH_VIEW . 'layouts/master.php';
