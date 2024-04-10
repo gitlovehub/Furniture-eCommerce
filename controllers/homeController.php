@@ -25,3 +25,12 @@ function index() {
 
     require_once PATH_VIEW . 'layouts/master.php';
 }
+
+function contact() {
+    $js       = BASE_URL.'assets/js/form.js';
+    $css      = BASE_URL.'assets/css/form.css';
+    $titleBar = 'Contact';
+    $view     = 'layouts/contact';
+
+    require_once PATH_VIEW . 'layouts/master.php';
+}

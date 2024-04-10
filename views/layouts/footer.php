@@ -83,14 +83,14 @@
                         <a href="" class="">RETURNS & EXCHANGES</a>
                     </li>
                     <li class="footer__link-item fs-4">
-                        <a href="" class="">CONTACT</a>
+                        <a href="?act=contact" class="">CONTACT</a>
                     </li>
                 </ul>
             </div>
         </div>
         <div class="footer__aside">
             <div class="footer__aside-copyright fs-4">
-                <p>© KIA Shop</p>
+                <p>© Funi Shop</p>
                 <p>Web Design by Trần Hưng</p>
             </div>
         </div>

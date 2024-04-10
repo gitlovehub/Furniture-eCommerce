@@ -10,7 +10,7 @@
                     Back to list
                 </a>
                 <a href="?act=add-color-product&id=<?= $product['id'] ?>" class="btn btn-dark p-2">
-                    <i class="bx bx-spray-can me-1"></i>
+                    <i class="bx bx-brush me-1"></i>
                     Add color
                 </a>
             </div>

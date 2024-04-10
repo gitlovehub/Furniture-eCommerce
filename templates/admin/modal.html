@@ -1,0 +1,38 @@
+<head>
+    <link rel="stylesheet" href="assets/css/modal.css">
+</head>
+<!-- The Modal -->
+<div class="modal-overlay" id="myModal">
+    <div class="modal-wrapper">
+        <div class="modal-container">
+            <h4 class="modal-question">
+                Delete item?
+            </h4>
+            <p class="modal-text">You cannot undo this action</p>
+            <div class="modal-controls">
+                <a id="ok-btn" class="modal-control-btn">OK</a>
+                <button class="modal-control-btn cancel-btn" onclick="closeModal()">Cancel</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    function openModal(id) {
+        // Open the modal
+        document.getElementById('myModal').style.display = 'block';
+
+        // Set the href attribute dynamically for the "OK" button
+        document.getElementById('ok-btn').href = 'logic/delete.php?get_id=' + id;
+    }
+
+    function confirmDelete() {
+        // Redirect to delete.php using the dynamically set href
+        window.location.href = document.getElementById('ok-btn').href;
+    }
+
+    function closeModal() {
+        // Close the modal
+        document.getElementById('myModal').style.display = 'none';
+    }
+</script>

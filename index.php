@@ -55,6 +55,8 @@ match ($act) {
     'order-history'    => orderHistory($_GET["id"]),
     'order-success'    => orderSuccess(),
 
+    // Contact
+    'contact'          => contact(),
 };
 
 require_once './commons/disconnect-db.php';

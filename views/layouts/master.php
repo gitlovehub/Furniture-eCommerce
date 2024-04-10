@@ -72,6 +72,10 @@
         }
     </script>
 
+    <!-- Ionicons here -->
+    <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
+    <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
+
     <script src="<?= BASE_URL ?>assets/js/base.js"></script>
     <script src="<?= BASE_URL ?>assets/js/toast.js"></script>
     <script src="<?= $js ?? null ?>"></script>
