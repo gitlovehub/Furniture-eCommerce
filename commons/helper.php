@@ -68,12 +68,7 @@ if (!function_exists('middleware_auth_checkClient')) {
                 exit();
             }
         }
-        if ($act == 'reset-password') {
-            if (empty($_SESSION['user'])) {
-                header('Location: ' . BASE_URL);
-                exit();
-            }
-        }
+
         if ($act == 'review-cart') {
             if (empty($_SESSION['user'])) {
                 header('Location: ' . BASE_URL);

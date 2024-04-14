@@ -204,6 +204,20 @@ function decreaseInstock($productId, $quantity) {
     }
 }
 
+function increaseInstock($productId, $quantity) {
+    try {
+        $sql  = "UPDATE tbl_products SET instock = instock + :quantity WHERE id = :productId";
+        $stmt = $GLOBALS['conn']->prepare($sql);
+        $stmt->bindParam(':quantity', $quantity, PDO::PARAM_INT);
+        $stmt->bindParam(':productId', $productId, PDO::PARAM_INT);
+        $stmt->execute();
+        return true;
+    } catch (\Exception $e) {
+        debug($e);
+        return false;
+    }
+}
+
 function updatePaymentStatus($orderId, $paid) {
     try {
         $sql  = "UPDATE tbl_orders SET payment_status = :paymentStatus WHERE id = :orderId";
@@ -314,3 +328,29 @@ if (!function_exists('getProductsByOrder')) {
     }
 }
 
+if (!function_exists('getEmail')) {
+    function getEmail($email) {
+        try {
+            $sql  = "SELECT * FROM tbl_accounts WHERE email = :email AND status = 1";
+            $stmt = $GLOBALS['conn']->prepare($sql);
+            $stmt->bindParam(':email', $email);
+            $stmt->execute();
+            return $stmt->fetch(PDO::FETCH_ASSOC);
+        } catch (\Exception $e) {
+            debug($e);
+        }
+    }
+}
+
+function updatePassword($token, $pw) {
+    try {
+        $sql  = "UPDATE tbl_accounts SET password = :password WHERE token = :token";
+        $stmt = $GLOBALS['conn']->prepare($sql);
+        $stmt->bindParam(':password', $pw);
+        $stmt->bindParam(':token', $token);
+        $stmt->execute();
+        return true;
+    } catch (\Exception $e) {
+        debug($e);
+    }
+}

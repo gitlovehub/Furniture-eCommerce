@@ -27,7 +27,7 @@ match ($act) {
     'verify-email'     => verifyEmail($_GET["token"]),
     'verified'         => verified(),
     'forgot-password'  => forgotPassword(),
-    'reset-password'   => resetPassword(),
+    'reset-password'   => resetPassword($_GET["token"]),
 
     // Account
     'settings'         => settings(),
@@ -54,6 +54,8 @@ match ($act) {
     'place-order'      => placeOrder($_GET["id"]),
     'order-history'    => orderHistory($_GET["id"]),
     'order-success'    => orderSuccess(),
+    'cancel-order'     => cancelOrder($_GET["id"]),
+    'buy-again'        => buyAgain($_GET["id"]),
 
     // Contact
     'contact'          => contact(),

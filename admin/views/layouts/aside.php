@@ -107,7 +107,7 @@ if (isset($_SESSION["error"])) {
                 <i class="menu-icon tf-icons bx bx-user"></i>
                 <span>Accounts</span>
             </a>
-            <ul class="menu-sub">                
+            <ul class="menu-sub">
                 <li class="menu-item">
                     <a href="?act=admin-list" class="menu-link">
                         <span>Admin</span>
@@ -121,7 +121,7 @@ if (isset($_SESSION["error"])) {
             </ul>
         </li>
 
-        
+
         <!-- Order -->
         <li class="menu-item py-1">
             <a href="?act=order-list" class="menu-link">
@@ -129,12 +129,20 @@ if (isset($_SESSION["error"])) {
                 <span>Order</span>
             </a>
         </li>
-        
+
         <!-- Reviews -->
         <li class="menu-item py-1">
             <a href="?act=manage-reviews" class="menu-link">
                 <i class="menu-icon tf-icons bx bx-message-dots"></i>
                 <span>Reviews</span>
+            </a>
+        </li>
+
+        <!-- Contact -->
+        <li class="menu-item py-1">
+            <a href="?act=contact" class="menu-link">
+                <i class="menu-icon tf-icons bx bx-support"></i>
+                <span>Contact</span>
             </a>
         </li>
     </ul>

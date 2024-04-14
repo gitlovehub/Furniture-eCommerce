@@ -65,6 +65,10 @@ match ($act) {
     'order-details'          => orderDetails($_GET["id"]),
     'update-order'           => updateOrder($_GET["id"]),
 
+    // Contact
+    'contact'                => contact(),
+
+
 };
 
 require_once '../commons/disconnect-db.php';

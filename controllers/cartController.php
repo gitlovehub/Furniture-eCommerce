@@ -131,11 +131,3 @@ function removeCartItem($id) {
     
     require_once PATH_VIEW . 'layouts/master.php';
 }
-
-function checkout($id) {
-    $titleBar = 'Checkout';
-    $view     = 'cart/checkout';
-    $customer = selectOne('tbl_accounts', $id);
-
-    require_once PATH_VIEW . 'layouts/blank.php';
-}

@@ -30,7 +30,12 @@ function contact() {
     $js       = BASE_URL.'assets/js/form.js';
     $css      = BASE_URL.'assets/css/form.css';
     $titleBar = 'Contact';
-    $view     = 'layouts/contact';
+    $view     = 'contact';
+    $list     = selectAll('tbl_contact');
+
+    if (empty($list)) {
+        page404();
+    }
 
     require_once PATH_VIEW . 'layouts/master.php';
 }

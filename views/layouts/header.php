@@ -7,6 +7,7 @@ $toastSessions = [
     "deleteitem-success" => "Success",
     "save-info"          => "Success",
     "review-success"     => "Success",
+    "order_cancelled"    => "Success",
     "review-error"       => "error",
     "login-blocked"      => "Error",
     "login-unverified"   => "Error",
@@ -14,6 +15,7 @@ $toastSessions = [
     "missing-color"      => "Error",
     "login-first"        => "Error",
     "limited"            => "Error",
+    "not-match"          => "Error",
 ];
 
 // Duyệt qua mảng session và hiển thị toast nếu session tồn tại

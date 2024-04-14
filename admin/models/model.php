@@ -201,3 +201,20 @@ if (!function_exists('getReviews')) {
         }
     }
 }
+
+if (!function_exists('updateContact')) {
+    function updateContact($key, $value) {
+        try {
+            // Tạo câu lệnh SQL UPDATE dựa trên key_contact hoặc id
+            $sql = "UPDATE tbl_contact SET value_contact = :valueContact WHERE key_contact = :keyContact OR id = :keyContact";
+
+            // Chuẩn bị và thực thi câu lệnh SQL
+            $stmt = $GLOBALS['conn']->prepare($sql);
+            $stmt->bindParam(":valueContact", $value);
+            $stmt->bindParam(":keyContact", $key);
+            $stmt->execute();
+        } catch (\Exception $e) {
+            debug($e);
+        }
+    }
+}

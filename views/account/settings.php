@@ -19,7 +19,7 @@
                     <i class="fa-solid fa-dolly"></i>
                     <span>Order History</span>
                 </a>
-                <a href="?act=reset-password" class="account__navigation-link">
+                <a href="?act=forgot-password" class="account__navigation-link">
                     <i class="fa-solid fa-key"></i>
                     <span>Password</span>
                 </a>
@@ -41,7 +41,7 @@
                 <p class="account__header-text">
                     From your account dashboard you can manage your
                     <a href="?act=setting-info&id=<?= $customer['id'] ?>">shipping and billing addresses</a>, and
-                    <a href="?act=reset-password">edit your password.</a>
+                    <a href="?act=forgot-password">edit your password.</a>
                 </p>
             </div>
         </div>

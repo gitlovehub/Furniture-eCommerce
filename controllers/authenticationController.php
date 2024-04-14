@@ -94,11 +94,13 @@ function register() {
 
             insert('tbl_accounts', $data);
             
-            if (sendEmail('Please check Sign-up verification link', 'verify-email', $data['token'], $data['email'])) {
+            if (sendEmailVerification('Please check Sign-up verification link', 'verify-email', $data['token'], $data['email'])) {
                 header('Location: ?act=waiting-page');
                 exit();
             } else {
                 $_SESSION["send-failed"] = 'Please try again later.';
+                header('Location: ?act=register');
+                exit();
             }
     
         }
@@ -106,7 +108,7 @@ function register() {
     require_once PATH_VIEW . 'layouts/master.php';
 }
 
-function sendEmail($subject, $act, $token, $email) {
+function sendEmailVerification($subject, $act, $token, $email) {
     require 'PHPMailer-master/src/Exception.php';
     require 'PHPMailer-master/src/PHPMailer.php';
     require 'PHPMailer-master/src/SMTP.php';
@@ -143,13 +145,41 @@ function verifyEmail($token) {
     if (updateTokenOptions('tbl_accounts', $token, 'status', 1)) {
         header('Location: ?act=verified');
         exit();
-    } else {
-        
     }
 }
 
 function verified() {
     require_once PATH_VIEW . 'authentication/verified-page.php';
+}
+
+function sendEmailResetPassword($subject, $act, $email) {
+    require 'PHPMailer-master/src/Exception.php';
+    require 'PHPMailer-master/src/PHPMailer.php';
+    require 'PHPMailer-master/src/SMTP.php';
+
+    $token = getEmail($email)['token'];
+
+    $mail = new PHPMailer(true);
+
+    $mail->isSMTP();
+    $mail->Host = 'smtp.gmail.com';
+    $mail->SMTPAuth = true;
+    $mail->Username = EMAIL;
+    $mail->Password = PASSWORD;
+    $mail->SMTPSecure = 'ssl';
+    $mail->Port = 465;
+
+    $mail->setFrom(EMAIL);
+    $mail->addAddress($email);
+    $mail->isHTML(true);
+    $mail->Subject = $subject;
+    $mail->Body = '
+                <h2>Please click on the link below to reset your password.</h2>
+                <h3>
+                    <a href="'.BASE_URL.'?act=' . $act . '&token=' . $token . '">👉 Click me!</a>
+                </h3>
+                ';
+    return $mail->send() ? true : false;
 }
 
 function forgotPassword() {
@@ -158,14 +188,34 @@ function forgotPassword() {
     $titleBar = 'Forgot Password';
     $view     = 'authentication/forgot-password';
 
+    if (isset($_POST['btnRecover'])) {
+
+        if (sendEmailResetPassword('Reset Password', 'reset-password', $_POST["email"])) {
+            $_SESSION["email"] = '';
+        }
+    }
+
     require_once PATH_VIEW . 'layouts/master.php';
 }
 
-function resetPassword() {
+function resetPassword($token) {
     $js       = BASE_URL.'assets/js/form.js';
     $css      = BASE_URL.'assets/css/form.css';
     $titleBar = 'Reset Password';
     $view     = 'authentication/reset-password';
+
+    if (isset($_POST['btnReset'])) {
+        $pw  = $_POST["fieldPassword"];
+        $cpw = $_POST["fieldConfirm"];
+
+        if ($pw === $cpw) {
+            if (updatePassword($token, $cpw)) {
+                updateTokenOptions('tbl_accounts', $token, 'token', bin2hex(random_bytes(30)));
+            }
+        } else {
+            $_SESSION['not-match'] = 'Passwords do not match.';
+        }
+    }
 
     require_once PATH_VIEW . 'layouts/master.php';
 }

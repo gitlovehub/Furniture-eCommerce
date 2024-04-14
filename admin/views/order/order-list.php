@@ -10,15 +10,35 @@
         <div class="card mb-4">
             <div class="card-widget-separator-wrapper">
                 <div class="card-body card-widget-separator">
+                    <?php 
+                    $pendingPaymentCount = 0;
+                    $completedCount = 0;
+                    $refundedCount = 0;
+                    $failedCount = 0;
+                    foreach ($orders as $item) {
+                        if ($item['payment_status'] == 0) {
+                            $pendingPaymentCount++;
+                        }
+                        if ($item['payment_status'] == 1 && $item['delivery_status'] == 2) {
+                            $completedCount++;
+                        }
+                        if ($item['payment_status'] == 2) {
+                            $refundedCount++;
+                        }
+                        if ($item['delivery_status'] == 3) {
+                            $failedCount++;
+                        }
+                    }
+                    ?>
                     <div class="row gy-4 gy-sm-1">
                         <div class="col-sm-6 col-lg-3">
                             <div class="d-flex justify-content-between align-items-start card-widget-1 border-end pb-3 pb-sm-0">
                                 <div>
-                                    <h3 class="mb-2">26</h3>
+                                    <h3 class="mb-2"><?= $pendingPaymentCount ?></h3>
                                     <p class="mb-0">Pending Payment</p>
                                 </div>
                                 <div class="avatar me-sm-4">
-                                    <span class="avatar-initial rounded bg-label-info">
+                                    <span class="avatar-initial rounded bg-label-warning">
                                         <i class="bx bx-calendar bx-sm"></i>
                                     </span>
                                 </div>
@@ -28,7 +48,7 @@
                         <div class="col-sm-6 col-lg-3">
                             <div class="d-flex justify-content-between align-items-start card-widget-2 border-end pb-3 pb-sm-0">
                                 <div>
-                                    <h3 class="mb-2">12</h3>
+                                    <h3 class="mb-2"><?= $completedCount ?></h3>
                                     <p class="mb-0">Completed</p>
                                 </div>
                                 <div class="avatar me-lg-4">
@@ -42,11 +62,11 @@
                         <div class="col-sm-6 col-lg-3">
                             <div class="d-flex justify-content-between align-items-start border-end pb-3 pb-sm-0 card-widget-3">
                                 <div>
-                                    <h3 class="mb-2">4</h3>
+                                    <h3 class="mb-2"><?= $refundedCount ?></h3>
                                     <p class="mb-0">Refunded</p>
                                 </div>
                                 <div class="avatar me-sm-4">
-                                    <span class="avatar-initial rounded bg-label-warning">
+                                    <span class="avatar-initial rounded bg-label-secondary">
                                         <i class="bx bx-wallet bx-sm"></i>
                                     </span>
                                 </div>
@@ -55,7 +75,7 @@
                         <div class="col-sm-6 col-lg-3">
                             <div class="d-flex justify-content-between align-items-start">
                                 <div>
-                                    <h3 class="mb-2">2</h3>
+                                    <h3 class="mb-2"><?= $failedCount ?></h3>
                                     <p class="mb-0">Failed</p>
                                 </div>
                                 <div class="avatar">
@@ -135,7 +155,7 @@
                                 </td>
                                 <td><?= $item['customer_name'] ?></td>
                                 <td>
-                                    <span class="fw-semibold <?= ($item['payment_status'] == 0) ? 'text-warning' : (($item['payment_status'] == 1) ? 'text-success' : 'text-danger') ?>">
+                                    <span class="fw-semibold <?= ($item['payment_status'] == 0) ? 'text-warning' : (($item['payment_status'] == 1) ? 'text-success' : 'text-secondary') ?>">
                                         <?= ($item['payment_status'] == 0) ? 'Unpaid' : (($item['payment_status'] == 1) ? 'Paid' : 'Refunded') ?>
                                     </span>
                                 </td>

@@ -4,13 +4,16 @@
             <div class="form-heading">
                 <h1 class="fw-bold">RECOVER PASSWORD</h1>
                 <P>Please enter your email:</P>
-                <div class="alert alert-success mt-4" role="alert">
-                    We have sent you an email with instructions to reset your password.
-                </div>
+                <?php if (isset($_SESSION['email'])) : ?>
+                    <div class="alert alert-success mt-4" role="alert">
+                        We have sent you an email with instructions to reset your password.
+                    </div>
+                <?php endif; ?>
+                <?php unset($_SESSION['email']); ?>
             </div>
             <form action="" method="post">
                 <div class="form__group">
-                    <input type="email" id="email" placeholder="Email" autofocus required>
+                    <input type="email" id="email" name="email" placeholder="Email" autofocus required>
                     <label for="email">Email</label>
                 </div>
                 <div class="form__group">
@@ -31,12 +34,14 @@
                 <div class="form__group">
                     <button class="btn-submit" name="btnRecover" type="submit">Recover</button>
                 </div>
-                <div class="form__group">
-                    <span>
-                        Remember your password?
-                        <a href="?act=login" class="form__group-link btnBackToLogin fw-bold">Back to login</a>
-                    </span>
-                </div>
+                <?php if (empty($_SESSION["user"])) : ?>
+                    <div class="form__group">
+                        <span>
+                            Remember your password?
+                            <a href="?act=login" class="form__group-link btnBackToLogin fw-bold">Back to login</a>
+                        </span>
+                    </div>
+                <?php endif; ?>
             </form>
         </div>
     </div>

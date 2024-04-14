@@ -47,6 +47,7 @@ if (!function_exists('updateStatus')) {
             $stmt->bindValue(1, $value, PDO::PARAM_INT);
             $stmt->bindValue(2, $id, PDO::PARAM_INT);
             $stmt->execute();
+            return true;
         } catch (\Exception $e) {
             debug($e);
         }
@@ -139,6 +140,7 @@ if (!function_exists('deleteOne')) {
             $stmt = $GLOBALS['conn']->prepare($sql);
             $stmt->bindParam(":id", $id);
             $stmt->execute();
+            return true;
         } catch (\Exception $e) {
             debug($e);
         }
@@ -253,6 +255,37 @@ if (!function_exists('getLastId')) {
             return $stmt->fetchColumn();
         } catch (\Exception $e) {
             debug($e);
+        }
+    }
+}
+
+if (!function_exists('getOrderAgian')) {
+    function getOrderAgian($orderId) {
+        try {
+            $sql = "SELECT * FROM tbl_order_details WHERE id_order = :id_order";
+            $stmt = $GLOBALS['conn']->prepare($sql);
+            $stmt->bindParam(':id_order', $orderId);
+            $stmt->execute();
+            
+            while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+                $customerId = $_SESSION["user"]['id'];
+                $productId  = $row['id_product'];
+                $colorId    = $row['id_color'];
+                $quantity   = $row['quantity'];
+                
+                $insertSql = "INSERT INTO tbl_carts (`id_customer`, `id_product`, `quantity`, `id_color`) VALUES (:id_customer, :id_product, :quantity, :id_color)";
+                $insertStmt = $GLOBALS['conn']->prepare($insertSql);
+                $insertStmt->bindParam(':id_customer', $customerId);
+                $insertStmt->bindParam(':id_product', $productId);
+                $insertStmt->bindParam(':quantity', $quantity); // corrected binding
+                $insertStmt->bindParam(':id_color', $colorId); // corrected binding
+                $insertStmt->execute();
+            }
+            deleteOne('tbl_orders', $orderId);
+            return true;
+        } catch (\Exception $e) {
+            debug($e);
+            return false;
         }
     }
 }

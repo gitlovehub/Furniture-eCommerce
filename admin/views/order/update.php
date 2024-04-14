@@ -39,7 +39,7 @@
                                 <option value="2">refunded</option>
                             </select>
 
-                            <button type="submit" name="btnUpdatePayment" class="btn btn-outline-primary my-2 float-end <?= ($status['payment_status'] == 2) ? 'disabled' : '' ?>">Update Payment</button>
+                            <button type="submit" name="btnUpdatePayment" class="btn btn-primary my-2 float-end <?= ($status['payment_status'] == 2) ? 'disabled' : '' ?>">Update Payment</button>
                         </div>
                     </div>
                 </div>
@@ -60,7 +60,7 @@
                                 <option value="3">Failed</option>
                             </select>
 
-                            <button type="submit" name="btnUpdateDelivery" class="btn btn-outline-primary my-2 float-end <?= ($status['delivery_status'] == 3) ? 'disabled' : '' ?>">Update Delivery</button>
+                            <button type="submit" name="btnUpdateDelivery" class="btn btn-primary my-2 float-end <?= ($status['delivery_status'] == 3) ? 'disabled' : '' ?>">Update Delivery</button>
                         </div>
                     </div>
                 </div>

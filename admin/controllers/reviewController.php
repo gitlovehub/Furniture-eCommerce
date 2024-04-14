@@ -1,8 +1,8 @@
 <?php
 
 function manageReviews() {
-    $titleBar = 'Reviews';
-    $view     = 'review/review';
+    $titleBar = 'Manage Reviews';
+    $view     = 'review/manage-reviews';
 
     $reviews = getReviews();
 

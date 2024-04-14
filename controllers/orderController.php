@@ -83,7 +83,32 @@ function placeOrder($customerId) {
     }
 }
 
+function cancelOrder($orderId) {
+    if (updateStatus('tbl_orders', $orderId, 0)) {
+        $products = getProductsByOrder($orderId);
+        foreach ($products as $product) {
+            increaseInstock($product['product_id'], $product['quantity']);
+        }
+        $_SESSION["order_cancelled"] = 'The order has been successfully canceled!';
+        header('Location: ?act=order-history&id=' . $_SESSION["user"]['id']);
+        exit();
+    }
+}
 
+function buyAgain($orderId) {
+    if (getOrderAgian($orderId)) {
+        header('Location: ?act=checkout&user=' . $_SESSION["user"]['id']);
+        exit();
+    }
+}
+
+function checkout($id) {
+    $titleBar = 'Checkout';
+    $view     = 'order/checkout';
+    $customer = selectOne('tbl_accounts', $id);
+
+    require_once PATH_VIEW . 'layouts/blank.php';
+}
 
 function validateCheckout($data) {
     $errors = [];
