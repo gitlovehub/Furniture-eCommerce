@@ -39,17 +39,6 @@
                     <p class="fs-2 fw-semibold">We're open for any suggestion. 😊</p>
                 </div>
 
-                <?php foreach ($list as $key => $item) {
-                    // Truy cập các giá trị tương ứng và gán vào các biến
-                    if ($item['key_contact'] === 'address') {
-                        $address = $item['value_contact'];
-                    } elseif ($item['key_contact'] === 'phone') {
-                        $phone = $item['value_contact'];
-                    } elseif ($item['key_contact'] === 'email') {
-                        $email = $item['value_contact'];
-                    }
-                } ?>
-
                 <ul class="fs-3">
                     <li class="d-flex align-items-center mb-5">
                         <span style="padding: 1.3rem 1.6rem;" class="border rounded-circle me-4 fs-1 bg-light">
@@ -57,7 +46,7 @@
                         </span>
                         <p>
                             <span class="fw-bold">Address:</span>
-                            <?= $address ?>
+                            Số 16, phố Trấn Vũ, Hà Nội, Việt Nam
                         </p>
                     </li>
                     <li class="d-flex align-items-center mb-5">
@@ -66,7 +55,7 @@
                         </span>
                         <p>
                             <span class="fw-bold">Phone:</span>
-                            <?= $phone ?>
+                            0123456789
                         </p>
                     </li>
                     <li class="d-flex align-items-center mb-5">
@@ -75,7 +64,7 @@
                         </span>
                         <p>
                             <span class="fw-bold">Email:</span>
-                            <?= $email ?>
+                            hungtd.support@fpt.edu.vn
                         </p>
                     </li>
                 </ul>

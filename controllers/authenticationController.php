@@ -58,9 +58,9 @@ function login() {
 
 function logout() {
     if (!empty($_SESSION["user"])) {
-        session_destroy();
+        unset($_SESSION["user"]);
     }
-    header('Location: ' . BASE_URL);
+    header('Location: ?act=login');
     exit();
 }
 
@@ -194,7 +194,6 @@ function forgotPassword() {
             $_SESSION["email"] = '';
         }
     }
-
     require_once PATH_VIEW . 'layouts/master.php';
 }
 
@@ -211,12 +210,14 @@ function resetPassword($token) {
         if ($pw === $cpw) {
             if (updatePassword($token, $cpw)) {
                 updateTokenOptions('tbl_accounts', $token, 'token', bin2hex(random_bytes(30)));
+                $_SESSION['password-changed'] = 'Password has been successfully changed!';
             }
         } else {
             $_SESSION['not-match'] = 'Passwords do not match.';
         }
+        header('Location: ?act=login');
+        exit();
     }
-
     require_once PATH_VIEW . 'layouts/master.php';
 }
 

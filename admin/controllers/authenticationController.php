@@ -9,7 +9,7 @@ function authLogin() {
 
 function authLogout() {
     if (!empty($_SESSION["admin"])) {
-        session_destroy();
+        unset($_SESSION["admin"]);
     }
     header('Location: ' . BASE_URL);
     exit();

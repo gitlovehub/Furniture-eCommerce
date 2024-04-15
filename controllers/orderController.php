@@ -89,7 +89,7 @@ function cancelOrder($orderId) {
         foreach ($products as $product) {
             increaseInstock($product['product_id'], $product['quantity']);
         }
-        $_SESSION["order_cancelled"] = 'The order has been successfully canceled!';
+        $_SESSION["order-cancelled"] = 'The order has been successfully canceled!';
         header('Location: ?act=order-history&id=' . $_SESSION["user"]['id']);
         exit();
     }

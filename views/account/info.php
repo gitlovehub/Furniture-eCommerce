@@ -128,10 +128,10 @@
                     <div class="col-12 m-auto mb-5 text-center">
                         <div class="avt m-auto" style="width: 150px; height: 150px;">
                             <?php
-                            $defaultAvatar = 'https://www.gravatar.com/avatar/0?d=mp&f=y';
+                            $defaultAvatar = 'https://i.stack.imgur.com/l60Hf.png';
                             $avatar = !empty($customer['avatar']) ? BASE_URL . $customer['avatar'] : $defaultAvatar;
                             ?>
-                            <img id="avatarPreview" src="<?= $avatar ?>" class="avt-img rounded-circle h-100" style="object-fit: cover;" alt="avatar">
+                            <img id="avatarPreview" src="<?= $avatar ?>" class="avt-img rounded-circle h-100 object-fit-cover" alt="avatar">
                         </div>
                         <!-- Show errors -->
                         <?php if (isset($_SESSION["errors"]["avatar"])) : ?>

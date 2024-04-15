@@ -137,13 +137,5 @@ if (isset($_SESSION["error"])) {
                 <span>Reviews</span>
             </a>
         </li>
-
-        <!-- Contact -->
-        <li class="menu-item py-1">
-            <a href="?act=contact" class="menu-link">
-                <i class="menu-icon tf-icons bx bx-support"></i>
-                <span>Contact</span>
-            </a>
-        </li>
     </ul>
 </aside>

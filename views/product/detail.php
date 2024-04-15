@@ -153,10 +153,10 @@
                                 <div class="d-flex flex-row align-items-center">
                                     <div class="reviewer-avatar rounded-circle" style="width: 40px;">
                                         <?php
-                                        $defaultAvatar = 'https://www.gravatar.com/avatar/0?d=mp&f=y';
+                                        $defaultAvatar = 'https://i.stack.imgur.com/l60Hf.png';
                                         $avatar = !empty($review['customer_avatar']) ? BASE_URL . $review['customer_avatar'] : $defaultAvatar;
                                         ?>
-                                        <img src="<?= $avatar ?>" alt="" height="40px" class="rounded-circle">
+                                        <img src="<?= $avatar ?>" alt="avatar" height="40px" class="rounded-circle object-fit-cover">
                                     </div>
                                     <div class="ms-3 lh-base">
                                         <p class="fs-3 fw-bold">

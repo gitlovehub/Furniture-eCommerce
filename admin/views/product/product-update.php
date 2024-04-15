@@ -11,7 +11,7 @@
         </div>
 
         <form action="" method="post" class="row" enctype="multipart/form-data">
-            <div class="col-sm-12 col-lg-8">
+            <div class="col-12 col-lg-8">
                 <div class="card mb-4">
                     <div class="card-header">
                         <h5 class="card-title mb-0">Product information</h5>
@@ -44,28 +44,34 @@
                     </div>
                 </div>
 
-                <div class="card mb-4">
-                    <div class="card-header">
-                        <h5 class="card-title mb-0">Media</h5>
+                <div class="d-flex flex-column flex-md-row gap-4 mb-4">
+                    <div style="max-width: 300px;">
+                        <img src="<?= PATH_UPLOAD . $show['thumbnail'] ?>" id="img-preview" class="w-100 d-block card" alt="">
                     </div>
 
-                    <div class="card-body">
-                        <div class="mb-3">
-                            <label class="form-label" for="product-thumbnail">thumbnail</label>
-                            <input type="file" name="productThumbnail" class="form-control" id="product-thumbnail">
-                            <input type="hidden" name="img-current" value="<?= $show['thumbnail'] ?>">
-                            <!-- Show errors -->
-                            <?php if (isset($_SESSION["errors"]["productThumbnail"])) : ?>
-                                <span class="bg-label-danger">
-                                    <?= $_SESSION["errors"]["productThumbnail"] ?>
-                                </span>
-                            <?php endif; ?>
+                    <div class="card w-100">
+                        <div class="card-header">
+                            <h5 class="card-title mb-0">Media</h5>
+                        </div>
+    
+                        <div class="card-body">
+                            <div class="mb-3">
+                                <label class="form-label" for="thumbnail">thumbnail</label>
+                                <input type="file" name="productThumbnail" class="form-control" id="thumbnail" onchange="previewImage()">
+                                <input type="hidden" id="img-current" name="img-current" value="<?= $show['thumbnail'] ?>">
+                                <!-- Show errors -->
+                                <?php if (isset($_SESSION["errors"]["productThumbnail"])) : ?>
+                                    <span class="bg-label-danger">
+                                        <?= $_SESSION["errors"]["productThumbnail"] ?>
+                                    </span>
+                                <?php endif; ?>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
 
-            <div class="col-sm-12 col-lg-4">
+            <div class="col-12 col-lg-4">
                 <div class="card mb-4">
                     <div class="card-header">
                         <h5 class="card-title mb-0">Organize</h5>
@@ -161,3 +167,34 @@
 
     <div class="content-backdrop fade"></div>
 </div>
+
+<script>
+    var imgPreview = document.getElementById('img-preview');
+    var imgCurrent = document.getElementById('img-current');
+    var input      = document.getElementById('thumbnail');
+
+    function previewImage() {
+
+        // Check if a file is selected
+        if (input.files && input.files[0]) {
+            var reader = new FileReader();
+
+            reader.onload = function(e) {
+                imgPreview.src = e.target.result;
+            };
+
+            reader.readAsDataURL(input.files[0]);
+
+            // Update the hidden input value to the new image data
+            imgCurrent.value = '';
+        } else {
+            // If no file is selected, keep the current image
+            imgPreview.src = imgCurrent.value;
+        }
+    }
+
+    function deleteImage() {
+        imgCurrent.value = '';
+        imgPreview.src   = '';
+    }
+</script>
