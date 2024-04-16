@@ -16,9 +16,8 @@
         <!-- /Search -->
 
         <div class="navbar-nav flex-row align-items-center ms-auto">
-            <a class="btn btn-outline-primary" href="?act=logout">
-                <i class="bx bx-power-off me-2"></i>
-                <span class="align-middle">Log Out</span>
+            <a class="btn btn-danger" href="?act=logout">
+                <i class="bx bx-power-off"></i>
             </a>
         </div>
     </div>

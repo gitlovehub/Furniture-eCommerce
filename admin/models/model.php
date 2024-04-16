@@ -218,3 +218,62 @@ if (!function_exists('updateContact')) {
         }
     }
 }
+
+if (!function_exists('selectCount')) {
+    function selectCount($tableName) {
+        try {
+            $sql = "SELECT COUNT(*) AS count FROM $tableName";
+            $stmt = $GLOBALS['conn']->prepare($sql);
+            $stmt->execute();
+            return $stmt->fetch(2);
+        } catch (\Exception $e) {
+            debug($e);
+        }
+    }
+}
+
+if (!function_exists('selectRevenue')) {
+    function selectRevenue() {
+        try {
+            $sql = "SELECT SUM(total) AS total FROM tbl_orders WHERE payment_status = 2 AND delivery_status = 2 AND status = 1";
+            $stmt = $GLOBALS['conn']->prepare($sql);
+            $stmt->execute();
+            return $stmt->fetch(2);
+        } catch (\Exception $e) {
+            debug($e);
+        }
+    }
+}
+
+if (!function_exists('statis')) {
+    function statis() {
+        try {
+            $sql = "SELECT DATE(date) AS order_date, COUNT(*) AS order_total 
+                    FROM tbl_orders 
+                    WHERE date >= DATE_SUB(NOW(), INTERVAL 7 DAY) 
+                    AND date <= NOW()
+                    GROUP BY DATE(date);";
+            $stmt = $GLOBALS['conn']->prepare($sql);
+            $stmt->execute();
+            return $stmt->fetchAll();
+        } catch (\Exception $e) {
+            debug($e);
+        }
+    }
+}
+
+if (!function_exists('getBestSellingProducts')) {
+    function getBestSellingProducts() {
+        try {
+            $sql = "SELECT `id`, `view`, `thumbnail`, `name`, `description`, `price`, `discount`, `instock`, `status`, `id_category`
+            FROM `tbl_products`
+            ORDER BY `instock` ASC
+            LIMIT 4";
+            $stmt = $GLOBALS['conn']->prepare($sql);
+            $stmt->execute();
+            return $stmt->fetchAll();
+        } catch (\Exception $e) {
+            debug($e);
+        }
+    }
+}

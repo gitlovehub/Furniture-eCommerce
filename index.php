@@ -55,7 +55,7 @@ match ($act) {
     'order-history'    => orderHistory($_GET["id"]),
     'order-success'    => orderSuccess(),
     'cancel-order'     => cancelOrder($_GET["id"]),
-    'buy-again'        => buyAgain($_GET["id"]),
+    'buy-back'        => buyBack($_GET["id"]),
 
     // Contact
     'contact'          => contact(),

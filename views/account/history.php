@@ -410,7 +410,7 @@
                                             </span>
                                         </div>
                                         <div class="fs-3 fw-bold">
-                                            <a href="?act=buy-again&id=<?= $order['id'] ?>" class="btn btn-danger fs-3 px-4 me-2">Buy again</a>
+                                            <a href="?act=buy-back&id=<?= $order['id'] ?>" class="btn btn-danger fs-3 px-4 me-2">Buy back</a>
                                             <span>Total:</span>
                                             <?php $total = 0 ?>
                                             <span>₤ <?= $total += $totalPrice ?></span>

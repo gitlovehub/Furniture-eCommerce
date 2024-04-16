@@ -95,8 +95,8 @@ function cancelOrder($orderId) {
     }
 }
 
-function buyAgain($orderId) {
-    if (getOrderAgian($orderId)) {
+function buyBack($orderId) {
+    if (getOrderBack($orderId)) {
         header('Location: ?act=checkout&user=' . $_SESSION["user"]['id']);
         exit();
     }
